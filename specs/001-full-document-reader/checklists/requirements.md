@@ -60,3 +60,45 @@ to planning
   unresolved clarification markers.
 - Audit attempt 4 returned a current PASS. Five optional advisories are retained
   in `../audits.md` for operator judgement.
+- The operator added persistent settings help, Accessibility Reader setup,
+  the three-action usage flow, publishable value messaging, and a later
+  marketplace boundary. The revision also resolves all five Attempt 4
+  advisories.
+- Validation iteration 5 passed after that revision: required sections and
+  identifiers are present, no unresolved clarification marker remains, all
+  three documentation files are unchanged by `sanitize`, and
+  `git diff --check` reports no error.
+- Audit attempt 5 returned PASS with two advisories. Both were remediated by
+  aligning the public-value exclusion lists and specifying that repeated
+  invocation replaces the earlier reader presentation. The changed candidate
+  passed validation iteration 6: required sections and sequential identifiers
+  are present, no unresolved marker remains, all three documentation files are
+  unchanged by `sanitize`, and `git diff --check` reports no error. A fresh
+  independent audit was required.
+- Audit attempt 6 returned FAIL because an active Markdown file that Obsidian
+  cannot open or render was outside both failure branches. The blocking finding
+  and all three advisories were remediated. The changed candidate requires
+  validation iteration 7 and a fresh independent audit.
+- Validation iteration 7 passed: required sections and sequential identifiers
+  are present, no unresolved marker remains, all three documentation files are
+  unchanged by `sanitize`, and `git diff --check` reports no error. A fresh
+  independent audit was required.
+- Audit attempt 7 returned PROVISIONAL because invocation-control placement was
+  not explicitly deferred. The condition and two actionable advisories were
+  remediated; the acceptance-scenario advisory was retained because those
+  scenarios provide concrete acceptance examples. The changed candidate
+  passed validation iteration 8: required sections and sequential identifiers
+  are present, no unresolved marker remains, all three documentation files are
+  unchanged by `sanitize`, and `git diff --check` reports no error. A fresh
+  independent audit was required.
+- Audit attempt 8 returned FAIL because FR-025 did not require the public
+  three-action flow or no-remote-wait claim carried by Scope, User Story 4, and
+  SC-008. Both blocking findings and both advisories were remediated. The
+  changed candidate passed validation iteration 9: required sections and
+  sequential identifiers are present, no unresolved marker remains, all three
+  documentation files are unchanged by `sanitize`, and `git diff --check`
+  reports no error.
+- Audit attempt 9 returned the current PASS. Two non-blocking advisories are
+  retained in `../audits.md`: SC-008 deliberately keeps its measurement
+  self-contained, and planning must reverify the externally owned iOS 26
+  availability floor.

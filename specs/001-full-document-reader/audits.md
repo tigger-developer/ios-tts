@@ -125,7 +125,8 @@
 - Artefact revision: SHA-256
   `70445bea4c375b62481f9dfa6d608bdc4cb8ced607eb770d766ae8c4e20ef4cc`
 - Verdict: PASS
-- Status: Current effective PASS with retained advisories.
+- Status: Superseded by the operator-directed help, usage, and publication
+  revision.
 
 ### Findings
 
@@ -167,3 +168,166 @@
    can open"; define it once (e.g., in Key Entities) and state which response
    applies to a Markdown file Obsidian cannot open - FR-010 (unsupported-state
    response) or FR-013.
+
+## Operator Revision After Attempt 4
+
+- Adds persistent How to use guidance in plugin settings.
+- Defines the routine three-action flow: plugin button, accessibility shortcut,
+  and Play.
+- Uses triple-clicking the side button as the principal setup example while
+  acknowledging other iOS launch methods.
+- Defines the native, non-metered, no-API-key value proposition for public
+  plugin metadata and details.
+- Prepares metadata and guidance for later human-authorized Obsidian marketplace
+  submission.
+- Resolves all five Attempt 4 advisories in the revised candidate.
+
+## Attempt 5
+
+- Auditor: `audit-spec` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revision: SHA-256
+  `b2a37eef52e4375b0284cedf5322afe6dbb5db082ec9588f1f83867f63c18745`
+- Verdict: PASS
+- Status: Superseded by remediation of both retained advisories.
+
+### Findings
+
+1. [ADVISORY] User Story 4 scenario 4 used a shorter exclusion list than FR-025
+   and SC-008, which could let acceptance omit the external-account and
+   pay-per-use conditions.
+2. [ADVISORY] FR-008 and the snapshot assumption did not specify whether a new
+   invocation replaces the earlier presentation or stacks another one.
+
+### Disposition
+
+- Aligned User Story 4 scenario 4 with FR-025 and SC-008 while retaining the
+  remote-response boundary from FR-026.
+- Added explicit replacement behaviour to User Story 1 scenario 3 and FR-028.
+
+## Attempt 6
+
+- Auditor: `audit-spec` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revision: SHA-256
+  `330579357e58bd722054983d0ace5b5d681676f2c14b659e22824661878295be`
+- Verdict: FAIL
+- Status: Superseded by remediation of the blocking finding and all three
+  advisories.
+
+### Findings
+
+1. [BLOCKING] FR-010, FR-013, and the Supported note definition left an active
+   Markdown file that Obsidian cannot open or render outside both specified
+   failure branches.
+2. [ADVISORY] The Supported note entity combined its definition and two failure
+   assignments in one bullet.
+3. [ADVISORY] The frontmatter-only edge case used different property wording
+   from User Story 1 scenario 5 and FR-017.
+4. [ADVISORY] The README relationship did not say how its previewer comparison
+   relates to authoritative FR-002.
+
+### Disposition
+
+- Assigned any active Markdown file that Obsidian cannot open or render to the
+  FR-013 presentation-failure response.
+- Split supported, unsupported, and presentation-failure states into separate
+  Key Entities bullets.
+- Standardized the frontmatter-only edge case on visible properties in
+  Obsidian's order.
+- Recorded the README previewer comparison as illustrative no-truncation
+  context and FR-002 as the authoritative requirement.
+
+## Attempt 7
+
+- Auditor: `audit-spec` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revision: SHA-256
+  `07224175989494dc7ebefd21b612a64af28e66f19692a1bbd9ac29744bec6441`
+- Verdict: PROVISIONAL
+- Status: Superseded by condition remediation.
+
+### Findings
+
+1. [CONDITION] FR-001 required a user-visible button without stating that its
+   placement is a planning decision.
+2. [ADVISORY] FR-027 did not state that a reader-adjacent Help control is
+   optional.
+3. [ADVISORY] Three acceptance scenarios repeat their connected requirements,
+   although the reviewer acknowledged their concrete-example value.
+4. [ADVISORY] SC-003 did not directly point to the Assumptions bullet defining
+   its representative acceptance set.
+
+### Disposition
+
+- Explicitly deferred button placement and any command-palette alternative to
+  planning without weakening FR-001.
+- Made a reader-adjacent Help control optional and retained settings help as
+  mandatory.
+- Retained the three acceptance scenarios because they provide concrete
+  feature-level examples for acceptance testing.
+- Added the Assumptions cross-reference to SC-003.
+
+## Attempt 8
+
+- Auditor: `audit-spec` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revision: SHA-256
+  `2f52999f7911b15d38f77f8dfd86161d37c566bf6c036a90f04160dc475e2f5a`
+- Verdict: FAIL
+- Status: Superseded by remediation of both blocking findings and both
+  advisories.
+
+### Findings
+
+1. [BLOCKING] Scope and SC-008 required public metadata to explain the
+   three-action flow, but FR-025 did not.
+2. [BLOCKING] User Story 4 scenario 4 required the public description to state
+   that there is no remote speech-processing wait, but FR-025 and SC-008 did
+   not carry the same claim.
+3. [ADVISORY] FR-014's word "recursively" could permit first-level inclusion of
+   referenced-target content.
+4. [ADVISORY] FR-001 did not require an accessible name for the invocation
+   button.
+
+### Disposition
+
+- Extended FR-025 to require the public three-action sequence and aligned it
+  with FR-022.
+- Added the absence of a remote speech-processing wait to FR-025 and SC-008.
+- Reworded the referenced-content boundary to exclude target-only content at
+  any depth.
+- Required the invocation button to expose an accessible name identifying the
+  action.
+
+## Attempt 9
+
+- Auditor: `audit-spec` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revision: SHA-256
+  `ce50e3c57bb96e4bfb09151f4874aa0e7641d2a2e92754eb67547894a26f7715`
+- Verdict: PASS
+- Status: Current effective PASS with two retained advisories.
+- Service note: The first execution produced no output for more than eleven
+  minutes and was terminated without a verdict. An identical retry returned
+  the result recorded here.
+
+### Findings
+
+1. [ADVISORY] SC-008 repeats FR-025's full service-independence list rather than
+   cross-referencing it, which creates a maintenance risk if FR-025 changes.
+2. [ADVISORY] The iOS 26 availability floor should be marked as derived from
+   the cited Apple instructions or reverified during planning.
+
+### Disposition
+
+- Retained SC-008's explicit list because it makes the human-review measurement
+  self-contained and permits direct comparison with FR-025.
+- Retained the iOS 26 floor as a documented assumption derived from the linked
+  Apple Accessibility Reader instructions; planning must reverify external
+  platform versions before selecting the supported-version contract.

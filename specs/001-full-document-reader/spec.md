@@ -6,7 +6,11 @@ Created: 2026-09-04
 
 Status: Draft
 
-Input: Write a specification for the straightforward Obsidian plugin described in `README.md`.
+Input: Write a specification for the straightforward Obsidian plugin described
+in `README.md`. Explain the Accessibility Reader setup and three-action reading
+flow in persistent help and publishable plugin details. Present native,
+non-metered text-to-speech as the plugin's value proposition, and prepare for a
+later Obsidian marketplace submission.
 
 ## Scope
 
@@ -19,14 +23,23 @@ Input: Write a specification for the straightforward Obsidian plugin described i
   note.
 - In scope: The presentation keeps note content **on the user's device** and
   leaves the source note unchanged.
+- In scope: A persistent **How to use page in plugin settings** explains initial
+  Accessibility Reader setup and routine use.
+- In scope: Publishable plugin metadata and details explain the **three-action
+  reading flow** and its **native, non-metered text-to-speech** value.
 - Out of scope: The plugin **does not synthesize speech** or provide playback,
   voice, language, pronunciation, or audio controls.
 - Out of scope: The plugin **does not provide an editing surface** or reproduce
   unrelated Obsidian navigation and workspace controls.
-- Out of scope: The plugin **does not recursively include content** from linked
+- Out of scope: The plugin **does not include content at any depth** from linked
   notes, external media, canvases, PDFs, or other non-Markdown files.
 - Out of scope: Reader behaviour on desktop or other non-iOS platforms is
   **not specified by this feature**.
+- Out of scope: The plugin **does not invoke Accessibility Reader or start
+  playback programmatically** because those actions remain under user and iOS
+  control.
+- Out of scope: Submission to or publication through the Obsidian Community
+  Plugins marketplace requires **later human approval**.
 
 ## User Scenarios & Testing
 
@@ -71,7 +84,10 @@ its final readable content** in one reader presentation.
    WHEN the user opens the full document reader again
 
    THEN the new presentation reflects the **current note content** known to
-   Obsidian at that moment.
+   Obsidian at that moment
+
+   AND replaces the earlier reader presentation rather than stacking a second
+   presentation beside it.
 
 4. GIVEN an active Markdown note containing links, embedded references, or
    media descriptions
@@ -91,27 +107,28 @@ its final readable content** in one reader presentation.
    THEN the reading sequence presents the **title once**, followed by the
    **visible properties in Obsidian's order**, followed by the **body content**.
 
-### User Story 2 - Invoke native iOS reading (Priority: P2)
+### User Story 2 - Use the three-action reading flow (Priority: P2)
 
-An iOS Obsidian user **invokes the configured native reader shortcut** against
-the full document presentation so the operating system can **read the note
-aloud**.
+An iOS Obsidian user **opens the full document**, **invokes Accessibility
+Reader**, and **presses Play** so the operating system reads the note aloud.
 
 Why this priority: The presentation has value only when the native
 accessibility facility **recognizes its readable content**.
 
-Independent Test: The configured native iOS shortcut **discovers one complete
-document** and can reach its final readable content.
+Independent Test: The three user actions expose **one complete document to
+native iOS speech**, which can reach the final readable content.
 
 #### Acceptance Scenarios
 
-1. GIVEN the full document reader is displaying a supported note
+1. GIVEN Accessibility Reader is enabled and assigned to a user-selected iOS
+   accessibility shortcut
 
-   WHEN the user invokes the configured iOS reader accessibility shortcut
+   WHEN the user presses the plugin button, invokes that accessibility
+   shortcut, and presses Play
 
-   THEN iOS discovers the **document's readable body**
+   THEN iOS discovers the **complete reading sequence**
 
-   AND can proceed through that body in **logical reading order**.
+   AND reads it in **logical order through the final content**.
 
 2. GIVEN any reader presentation text exists outside the document body
 
@@ -180,15 +197,68 @@ content transfer**.
    access, or network request** beyond Obsidian's standard rendering of the
    same note.
 
+### User Story 4 - Configure and understand the reading flow (Priority: P2)
+
+A first-time user opens **How to use** in plugin settings to configure
+Accessibility Reader and understand the plugin's three-action reading flow.
+
+Why this priority: **One-time iOS setup enables the plugin's intended value**.
+
+Independent Test: A first-time user can **configure Accessibility Reader and
+start reading a full note** without an API key, external account, or other
+guidance.
+
+#### Acceptance Scenarios
+
+1. GIVEN Accessibility Reader has not been enabled
+
+   WHEN the user opens the plugin's How to use page
+
+   THEN the page provides **ordered setup instructions** for enabling
+   Accessibility Reader and assigning an accessibility shortcut
+
+   AND gives **triple-clicking the side (lock) button** as the principal example
+   while noting that other iOS launch methods are available.
+
+2. GIVEN Accessibility Reader is configured
+
+   WHEN the user reads the routine-use instructions
+
+   THEN the page describes the **three actions in order**: press the plugin
+   button, invoke the accessibility shortcut, and press Play.
+
+3. GIVEN several features are assigned to the iOS Accessibility Shortcut
+
+   WHEN the user invokes that shortcut
+
+   THEN the help explains that iOS may show an **additional feature chooser**
+
+   AND explains that assigning only Accessibility Reader provides the direct
+   **three-action flow**.
+
+4. GIVEN a prospective user reads the publishable plugin metadata and details
+
+   WHEN the user evaluates the plugin before installation
+
+   THEN the description identifies **native iOS Accessibility Reader** as the
+   speech facility
+
+   AND states that the plugin requires **no TTS API key, external TTS account,
+   pay-per-use charge from the plugin, metered TTS service, or remote
+   speech-processing wait**.
+
 ### Edge Cases
 
 - An **empty Markdown note** produces an empty document body without showing
   stale content or reporting a false failure.
 - A note containing only frontmatter presents the **title once**, followed by
-  any human-readable property names and values in the order Obsidian exposes
-  them, without speaking formatting delimiters or inventing prose.
+  the **visible properties in Obsidian's order**, without speaking formatting
+  delimiters or inventing prose.
 - A note with links or embedded references includes their **readable labels**
-  but does not recursively append the referenced content.
+  but does not include content belonging only to a referenced target at any
+  depth.
+- For a bare embedded-note transclusion, the written target name counts as
+  **author-supplied reference text**.
 - A media reference without an author-supplied readable label or description
   contributes **no invented label, filename, or placeholder text** to the
   reading sequence.
@@ -196,13 +266,19 @@ content transfer**.
   reader does not impose a separate **content-length limit**.
 - If the active file is not a Markdown note, the plugin reports the
   **unsupported file type** without altering or replacing the file.
+- If several features share the iOS Accessibility Shortcut, the system chooser
+  can add **one selection action** to the routine flow.
+- If the user enables Accessibility Reader Autoplay, iOS can omit the final
+  **manual Play action**; Autoplay is optional and is not required by the
+  plugin.
 
 ## Requirements
 
 ### Functional Requirements
 
-- FR-001 - Full reader action: The plugin MUST provide an action that opens a
-  **reader presentation for the active Markdown note**.
+- FR-001 - Full reader button: The plugin MUST provide a **user-visible button**
+  that opens a reader presentation for the active Markdown note and exposes an
+  **accessible name identifying the full document reader action**.
 - FR-002 - Complete readable content: The reader MUST include the note's
   **readable content from beginning to end** without a plugin-imposed
   content-length limit or truncation.
@@ -218,8 +294,8 @@ content transfer**.
   semantic content**, rather than requiring the user to interpret formatting
   delimiters or other authoring syntax.
 - FR-006 - Native accessibility discovery: The reader MUST make the note's
-  readable body available as **one continuous document** to the native iOS
-  reader accessibility shortcut.
+  full title, visible-properties, and body sequence available as **one
+  continuous document** to the native iOS reader accessibility shortcut.
 - FR-007 - Document-only sequence: The reading sequence MUST exclude
   **navigation, controls, status text, and other non-document interface text**.
 - FR-008 - Read-only operation: Opening, using, reopening, or closing the reader
@@ -234,11 +310,12 @@ content transfer**.
 - FR-012 - Native speech boundary: Speech generation, playback, voice,
   language, pronunciation, and audio controls MUST remain under **native iOS
   ownership** rather than being duplicated by the plugin.
-- FR-013 - Presentation failure response: If the reader presentation cannot be
-  created for a supported note, the plugin MUST report the **failure without
+- FR-013 - Presentation failure response: If an active Markdown file cannot be
+  opened or rendered by Obsidian, or its reader presentation cannot otherwise
+  be created, the plugin MUST report the **presentation failure without
   modifying the note or displaying stale content**.
-- FR-014 - Referenced-content boundary: The reader MUST NOT **recursively append
-  content belonging only to a linked or embedded target**.
+- FR-014 - Referenced-content boundary: The reader MUST NOT include, **at any
+  depth, content belonging only to a linked or embedded target**.
 - FR-015 - Unlabelled-media boundary: An embedded media reference without an
   author-supplied label or description MUST contribute **no invented label,
   filename, or placeholder text** to the reading sequence.
@@ -248,13 +325,55 @@ content transfer**.
 - FR-017 - Title and properties order: The reading sequence MUST present the
   **note title exactly once**, followed by **visible properties in Obsidian's
   order**, followed by the **note body**.
+- FR-018 - Task state semantics: Task-list checkboxes MUST expose their
+  **checked or unchecked state through the semantics Obsidian provides**
+  without plugin-invented state text.
+- FR-019 - Persistent settings help: Plugin settings MUST provide a
+  **discoverable How to use page** that remains available after initial setup.
+- FR-020 - Accessibility Reader setup guidance: The How to use page MUST direct
+  the user to enable Accessibility Reader at **Settings > Accessibility > Read
+  & Speak > Accessibility Reader**.
+- FR-021 - Shortcut examples and alternatives: The setup guidance MUST use
+  **Settings > Accessibility > Accessibility Shortcut** for assignment, MUST
+  use **triple-clicking the side (lock) button** as its principal launch
+  example, and MUST state that other iOS launch methods, including Control
+  Centre, may be available.
+- FR-022 - Routine usage guidance: The How to use page MUST state the routine
+  **three-action sequence**: press the plugin button, invoke the configured
+  accessibility shortcut, and press Play.
+- FR-023 - Multiple-shortcut guidance: The How to use page MUST explain that
+  assigning several accessibility features can add an iOS chooser and that
+  assigning only Accessibility Reader provides the direct three-action flow.
+- FR-024 - Optional Autoplay guidance: The How to use page MUST identify iOS
+  Accessibility Reader **Autoplay as optional** and MUST keep the manual Play
+  path as the baseline instructions.
+- FR-025 - Publishable value proposition: Public plugin metadata and details
+  MUST explain the **three-action sequence** from FR-022, state that the plugin
+  uses **native iOS Accessibility Reader**, and state that it requires **no TTS
+  API key, external TTS account, pay-per-use charge from the plugin, metered
+  TTS service, or remote speech-processing wait**.
+- FR-026 - Remote-service independence: Presenting the full document MUST NOT
+  depend on **remote speech processing, remote TTS availability, or a remote
+  TTS response**.
+- FR-027 - Help isolation: Any Help control shown beside the reader MUST remain
+  **outside the document's accessibility reading sequence**.
+- FR-028 - Repeated invocation: Invoking the full document reader while an
+  earlier presentation is open MUST **replace that presentation with one
+  current presentation**, rather than stacking multiple reader presentations.
 
 ### Key Entities
 
 - Active Markdown note: The Obsidian note **selected at invocation**, including
   its current readable content and document order.
+- Supported note: An active Markdown note that **Obsidian can open and render**.
+- Unsupported active state: A **missing or non-Markdown active file** receives
+  the unsupported-state response in FR-010.
+- Presentation failure state: An **active Markdown file that Obsidian cannot
+  open or render**, or whose reader presentation otherwise cannot be created,
+  receives the presentation-failure response in FR-013.
 - Reader presentation: A **transient, read-only representation** of one active
-  Markdown note whose complete readable body is available to iOS accessibility
+  Markdown note. Its continuous document comprises the complete title,
+  visible-properties, and body sequence available to iOS accessibility
   facilities.
 
 ## Success Criteria
@@ -270,24 +389,44 @@ content transfer**.
   seconds** of invocation on the supported platform versions selected during
   planning.
 - SC-003 - Native reading success: In **100% of the representative document
-  structures** used for acceptance, the configured native iOS shortcut
-  discovers the document body and can reach its final readable content.
+  structures defined under Assumptions**, the configured native iOS shortcut
+  discovers the complete reading sequence and can reach its final readable
+  content.
 - SC-004 - Source and privacy safety: Across all acceptance sessions, opening
   and using the reader causes **zero source-note changes** and **zero external
-  content transfers** by the plugin.
+  transfers of note content** by the plugin.
 - SC-005 - Usable reading sequence: On the supported platform versions selected
   during planning, the project owner can confirm in human accessibility review
   that each representative note is read in its **expected logical order**
   without unrelated interface text interrupting the document.
+- SC-006 - Guided first use: Without external guidance, a first-time user can
+  find the settings help, configure Accessibility Reader, and start native
+  playback of a full note within **five minutes**.
+- SC-007 - Three-action routine: With Accessibility Reader assigned as the only
+  feature on the selected accessibility shortcut and Autoplay disabled, **100%
+  of routine reading sessions require three user actions** before speech
+  begins: plugin button, accessibility shortcut, and Play.
+- SC-008 - Publishable clarity: In human review, the project owner can identify
+  the **purpose, three-action flow, native speech ownership, and absence of API
+  keys, external TTS accounts, pay-per-use TTS charges from the plugin, metered
+  TTS services, or remote speech-processing waits** from the public plugin
+  metadata and details without consulting another source.
+- SC-009 - Remote-service independence: Across all acceptance sessions,
+  opening the reading view makes **zero metered TTS calls** and never waits for
+  a remote TTS response before presenting the document.
 
 ## Assumptions
 
 - This specification **preserves and elaborates the product purpose** recorded
   in `README.md`: present the complete, untruncated Obsidian document so native
   iOS text-to-speech can read it. It changes no earlier approved feature
-  requirement because none exists in the greenfield baseline.
+  requirement because none exists in the greenfield baseline. The README's
+  comparison with Obsidian's previewer is illustrative context for the
+  no-truncation expectation; FR-002 is the authoritative requirement.
 - The user has a **supported Obsidian iOS installation** and has configured the
   native reader accessibility shortcut.
+- Accessibility Reader requires **iOS 26 or later**. Earlier iOS speech
+  facilities are outside this feature.
 - "Entire document" means the active Markdown note's **readable semantic
   content**, including visible property names and values, link labels, and
   media descriptions. It excludes formatting delimiters and content belonging
@@ -303,6 +442,19 @@ content transfer**.
   and embedded references, and a note of at least 100,000 words.
 - iOS **owns speech and playback behaviour**. The plugin owns only the
   accessible document presentation within Obsidian.
+- The invocation button's placement, and whether a command-palette alternative
+  accompanies it, are **planning decisions** that do not reduce FR-001's
+  requirement for a user-visible button.
+- A reader-adjacent Help control is **optional**. If planning includes one,
+  FR-027 applies; the persistent settings help in FR-019 remains mandatory.
+- The setup guidance links to Apple's current
+  [Accessibility Reader instructions](https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26)
+  as the external authority for system-owned steps.
+- The user authorizes **no external TTS service, account, API key, subscription,
+  or pay-per-use speech processing** for this feature.
+- Marketplace metadata and usage details are prepared for human review in this
+  feature. Actual Obsidian Community Plugins submission and publication are a
+  **later operator-authorized activity**.
 - Obsidian and iOS remain **external platform contracts**. Exact supported
-  versions will be selected during planning without reducing the observable
-  behaviour specified here.
+  Obsidian versions will be selected during planning without reducing the
+  observable behaviour specified here.
