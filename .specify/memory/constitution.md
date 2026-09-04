@@ -1,8 +1,6 @@
-<!-- SYNC IMPACT: UNRATIFIED -> 0.1.0 | Principles: Added I. Complete-Document Accessibility | Added: Concern-specific authority hierarchy and ratification blockers | Removed: Generic placeholder sections | TODOs: Confirm released SDLC revision and obtain explicit human ratification -->
+<!-- SYNC IMPACT: UNRATIFIED -> 1.0.0 | Principles: None | Added: None | Removed: Draft scaffold marker, draft qualifications, and resolved ratification blockers | TODOs: None -->
 
 # iOS TTS Constitution
-
-<!-- SDLC-GENERATED-SCAFFOLD: editable until ratification. -->
 
 ## Engineering Standards
 
@@ -22,7 +20,7 @@ This project MUST comply with the following canonical standards. The standards a
 
 A deviation MUST name the standard, reason, risk, and approving authority. Silence is not a deviation.
 
-The adopted SDLC revision is `16f3728325bbc8f64c2cc9a52a94bd13ab1f558d`.
+The adopted SDLC revision is `v2.0.8`.
 
 
 ## Specification and Evidence
@@ -63,9 +61,9 @@ purpose unless a constitutional amendment explicitly changes it.
 
 ## Project Ownership and Architecture Boundaries
 
-- **Human governance:** Taḋg, the human project owner, controls constitutional ratification,
+- **Human governance:** Tadhg O'Brien, the human project owner, controls constitutional ratification,
   amendments, and standards deviations.
-- **Engineering and governance:** After ratification, this constitution and its selected standards
+- **Engineering and governance:** This constitution and its selected standards
   govern engineering and governance within their named concerns.
 - **Purpose and policy:** `README.md` governs durable project purpose and policy. Approved feature
   specifications govern observable behaviour and may not be overruled by undifferentiated project
@@ -86,25 +84,15 @@ purpose unless a constitutional amendment explicitly changes it.
 
 ## Governance
 
-This constitution governs project specifications, plans, tasks, implementation, and review after
-ratification. Before ratification, this scaffold has no authority.
+This constitution governs project specifications, plans, tasks, implementation, and review.
 
-Taḋg, the human project owner, is the ratification and amendment authority. A proposed amendment
-MUST state its compatibility and migration effects and update the version and dates below. No
-pre-ratification revision is a constitutional amendment.
+Tadhg O'Brien, the human project owner, is the ratification and amendment authority. An amendment
+MUST state its compatibility and migration effects and update the version and dates below.
 
-Before ratification, the version MUST remain below `1.0.0`. Initial ratification MUST set version
-`1.0.0`. After ratification, MAJOR removes or incompatibly redefines governance, MINOR adds or
-materially expands governance, and PATCH clarifies governance without changing its meaning.
+MAJOR removes or incompatibly redefines governance, MINOR adds or materially expands governance,
+and PATCH clarifies governance without changing its meaning.
 
 Compliance review MUST report the applicable constitutional principles, every approved deviation,
-and every unresolved constitutional conflict. No standards deviation is approved by this
-unratified draft.
+and every unresolved constitutional conflict. No standards deviation is approved.
 
-**Ratification blockers:**
-
-- Taḋg has not issued explicit human ratification.
-- The adopted SDLC revision has not been confirmed as the released revision intended for initial
-  ratification.
-
-**Version**: 0.1.0 | **Ratified**: UNRATIFIED | **Last Revised**: 2026-09-04
+**Version**: 1.0.0 | **Ratified**: 2026-09-04 | **Last Revised**: 2026-09-04
