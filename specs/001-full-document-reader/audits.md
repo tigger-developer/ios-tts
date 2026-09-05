@@ -331,3 +331,264 @@
 - Retained the iOS 26 floor as a documented assumption derived from the linked
   Apple Accessibility Reader instructions; planning must reverify external
   platform versions before selecting the supported-version contract.
+
+# Design Audit
+
+## Attempt 1
+
+- Auditor: `audit-design` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revisions:
+  - `plan.md`: SHA-256
+    `c30fbde6b75e969861bdfd0426d080203460981df3799258428afc3aa7ba8277`
+  - `research.md`: SHA-256
+    `8541e2b27c17cce7f4e6f19556ffeb693b634b0d4ecc5e13bd12e123c2c13842`
+  - `data-model.md`: SHA-256
+    `641d7776ce8c56f4891889c31cbd3b248cdf6b8379fce941c2d8a7b72983a9c4`
+  - `contracts/ui-contract.md`: SHA-256
+    `dfccb5e8fb28d4324eb2caa4bb02a3c0957b6f2612fc1673bca77123ee2545e1`
+  - `quickstart.md`: SHA-256
+    `aefeca8392e79f584109484ea391c928b549f87080dfbb7eb15947a81315326c`
+- Verdict: FAIL
+- Status: Superseded by remediation of the blocking finding and all five
+  advisories.
+
+### Findings
+
+1. [BLOCKING] The design silently substituted YAML source order for FR-017's
+   requirement to present visible properties in Obsidian's order.
+2. [ADVISORY] The supported Obsidian and iOS floors were selected without
+   recording the planning-phase reverification required by the specification
+   audit.
+3. [ADVISORY] One generic unsupported-state notice did not explicitly document
+   how it identified both a missing and a non-Markdown active note.
+4. [ADVISORY] The vulnerability exception schema omitted the scanner
+   configuration that applies the exact exception.
+5. [ADVISORY] The desktop smoke check lacked an expected result consistent with
+   iOS-only reader registration.
+6. [ADVISORY] The design did not address memory or main-thread behaviour for a
+   detached render of a 100,000-word note on iOS.
+
+### Disposition
+
+- Replaced source-order language with the order returned by Obsidian's public
+  YAML parser, prohibited plugin-owned sorting or grouping, documented the
+  absence of a separate public current-note property-editor order, and made a
+  physical comparison with visible **Properties in document** rows an
+  acceptance gate.
+- Recorded current Apple and Obsidian platform-floor evidence and the resulting
+  supported-version contract.
+- Gave missing and non-Markdown active states distinct notices.
+- Added the exact scanner-configuration identity to each vulnerability
+  exception and required the wrapper to validate it.
+- Defined the desktop smoke outcome as successful load with no reader ribbon
+  button or command.
+- Bounded memory to one source snapshot plus one detached render tree, avoided
+  a second DOM clone, documented main-thread execution, and required later
+  physical-device tests to retain responsiveness and memory failures.
+
+## Attempt 2
+
+- Auditor: `audit-design` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revisions:
+  - `plan.md`: SHA-256
+    `c30fbde6b75e969861bdfd0426d080203460981df3799258428afc3aa7ba8277`
+  - `research.md`: SHA-256
+    `77ffd449698cedd5c2a054263a6c3c5ccbc2eba746393a37c578ba5b400d4f3e`
+  - `data-model.md`: SHA-256
+    `da97d7dfa4071b2862b27a901cff7e1fd2d05845cb7f3b37034f04ab97635a26`
+  - `contracts/ui-contract.md`: SHA-256
+    `d29970a2e3e5aece0242566342159572eb6bd9043bd8d162f3a8d90ad6005889`
+  - `quickstart.md`: SHA-256
+    `68fc0ca8bb2424c0b293e9ab58d0df2f2fed0d014f5ced04f6e5f40dda374f6e`
+- Verdict: PASS
+- Status: Superseded by remediation of all three advisories.
+
+### Findings
+
+1. [ADVISORY] The design named `PluginSettingTab` and
+   `SettingDefinitionPage` without defining how they compose or which source
+   file owns registration.
+2. [ADVISORY] Project Structure omitted the conditional vulnerability-exception
+   store and the later physical-device `validation.md` evidence file.
+3. [ADVISORY] The ribbon path did not define how it distinguishes the two
+   unsupported-state notices after `getActiveViewOfType` returns null.
+
+### Disposition
+
+- Assigned the settings class and definitions to `src/settings-tab.ts`, the
+  `Plugin.addSettingTab()` call to `src/main.ts`, and the **How to use** content
+  to an inline declarative page returned by `getSettingDefinitions()`.
+- Added `validation.md` and the absent-when-unused
+  `security/vulnerability-exceptions.json` to Project Structure.
+- Required the shared controller to resolve the active public `FileView` after a
+  null active Markdown view, distinguishing an active non-Markdown file from no
+  active file without relying on `getActiveFile()`'s most-recent-file fallback.
+
+## Attempt 3
+
+- Auditor: `audit-design` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revisions:
+  - `plan.md`: SHA-256
+    `96b27d3a53d07473b921e59d67de3aa51d8d2942d336ba692aec4f02f3006359`
+  - `research.md`: SHA-256
+    `c30d495d4c892b02da632e28b974d46f96ff24cbf132fd7c12d131f83b216a2d`
+  - `data-model.md`: SHA-256
+    `da97d7dfa4071b2862b27a901cff7e1fd2d05845cb7f3b37034f04ab97635a26`
+  - `contracts/ui-contract.md`: SHA-256
+    `e74e9f03faa2d14d36793dc5ebc9d621a24cdadaecadf3927c796d238c811aa4`
+  - `quickstart.md`: SHA-256
+    `68fc0ca8bb2424c0b293e9ab58d0df2f2fed0d014f5ced04f6e5f40dda374f6e`
+- Verdict: FAIL
+- Status: Superseded by remediation of the blocking finding and all three
+  advisories.
+
+### Findings
+
+1. [BLOCKING] The design required an Obsidian-displayed note title but did not
+   define a public-API title source or reconcile it with the rule that the raw
+   file path is never displayed as title.
+2. [ADVISORY] The single-title-`h1` wording conflicted with preserving an
+   author-supplied body level-one heading.
+3. [ADVISORY] The ReaderSession state machine did not define a new invocation
+   from `FAILED`.
+4. [ADVISORY] The failure contract did not identify which invocation surface
+   can exercise unsupported-state notices while the command is disabled.
+
+### Disposition
+
+- Made the active `MarkdownView.getDisplayText()` value the exact title source,
+  kept the vault-relative path as non-readable identity and renderer context,
+  and added a physical comparison with Obsidian's displayed view title.
+- Clarified that exactly one title heading is plugin-added while all body
+  headings retain the levels produced by Obsidian.
+- Added `FAILED` to the states closed by a fresh invocation.
+- Assigned both unsupported-state notices to the always-available iOS ribbon
+  path and stated that the disabled command cannot exercise them normally.
+
+## Attempt 4
+
+- Auditor: `audit-design` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revisions:
+  - `plan.md`: SHA-256
+    `96b27d3a53d07473b921e59d67de3aa51d8d2942d336ba692aec4f02f3006359`
+  - `research.md`: SHA-256
+    `35e957c74d295184fa2495d431ba2269fb5ff2a6a2e07ffd0cb10a9e06185c13`
+  - `data-model.md`: SHA-256
+    `411fdd77355e2cf6fe437673202750ccee8fb58cbd39ce0587b16631a8b3b8e9`
+  - `contracts/ui-contract.md`: SHA-256
+    `70ab11ee3baba15e6369367ea369df453b79ef537456c21030a1a34196d43ff3`
+  - `quickstart.md`: SHA-256
+    `ad8630974b549b282bc790d974475e317a51a459ea74f6269940e8ed2d8ecb0f`
+- Verdict: PASS
+- Status: Superseded by remediation of all four advisories.
+
+### Findings
+
+1. [ADVISORY] The design did not define which parsed frontmatter entries count
+   as visible properties.
+2. [ADVISORY] It did not say whether an unsupported invocation closes an
+   already open reader before showing the notice.
+3. [ADVISORY] It did not define the readable representation of null values or
+   empty arrays and mappings.
+4. [ADVISORY] Accessible names on internal sections could introduce
+   non-document labels into the iOS reading sequence.
+
+### Disposition
+
+- Defined every own enumerable top-level property returned by Obsidian's parser
+  as visible for this feature, with no plugin-owned display-mode or name filter.
+- Required every new invocation to invalidate work and close the current reader
+  before active-state validation.
+- Represented null and empty collection values with an empty `<dd>` and no
+  placeholder or invented text.
+- Removed accessible names from internal sections and added a physical check
+  that no plugin-added section label enters the reading sequence.
+
+## Attempt 5
+
+- Auditor: `audit-design` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revisions:
+  - `plan.md`: SHA-256
+    `96b27d3a53d07473b921e59d67de3aa51d8d2942d336ba692aec4f02f3006359`
+  - `research.md`: SHA-256
+    `109cd65eed313baa8bee695c02d51edafe9790faabd06314c21a955260f4d0c5`
+  - `data-model.md`: SHA-256
+    `4fabf945d845982f27921c3510bd263208075d7696acb52b0c2150f36e69145b`
+  - `contracts/ui-contract.md`: SHA-256
+    `bf5b94f68b5f59c8f7cbe462cf16d827978aa87b50bfbe61e586f7add5519c58`
+  - `quickstart.md`: SHA-256
+    `bc5cf2e82da4c1d3b95607bd4966b73a5ea4823dfb6934b79d0b4c6e8c739e6a`
+- Verdict: FAIL
+- Status: Superseded by remediation of the blocking finding and both
+  advisories. This is the third failed attempt in the phase; attempts 2 and 4
+  passed before their advisory remediations changed the audited scope.
+
+### Findings
+
+1. [BLOCKING] An active `.md` `FileView` that is not a `MarkdownView` had no
+   mapped presentation-failure branch, despite FR-013 assigning that state to
+   presentation failure.
+2. [ADVISORY] The design did not enumerate unsupported parsed YAML values,
+   leaving date or timestamp objects unresolved.
+3. [ADVISORY] The Makefile omitted the standards-required canonical `make sync`
+   operator entry point.
+
+### Disposition
+
+- Added a third pre-capture branch that maps an active `.md` `FileView` without
+  a `MarkdownView` to the presentation-failure notice.
+- Added valid dates to supported property values with deterministic ISO 8601
+  rendering and enumerated all unsupported value categories that fail
+  presentation.
+- Added the exact SDLC `make sync` contract to research and Project Structure,
+  without authorizing its invocation.
+
+## Attempt 6
+
+- Auditor: `audit-design` via `sdlc-audit`
+- Auditor provider: `nous`
+- Auditor model: `z-ai/glm-5.3-flash`
+- Artefact revisions:
+  - `plan.md`: SHA-256
+    `d92ee474d0809776a8ed0898c1b0465031794e0b83694614df21baa017ac7c9d`
+  - `research.md`: SHA-256
+    `f5201fa0d061dbf2eef7ffc57e0800abf46f08a32ed1689bc68d7420c3562228`
+  - `data-model.md`: SHA-256
+    `c816fadbae0e3ff0b183ccdd7144a293388cfc80d7a8783596a0187b386163bb`
+  - `contracts/ui-contract.md`: SHA-256
+    `0c4bddf8d29a34322a642702b5028770bfc3077c48a5bfe78c332c65cb8be801`
+  - `quickstart.md`: SHA-256
+    `68fafff818c37e0e07ba8411c21d4d769320209a3beee5065a5810e3947cf730`
+- Verdict: PASS
+- Status: Current effective PASS with four retained advisories.
+- Service note: The first execution produced no verdict before the configured
+  four-minute timeout. An identical retry with a ten-minute timeout returned
+  the result recorded here. The timeout was a harness incident and did not
+  consume an audit attempt.
+
+### Findings
+
+1. [ADVISORY] An active `MarkdownView` whose `.file` is transiently null has no
+   explicit observable notice mapping.
+2. [ADVISORY] The vulnerability wrapper does not yet specify concise operator
+   output identifying scanner, input, findings, exceptions, and overall result.
+3. [ADVISORY] The no-additional-network-request reasoning for media normalized
+   before attachment remains implicit.
+4. [ADVISORY] The ReaderSession diagram omits the normal user-close transition,
+   although its resource rule already requires release on close.
+
+### Disposition
+
+- Retained all four as non-blocking implementation and test-design advisories.
+  They do not alter the selected architecture, external contract, or current
+  design gate.
