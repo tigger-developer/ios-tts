@@ -1,4 +1,4 @@
-<!-- SYNC IMPACT: UNRATIFIED -> 1.0.0 | Principles: None | Added: None | Removed: Draft scaffold marker, draft qualifications, and resolved ratification blockers | TODOs: None -->
+<!-- SYNC IMPACT: 1.0.0 -> 1.0.1 | Principles: None (SDLC v2.0.8 -> v2.0.9) | Added: None | Removed: None | TODOs: None -->
 
 # iOS TTS Constitution
 
@@ -20,7 +20,7 @@ This project MUST comply with the following canonical standards. The standards a
 
 A deviation MUST name the standard, reason, risk, and approving authority. Silence is not a deviation.
 
-The adopted SDLC revision is `v2.0.8`.
+The adopted SDLC revision is `v2.0.9`.
 
 
 ## Specification and Evidence
@@ -89,10 +89,14 @@ This constitution governs project specifications, plans, tasks, implementation, 
 Tadhg O'Brien, the human project owner, is the ratification and amendment authority. An amendment
 MUST state its compatibility and migration effects and update the version and dates below.
 
+Amendment 1.0.1 updates only the adopted SDLC release from `v2.0.8` to `v2.0.9`. It changes no
+project-specific principle, product behaviour, data format, or migration requirement. Tadhg O'Brien
+ratified this amendment on 2026-09-05.
+
 MAJOR removes or incompatibly redefines governance, MINOR adds or materially expands governance,
 and PATCH clarifies governance without changing its meaning.
 
 Compliance review MUST report the applicable constitutional principles, every approved deviation,
 and every unresolved constitutional conflict. No standards deviation is approved.
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-04 | **Last Revised**: 2026-09-04
+**Version**: 1.0.1 | **Ratified**: 2026-09-04 | **Last Revised**: 2026-09-05
