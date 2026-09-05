@@ -592,3 +592,13 @@
 - Retained all four as non-blocking implementation and test-design advisories.
   They do not alter the selected architecture, external contract, or current
   design gate.
+
+## Operator Design Sign-off
+
+- Date: 2026-09-05
+- Operator statement: `approved`
+- Approved revision: The five design artefact hashes recorded under Design
+  Audit Attempt 6.
+- Effect: The audited design phase is signed off by the operator.
+- Downstream authority: No task generation, test design, implementation,
+  publication, or licence decision was authorized by this statement.
