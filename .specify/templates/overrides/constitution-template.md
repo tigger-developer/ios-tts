@@ -22,7 +22,11 @@ This project MUST comply with the following canonical standards. The standards a
 
 A deviation MUST name the standard, reason, risk, and approving authority. Silence is not a deviation.
 
-The adopted SDLC revision is `16f3728325bbc8f64c2cc9a52a94bd13ab1f558d`.
+The adopted SDLC revision is `v2.0.9`.
+
+**Branch strategy:** `current`
+
+Staged delivery MUST follow the phase-boundary synchronization contract in `~/.agents/sdlc/GIT.md`. The selected strategy governs whether work remains on the operator-selected current branch or uses one published branch per feature.
 
 
 ## Specification and Evidence
