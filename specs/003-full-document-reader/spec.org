@@ -12,8 +12,9 @@
 
 - Outcome :: *Open the whole current note* so Apple's *Accessibility Reader*
   can read it on *macOS and iOS*.
-- Before :: This project has *no implemented plugin*. Ordinary preview does
-  not establish that the native reader can reach the whole document.
+- Before :: For long documents, *Obsidian preview loads only a portion* for
+  display, so *Accessibility Reader cannot access the whole document*.
+  This project has *no implemented plugin*.
 - After :: A *button or command* opens one *read-only snapshot*, rendered by
   Obsidian in full. The user invokes Accessibility Reader and presses Play.
 - Changes :: Add the reader, short README instructions and installable plugin
@@ -40,6 +41,10 @@
 :END:
 
 ** Problem and outcome
+
+For long documents, *Obsidian preview loads only a portion* of the document
+for display. *Accessibility Reader cannot access the unloaded content*, so it
+cannot read the whole document.
 
 The user needs the *complete current Markdown note* available to native
 Accessibility Reader, including content beyond the visible viewport. The

@@ -140,6 +140,27 @@
   returned =Opened spec.org= with exit status 0 on 2026-09-07. Presentation
   does not establish operator approval.
 
+** Operator clarification - long-document preview
+:PROPERTIES:
+:DATE: 2026-09-07
+:END:
+
+- Revision :: SHA-256
+  =86d801c93c1cd0f3869dc427ff2b5ea5c8068ee661d60b66c5d2142dc3ea3546=.
+- Authority :: The operator clarified: "long documents only load a portion
+  onto the screen, so the accessibility reader does not have access to the
+  whole document".
+- Correction :: The summary and problem statement now state that reported
+  limitation directly. The former wording incorrectly presented the motivating
+  problem as uncertainty about what preview establishes.
+- Scope check :: Local diff review and an exact comparison confirm that
+  acceptance criteria, tests, edge cases, design and handoff are unchanged.
+  This is an editorial clarification, not a material specification change;
+  the definition gate remains PASS and operator sign-off remains PENDING.
+- Evidence boundary :: The problem statement records the operator's report.
+  The external round 2 verdict remains evidence for its identified revision;
+  no new independent audit or native integration test is claimed here.
+
 * Implementation gate
 
 - State :: Not started; this workflow defines the change only.
