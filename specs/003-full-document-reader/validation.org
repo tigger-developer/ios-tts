@@ -5,6 +5,7 @@
 * Automated regression
 
 - Definition :: [[file:spec.org::#rt-003-1][RT003.1 - Reader session lifetime]].
+- Additional definition :: [[file:spec.org::#rt-003-2][RT003.2 - Word limit and preference]].
 - State :: Not run; implementation has not started.
 
 * User tests
@@ -22,6 +23,8 @@
 - Required evidence :: Tested revision, hardware and platform versions, fixture
   recipe and hashes, native reading and lifecycle observations, source
   preservation, cleanup and named human authority.
+- Amendment evidence :: Settings help, agreement with README/vision, Mac setup,
+  limit boundaries, validation feedback, Save/reload persistence and offline help.
 
 ** UT003.2 - iOS reading workflow
 :PROPERTIES:
@@ -36,6 +39,9 @@
 - Required evidence :: Tested revision, physical device and platform versions,
   fixture recipe and hashes, native reading and lifecycle observations, source
   preservation, cleanup and named human authority.
+- Amendment evidence :: Settings help, triple-click and double-tap Back Tap
+  invocation, multi-feature shortcut menu, tested button type, limit boundaries,
+  Save/reload persistence and offline help.
 
 * One-off tests
 
@@ -50,6 +56,8 @@
   [[file:spec.org::#ot-003-1][OT003.1 - Source and security review]].
 - Required evidence :: Tested revision, reviewed source and bundle, reviewer,
   findings, locked dependency audit result and absence of managed-file changes.
+- Amendment evidence :: Preference-only storage, bundled help and absence of
+  plugin-owned system-shortcut changes or help downloads.
 
 ** OT003.2 - Build and local installation
 :PROPERTIES:

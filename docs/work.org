@@ -95,6 +95,9 @@ classification; it is provenance, not current state.
   before commit =58ff90f= (retire feature 001).
 - Scope direction :: On 2026-09-07 the operator requested a very simple reader
   under SDLC v3, supporting both macOS and iOS. Definition sign-off is pending.
+- Scope amendment :: On 2026-09-08 the operator requested settings-panel shortcut
+  help and benefits/limitations, a configurable 100,000-word default limit,
+  [[file:VISION.md][Product vision]] and investigation of Community directory listing.
 
 * Migration record
 :PROPERTIES:

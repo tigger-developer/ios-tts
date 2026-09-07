@@ -2,7 +2,7 @@
 #+SUBTITLE: Unified change specification
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
-#+DEFINITION_GATE: PASS
+#+DEFINITION_GATE: PENDING
 #+OPERATOR_SIGNOFF: PENDING
 
 * Full document reader for macOS and iOS
@@ -15,22 +15,30 @@
 - Before :: For long documents, *Obsidian preview loads only a portion* for
   display, so *Accessibility Reader cannot access the whole document*.
   This project has *no implemented plugin*.
-- After :: A *button or command* opens one *read-only snapshot*, rendered by
-  Obsidian in full. The user invokes Accessibility Reader and presses Play.
-- Changes :: Add the reader, short README instructions and installable plugin
-  files. Use *normal Markdown rendering*, with no custom title, properties,
-  link, embed or media rewriting and no separate settings page.
+- After :: A *button or command* opens one *read-only snapshot* within the
+  configured limit, rendered in full. The user invokes Accessibility Reader
+  and presses Play.
+- Changes :: Add the reader, *settings-panel shortcut help* and a saved
+  *100,000-word default limit*. Use normal Markdown rendering. README and
+  *docs/VISION.md* explain the same benefits, limitations and listing intent.
 - Unchanged :: *Obsidian owns rendering; Apple owns speech*. The plugin does
   not edit notes, retain their contents, add network services or control audio.
 - Edge cases :: Handle *empty or unsupported notes*, rendering errors, repeated
   invocation and closing during rendering without retaining stale content.
+  *Over-limit notes are refused, never truncated*. Invalid settings retain the
+  active limit; load failures use the default with a notice and no silent rewrite.
   Invalid install targets fail before copying; partial-copy errors are reported.
 - Decisions :: Target *Obsidian 1.13+*, *macOS 26+* and *iOS 26+*. Development
   stays outside the vault; the operator manages the testing symlink and iOS copy.
-- Evidence :: One focused automated session test, *native user tests on both
+- Settings :: Save *only the word-limit preference* in Obsidian plugin data.
+  Help covers *triple-clicking the side/lock button*, *double-tap Back Tap*,
+  native speech without usage fees, and macOS setup. No system settings change.
+- Distribution :: Prepare *Community directory copy and readiness guidance*;
+  actual release and listing submission follow operator review.
+- Evidence :: Focused session and word-limit tests, *native user tests on both
   platforms*, and bounded package and security checks. Complete native reading of a
   *100,000-word text note remains unverified* until those user tests pass.
-- Next step :: Definition audit *PASS*; *operator sign-off is pending*. This work defines
+- Next step :: The amendment's *definition audit and sign-off are pending*. This work defines
   the plugin; it does not implement or install it.
 
 -----
@@ -53,26 +61,31 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 ** Scope
 
 - Included :: One *Open full document reader* ribbon button and equivalent
-  command; one scrollable reader; brief setup and usage documentation.
+  command; one scrollable reader; one settings panel containing *shortcut help
+  and a maximum-word setting*; README, vision and listing preparation.
 - Content :: Pass the *entire current Markdown source* to Obsidian's public
   renderer. Preserve its normal body rendering, including links and embeds.
   Do not synthesize a separate filename title or properties panel, extract
   media text, expand links independently, or rewrite rendered content.
-- Excluded :: Speech controls, settings UI, custom Markdown parsing, export,
+- Excluded :: Speech controls, custom Markdown parsing, export,
   EPUB/PDF conversion, live synchronization, background vault scanning,
-  marketplace submission and automated vault deployment.
+  release publication, marketplace submission and automated vault deployment.
 - Unchanged :: Existing editing, vault settings, other plugins and native
   accessibility configuration remain under their existing owners.
 
 ** Authority and starting point
 
-- Current authorities :: [[file:../../README.md][Project purpose]],
+- Current authorities :: [[file:../../README.md][Project overview]],
+  [[file:../../docs/VISION.md][Product vision and listing intent]],
   [[file:../../.sdlc/project.yaml][Project profile]] and
   [[file:../../docs/work.org][Project work ledger]]. No current architecture,
   implementation or regression pack exists at the starting revision.
 - Operator direction :: On 2026-09-07, Taḋg requested *macOS and iOS support*,
   development outside the vault with an operator-created testing symlink, and
   a *very simple plugin* under =define-change= after excessive old scope.
+- Operator amendment :: On 2026-09-08, add *settings-panel guidance*, a
+  *configurable word limit defaulting to 100,000*, =docs/VISION.md= and
+  investigation of marketplace listing with the same benefits and limitations.
 - Historical evidence :: [[file:../../docs/archive/sdlc-v2/.specify/memory/constitution.md][Archived complete-document principle]]
   and [[file:../../workflow-report-2026-09-05.md][Prior scope and test expansion]].
   The deleted =spec.md=, =plan.md= and =validation.md= are recoverable under
@@ -83,11 +96,19 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   normalization, settings help, publication copy and timing/action-count targets
   with the explicitly proposed scope here. Its earlier audits do not approve
   this specification. Historical identifiers 001 and 002 remain reserved.
+- Amendment relationship :: The 2026-09-08 direction supersedes the initial
+  README-only help, absence of settings/persistence and absence of a word limit.
+  *Complete-note rendering remains mandatory*: refuse an oversized note rather
+  than cut it off. Listing research and copy do not authorize publication.
 - External contracts :: [[https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts][Obsidian public API]],
   [[https://docs.obsidian.md/plugins/guides/lifecycle-management][Obsidian component lifecycle]],
   [[https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac][Mac Accessibility Reader]] and
   [[https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26][iPhone Accessibility Reader]],
-  consulted on 2026-09-07. These document platform interfaces; they do not prove
+  consulted on 2026-09-07 and refreshed on 2026-09-08. The linked
+  [[file:../../docs/reader-help.md][Settings-panel help]] includes Apple's
+  shortcut and Back Tap references; =docs/VISION.md= records current Community
+  directory submission requirements and evidence for the cloud-TTS comparison.
+  These document platform interfaces; they do not prove
   complete native reading of this plugin's output.
 
 ** Constraints, decisions and blockers
@@ -95,12 +116,17 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Compatibility :: Support *Obsidian 1.13 or later on macOS 26 and iOS 26 or
   later*. The manifest is mobile-compatible. Other operating systems and
   replacement speech facilities are outside the acceptance claim.
-- Proposed simplification :: Use *standard rendering and README help* as the
-  minimal interpretation of the operator's scope reset. Definition sign-off
-  approves these choices; no old special transformation is implicitly retained.
-- Size :: *Do not truncate or impose a plugin word limit*. A 100,000-word text
-  note is the representative long-document test, not an unlimited resource
-  guarantee. Converting or repairing binary or image-heavy imports is excluded.
+- Simplicity :: Use *standard rendering*, one settings panel, bundled help and
+  one saved number. No old special content transformation is retained.
+- Size :: *Never truncate*. The default maximum is *100,000 words*, configurable
+  as a positive whole number. Higher values permit attempts on larger notes;
+  they do not establish a tested capacity or an unlimited resource guarantee.
+  Word count is not a byte or image-memory limit. Conversion and repair of
+  binary or image-heavy imports remain excluded.
+- Comparison :: Explain that *some cloud TTS plugins require API keys and paid
+  generation*, which can accumulate for long or repeated conversions. Apple
+  devices already provide native speech without a speech API usage bill.
+  Do not imply all other TTS plugins are paid or that cloud voices have no value.
 - Feasibility :: Native discovery of the *whole off-screen document* is an
   integration risk. Test the minimal view early during delivery. If the public
   renderer cannot satisfy it, record the failure and return the specific design
@@ -118,8 +144,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 :CUSTOM_ID: ac-003-1
 :END:
 
-- Criterion :: For an active Markdown note in editing or reading mode, the
-  reader button and command present its *complete current rendered body in
+- Criterion :: For an active Markdown note *within the configured word limit*
+  in editing or reading mode, the reader button and command present its
+  *complete current rendered body in
   document order*, including current editor changes. Empty content is valid.
   Opening again captures the *current note*, not the previous snapshot.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
@@ -130,8 +157,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 :CUSTOM_ID: ac-003-2
 :END:
 
-- Criterion :: On each supported platform, Accessibility Reader can discover
-  and read the *whole rendered document through its final text*, without
+- Criterion :: On each supported platform, for an accepted note within the
+  configured limit, Accessibility Reader can discover and read the
+  *whole rendered document through its final text*, without
   manually scrolling the plugin view to reveal missing text. Plugin controls
   do not interrupt the document's reading sequence.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
@@ -179,7 +207,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 :END:
 
 - Criterion :: The plugin *does not invoke speech*, send note content to a
-  service, save content to storage or logs, or add privileged access or network
+  service, save note content to storage or logs, or add privileged access or network
   operations beyond *Obsidian's normal rendering of the same note*. Presenting
   local text does not require a network connection, account or API key.
 - Proven by :: [[#ot-003-1][OT003.1 - Source and security review]] and
@@ -207,8 +235,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 - Criterion :: The README identifies supported platforms, installation files
   and the *open reader, invoke Accessibility Reader, Play* flow, with links to
-  Apple's setup instructions. It explains *native speech ownership* and the
-  standard-rendering boundary without requiring a plugin settings page.
+  Apple's setup instructions. The *plugin settings panel contains bundled
+  setup instructions and benefits/limitations*, including triple-clicking the
+  side/lock button, the Home-button alternative, double-tap Back Tap through
+  Accessibility Shortcut, and the Mac shortcut. It explains *native speech
+  ownership*, cloud-TTS costs, the word limit and normal-rendering boundary.
+  README and =docs/VISION.md= present consistent claims and listing intent.
+  Help remains readable offline; following an external link is optional.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
   [[#ut-003-2][UT003.2 - iOS reading workflow]].
 
@@ -224,6 +257,37 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   destinations fail before installation writes; an incomplete copy is reported
   as failure, never success.
 - Proven by :: [[#ot-003-2][OT003.2 - Build and local installation]].
+
+** AC003.10 - Configurable maximum words
+:PROPERTIES:
+:CUSTOM_ID: ac-003-10
+:END:
+
+- Criterion :: Settings expose *Maximum words*, initially *100,000*, and Save.
+  A valid saved positive whole number *persists across plugin reloads* and
+  applies to the *next reader invocation*. Invalid input or a failed save shows
+  an actionable error and retains the active value. Missing settings use the
+  default; malformed settings or a failed load use it with a notice, without
+  silently overwriting stored data. Saving changes *only this preference*.
+- Proven by :: [[#rt-003-2][RT003.2 - Word limit and preference]],
+  [[#ut-003-1][UT003.1 - macOS reading workflow]],
+  [[#ut-003-2][UT003.2 - iOS reading workflow]] and
+  [[#ot-003-1][OT003.1 - Source and security review]].
+
+** AC003.11 - Explicit refusal above the word limit
+:PROPERTIES:
+:CUSTOM_ID: ac-003-11
+:END:
+
+- Criterion :: A note *at or below the configured limit* remains eligible for
+  complete rendering. A note *above it* clears any previous reader and receives
+  a notice identifying the limit and explaining how to raise it in settings.
+  It is *not rendered or truncated*. The check uses the full current Markdown
+  source, counting each whitespace-separated non-empty token as one word;
+  properties and markup count, and empty source counts as zero.
+- Proven by :: [[#rt-003-2][RT003.2 - Word limit and preference]],
+  [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
 
 * Test Definitions
 :PROPERTIES:
@@ -249,6 +313,32 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   =make test=. It tests owned asynchronous state, not Apple's reader or a fake
   Markdown engine. Automated implementation starts with its expected RED.
 
+** RT003.2 - Word limit and preference
+:PROPERTIES:
+:CUSTOM_ID: rt-003-2
+:END:
+
+- Covers :: [[#ac-003-10][AC003.10 - Configurable maximum words]] and
+  [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]].
+- Boundary :: Owned preference load/save and reader admission, with host
+  persistence and rendering supplied as narrow callbacks.
+- Procedure :: Exercise absent, valid, malformed and rejected loads; save a
+  valid value and reload it; reject blank, zero, negative, fractional, nonnumeric
+  and unsafe-integer input; force a rejected save. Observe the active value,
+  stored preference and error category. A pending save blocks a second save;
+  the old value remains active until success. An already-open snapshot remains
+  unchanged, while the next invocation uses the saved value.
+- Limit cases :: Exercise empty and whitespace-only source, mixed whitespace,
+  frontmatter/markup tokens, limit minus one, exact limit and limit plus one.
+  Above the limit, assert no render and no previous presentation; increasing
+  the limit admits the same complete source. Include the 100,000-word default.
+- Expected :: Valid preferences persist; invalid or failed operations never
+  replace the active value or silently rewrite storage. Admission implements
+  [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]] exactly.
+- Retention :: A second small Node test file under =make test=, written first
+  with its expected RED. It protects limit decisions and persistence failures;
+  it does not simulate settings widgets, Apple shortcuts or the Markdown engine.
+
 ** Shared user-test conditions
 
 - Environment :: Use a *disposable vault*, the built plugin, default theme and
@@ -263,6 +353,14 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   the native reader's extracted text through the ending, listen to the short
   note throughout and use native playback navigation to hear the long ending.
   *Scrolling the plugin view to feed missing text into native reading fails*.
+- Settings and copy :: In the real settings panel, read the bundled help and
+  compare its benefits/limitations with README and =docs/VISION.md=. Use the
+  relevant setup steps. Change the limit to a small value; exercise notes below,
+  at and above it, including rejection after a previous successful reader.
+  Save a larger value and reopen; check invalid-input feedback, reload
+  persistence and that an existing snapshot is unaffected by a limit change.
+  Restore 100,000 before the long-note test. Confirm offline help and usable
+  labelled input, Save button and links with keyboard or touch as appropriate.
 - Cleanup :: Remove only disposable test data and restore any changed native
   accessibility settings. Record results in [[file:validation.org][Validation evidence]].
 
@@ -277,8 +375,10 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[#ac-003-4][AC003.4 - Single transient reader]],
   [[#ac-003-5][AC003.5 - Clear unsupported and failed states]],
   [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]],
-  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]] and
-  [[#ac-003-8][AC003.8 - Brief usable instructions]].
+  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]],
+  [[#ac-003-8][AC003.8 - Brief usable instructions]],
+  [[#ac-003-10][AC003.10 - Configurable maximum words]] and
+  [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]].
 - Reviewer :: Taḋg or a named human tester, on macOS 26+ with Obsidian 1.13+.
 - Procedure :: Follow the README and shared conditions. Exercise button and
   command, editing and reading modes, an unsaved edit, switching notes, reopening,
@@ -302,14 +402,21 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[#ac-003-4][AC003.4 - Single transient reader]],
   [[#ac-003-5][AC003.5 - Clear unsupported and failed states]],
   [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]],
-  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]] and
-  [[#ac-003-8][AC003.8 - Brief usable instructions]].
+  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]],
+  [[#ac-003-8][AC003.8 - Brief usable instructions]],
+  [[#ac-003-10][AC003.10 - Configurable maximum words]] and
+  [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]].
 - Reviewer :: Taḋg or a named human tester, on a *physical iOS 26+ device*
   with Obsidian 1.13+. Desktop mobile emulation does not establish this result.
 - Procedure and expected result :: Repeat the macOS workflow and shared
   conditions using *touch, iOS dismissal and the configured accessibility
   shortcut*. Keyboard-only interaction is not required on the phone. Record
   actual native discovery and playback; a rendered DOM alone is insufficient.
+  Verify both the triple-click route and *Double Tap > Accessibility Shortcut*
+  Back Tap route from the bundled instructions. Test the shortcut-selection
+  menu when multiple accessibility features are selected. Record which device
+  button was tested; the Home-button alternative can be documentation-reviewed
+  if the available test phone has a side-button shortcut.
 
 ** OT003.1 - Source and security review
 :PROPERTIES:
@@ -318,14 +425,17 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 - Covers :: [[#ac-003-3][AC003.3 - Source preservation]] and
   [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]] and
-  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
+  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]] and
+  [[#ac-003-10][AC003.10 - Configurable maximum words]].
 - Boundary :: The audited source, generated plugin and their host interfaces.
 - Procedure :: Review all plugin-owned call paths for writes, content logging,
   network clients, speech APIs, executable HTML insertion and unmanaged
   resources or startup document access. Confirm use of Obsidian's renderer
-  without enabling extra capabilities. Run =make vulncheck= against the
+  without enabling extra capabilities. Confirm settings writes contain only
+  =maxWords=, help is bundled rather than downloaded, and no system shortcut is
+  configured by the plugin. Run =make vulncheck= against the
   committed dependency lock.
-- Expected :: *No added content-transfer, persistence, speech or privileged
+- Expected :: *No added content-transfer, note persistence, speech or privileged
   capability*; no raw-HTML injection; resources have cleanup; the dependency
   check reports no non-exempt findings and modifies no managed files.
 - Bounds :: One review per final candidate; one non-mutating npm advisory
@@ -374,6 +484,11 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[#ac-003-1][AC003.1 - Full current-note snapshot]].
 - No valid note or render failure :: *Clear the previous presentation and
   report a brief notice*. See [[#ac-003-5][AC003.5 - Clear unsupported and failed states]].
+- Oversized note :: *Refuse before rendering and explain the setting*; never
+  publish a partial note. See [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]].
+- Invalid or unavailable settings :: *Keep the active limit on invalid input
+  or save failure*. Use the default with a notice for malformed data or load
+  failure. See [[#ac-003-10][AC003.10 - Configurable maximum words]].
 - Reopen, close or disable during preparation :: *Discard stale results and
   release resources*. See [[#ac-003-4][AC003.4 - Single transient reader]].
 - Invalid installation target or copy failure :: *Fail explicitly* under the
@@ -391,11 +506,14 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 ** Architecture and flow
 
-1. Register the *ribbon button and command* through Obsidian's =Plugin= API.
+1. Load and validate the word-limit preference, then register the *ribbon
+   button, command and settings tab* through Obsidian's =Plugin= API.
    Perform no document work during plugin startup.
 2. Capture the active =MarkdownView=, its file path and =getViewData()= *once
    before asynchronous work*. Validate a present Markdown file; do not read
-   a disk copy in place of current editor contents.
+   a disk copy in place of current editor contents. Capture the current saved
+   limit too. Clear the prior session and check the source word count before
+   rendering; over-limit input receives the settings guidance notice.
 3. Close the previous reader and open a *dismissible Obsidian Modal* with a
    preparing notice. Render the *whole captured source* into one detached
    article using =MarkdownRenderer.render= and a session-owned =Component=.
@@ -410,8 +528,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 ** Interfaces and state
 
-- Structure :: Start with =src/main.ts= for host integration and the modal,
-  one small =src/reader-session.ts= helper for asynchronous lifetime, and
+- Structure :: Start with =src/main.ts= for host integration, settings UI and
+  the modal; =src/reader-session.ts= for asynchronous lifetime;
+  =src/reader-settings.ts= for preference validation and word-limit admission; and
   =styles.css=. No content-normalization framework or six-module architecture.
 - Language :: Strict TypeScript compiled to a CommonJS Obsidian bundle, targeting
   ECMAScript 2022. Node and npm are *development tooling only*; no Node or
@@ -440,13 +559,34 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   the build already publishes the artefacts through the operator's symlink;
   verify the three files and skip copying. iOS receives the same files through
   the operator's existing process. Never edit the enabled-plugin list.
-- State :: Retain only the current captured source, render component and modal
-  for their session lifetime. No database, saved reader settings or migration.
+- Settings :: Use Obsidian's =PluginSettingTab= and =Setting= controls for one
+  *Maximum words* field and Save. Accept trimmed decimal digits representing a
+  positive safe integer; reject other input rather than coercing it. Use
+  =loadData()= and =saveData()= for ={ maxWords: 100000 }=; persist no note data.
+  Disable Save while a write is pending and update the active limit only after
+  success. On failure retain it and show a retryable error. A missing setting
+  defaults normally; malformed data or a rejected read defaults with a notice
+  and no write until an explicit valid Save. Use host-managed storage only.
+  Ignore its =data.json= in Git during symlink testing; installation preserves it.
+- Admission :: Count non-empty whitespace-delimited tokens in captured Markdown
+  source, including properties and markup. A linear scan may stop as soon as
+  it exceeds the captured limit. Do not allocate a second whole-document token
+  array or expand embeds just to count. Invalid/over-limit input clears the
+  previous reader without invoking the renderer.
+- Help :: Bundle =docs/reader-help.md= into =main.js= as a static text import;
+  render it with the host renderer in the settings tab and clean up its owned
+  component on hide/unload. No runtime fetch, images or embedded resources in
+  help. Its external links open only on user action. Keep the maintained text
+  in the document, not a second copy embedded in TypeScript.
+- State :: Retain captured source, render component and modal only for their
+  session lifetime. The sole durable state is the word-limit preference;
+  no database, note-content storage or migration is introduced.
 - Failure :: Release the current failed session and show a short Obsidian
   =Notice= without note text, file paths or raw exceptions. Missing or unsupported
   input says to open a Markdown note; rendering failure says the reader could
-  not open it. Exact wording and README brevity receive human review, not
-  string-matching tests. No automatic retries.
+  not open it. Over-limit input identifies the maximum and says to increase
+  Maximum words in plugin settings. Exact wording and documentation brevity
+  receive human review, not string-matching tests. No automatic retries.
 
 ** Security impact
 
@@ -459,6 +599,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Data and access :: The plugin *adds no external service, content logging,
   durable content storage, credentials or privileged host API*. Do not change
   the user's system settings or vault permissions.
+  Save only the validated word-limit number through Obsidian's plugin storage.
+  The word limit reduces oversized-text rendering attempts; it is not a
+  byte-size limit or a defence against arbitrary embedded content.
 - Dependencies :: =make vulncheck= uses npm's non-mutating locked dependency
   audit, including build dependencies. It remains separate from =make test=;
   failure or an unavailable scanner blocks its result. Use the standard gate
@@ -473,28 +616,37 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   truncation and background work. Record observed long-note responsiveness;
   do not resurrect the old five-second or exact-action-count targets.
 - Maintainability :: Reuse public host APIs. The only retained automated test
-  protects *owned asynchronous session state*. Human tests cover rendering,
+  areas are *owned asynchronous session state and word-limit preferences*.
+  Human tests cover settings help, rendering,
   native discovery and interaction; do not add browser automation or a mock host.
 - Rollback :: Disable the plugin and remove its installed artefacts or testing
-  symlink. No source-note migration or recovery operation is required.
+  symlink. Its saved word-limit preference may remain in host-managed plugin
+  data; no source-note migration or recovery operation is required.
 
 * Delivery Handoff
 :PROPERTIES:
 :CUSTOM_ID: delivery-handoff
 :END:
 
-- Required reading :: This specification, project profile, README, and the
+- Required reading :: This specification, project profile, README,
+  =docs/VISION.md=, =docs/reader-help.md= and the
   named public API and lifecycle contracts. The retired draft is *provenance,
   not an additional implementation checklist*.
-- First step :: Write [[#rt-003-1][RT003.1 - Reader session lifetime]] and observe
-  its expected RED, then implement the smallest view. Exercise the native
+- First step :: Write [[#rt-003-1][RT003.1 - Reader session lifetime]] and
+  [[#rt-003-2][RT003.2 - Word limit and preference]] and observe their expected
+  RED, then implement the smallest view and settings panel. Exercise the native
   reading flow early; any architectural expansion returns for operator decision.
 - Final verification :: After the implementation gate, record current results
-  for the regression test, both platform user tests and both bounded checks.
+  for both regression definitions, both platform user tests and both bounded checks.
   Early feasibility trials do not silently count as final acceptance evidence.
 - Definition evidence :: [[file:audits.org][Definition audit evidence]].
 - Validation evidence :: [[file:validation.org][Planned and executed validation]].
-- Documentation impact :: README gains the brief setup/use/install instructions
-  and supported platform contract; preserve the archive and its history.
+- Documentation impact :: Keep README, bundled settings help and vision aligned
+  on shortcut setup, free native speech, cloud costs, platform support, the
+  configurable limit and limitations. README receives release installation
+  instructions and the same pros/cons for its public listing excerpt. The
+  proposed name/description and submission readiness route are in
+  =docs/VISION.md=; validate claims before any separately authorized publication.
+  Preserve the archive and its history.
 - Authorization :: *Definition only*. Implementation starts only after the
   definition gate passes and explicit operator sign-off is recorded.

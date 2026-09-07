@@ -2,6 +2,7 @@ authorities:
     architecture: []
     product:
         - README.md
+        - docs/VISION.md
     requirements:
         - docs/work.org
 infrastructure:

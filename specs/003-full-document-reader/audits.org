@@ -128,7 +128,7 @@
 - Limit :: Definition evidence only. No implementation, build, package,
   security or native reading result is established by this verdict.
 
-** Definition disposition
+** Definition disposition - 2026-09-07
 
 - Effective gate :: PASS after two local and two external rounds, using one
   authoring context and one retained external context.
@@ -160,6 +160,67 @@
 - Evidence boundary :: The problem statement records the operator's report.
   The external round 2 verdict remains evidence for its identified revision;
   no new independent audit or native integration test is claimed here.
+
+** Operator amendment - settings help, word limit and listing intent
+:PROPERTIES:
+:DATE: 2026-09-08
+:END:
+
+- Authority :: The operator requested settings-panel accessibility-shortcut
+  guidance, benefits and limitations, a configurable word limit, =docs/VISION.md=
+  and investigation of marketplace listing with the same pros and cons.
+- Material changes :: Add bundled help and one saved preference. Replace the
+  no-limit policy with a 100,000-word default, configurable maximum and explicit
+  over-limit refusal. Preserve complete-note rendering for admitted notes.
+  Prepare listing copy and readiness guidance without publishing a release.
+- Gate reset :: PENDING. The earlier PASS and editorial clarification remain
+  revision-specific history; they do not approve the amended scope. Operator
+  sign-off remains PENDING.
+- Sources :: Apple reader, accessibility shortcut and Back Tap instructions;
+  Obsidian Community directory submission guidance; and examples of cloud and
+  native TTS alternatives were checked on 2026-09-08. Links are recorded in
+  =docs/VISION.md= and =docs/reader-help.md=.
+- Review route :: Apply the local composite review, then resume the retained
+  external context =/root/definition_audit= with the amended candidate.
+
+** Local review - round 3
+:PROPERTIES:
+:ROUND: 3
+:DATE: 2026-09-08
+:END:
+
+- Revision :: Specification SHA-256
+  =78944b46058e4985e55c5f1653e60aa6b061a7cf05de64255e50bb3ab00973bf=.
+- Supporting revisions :: =docs/VISION.md= SHA-256
+  =6ab15de25e20399fb8bd56ba1cc6c1a948cd7424c1c0d1c62a67b30b30f19ba7=;
+  =docs/reader-help.md= SHA-256
+  =7ed2577cd5fd68917ca88f300189c423b23e5f9968c82017fa2a7b2e16e26dc7=.
+- Context :: Authoring context; not independent evidence.
+- Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= applied
+  together to the amendment and adjacent requirements.
+- Verdict :: PASS.
+- Specification review :: The operator's additions are explicit, the opening
+  summary represents them, and superseded no-settings/no-limit decisions remain
+  traceable. Complete rendering and refusal are distinct. Listing preparation
+  supplies the same pros/cons without authorizing release publication.
+- Design review :: One saved number, host settings controls and bundled help
+  keep the addition bounded. Only preference data is persisted, save failures
+  preserve the active value, and admission occurs before Markdown rendering.
+  Native shortcut settings remain user-owned. Symlink-created =data.json= is
+  excluded from Git and preserved by installation.
+- Test-definition review :: One additional retained definition protects limit
+  boundaries, validation and persistence failure. Existing real-platform user
+  tests cover settings, help and native invocation; the iOS test exercises both
+  requested shortcuts. No browser or marketplace automation was introduced.
+- Remediation :: Clarified that prohibited persistence concerns note content,
+  added the symlink preference-file boundary, and qualified the cloud-TTS
+  comparison using both cloud and native examples.
+- Checks :: Eleven criteria and six test definitions have reciprocal links.
+  All seven documents parse, their local file links resolve, the project profile
+  names existing authorities, and the 141-character listing description meets
+  the documented length/full-stop requirements. Sanitizer and whitespace checks
+  pass. Product tests are still unexecuted.
+- Next review :: Resume the retained external context =/root/definition_audit=.
 
 * Implementation gate
 
