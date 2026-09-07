@@ -78,6 +78,24 @@ classification; it is provenance, not current state.
 
 * Work items
 
+** TODO W003 - Full document reader for macOS and iOS :feature:
+:PROPERTIES:
+:CUSTOM_ID: w-003
+:PRIORITY: P1
+:SOURCE: operator
+:CREATED: 2026-09-07
+:BRANCH: 003-full-document-reader
+:END:
+
+- Specification :: [[file:../specs/003-full-document-reader/spec.org][W003 - Full document reader for macOS and iOS]].
+- Evidence :: [[file:../specs/003-full-document-reader/audits.org][Definition audits]] and
+  [[file:../specs/003-full-document-reader/validation.org][Validation record]].
+- Lineage :: Replaces the retired feature 001 draft and reserved feature 002
+  restart. Neither identifier is reused. The original draft remains recoverable
+  before commit =58ff90f= (retire feature 001).
+- Scope direction :: On 2026-09-07 the operator requested a very simple reader
+  under SDLC v3, supporting both macOS and iOS. Definition sign-off is pending.
+
 * Migration record
 :PROPERTIES:
 :VISIBILITY: folded

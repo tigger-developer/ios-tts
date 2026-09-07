@@ -1,0 +1,58 @@
+#+TITLE: W003 - Full document reader validation evidence
+#+STARTUP: content
+#+OPTIONS: toc:2 num:nil
+
+* Automated regression
+
+- Definition :: [[file:spec.org::#rt-003-1][RT003.1 - Reader session lifetime]].
+- State :: Not run; implementation has not started.
+
+* User tests
+
+** UT003.1 - macOS reading workflow
+:PROPERTIES:
+:CUSTOM_ID: ut-003-1-result
+:END:
+
+- Category :: User test.
+- Status :: PENDING.
+- Criteria, procedure and expected result ::
+  [[file:spec.org::#ut-003-1][UT003.1 - macOS reading workflow]], including its
+  shared conditions and criterion links.
+- Required evidence :: Tested revision, hardware and platform versions, fixture
+  recipe and hashes, native reading and lifecycle observations, source
+  preservation, cleanup and named human authority.
+
+** UT003.2 - iOS reading workflow
+:PROPERTIES:
+:CUSTOM_ID: ut-003-2-result
+:END:
+
+- Category :: User test.
+- Status :: PENDING.
+- Criteria, procedure and expected result ::
+  [[file:spec.org::#ut-003-2][UT003.2 - iOS reading workflow]], including its
+  shared conditions and criterion links.
+- Required evidence :: Tested revision, physical device and platform versions,
+  fixture recipe and hashes, native reading and lifecycle observations, source
+  preservation, cleanup and named human authority.
+
+* One-off tests
+
+** OT003.1 - Source and security review
+:PROPERTIES:
+:CUSTOM_ID: ot-003-1-result
+:END:
+
+- Category :: Bounded one-off review.
+- Status :: PENDING.
+- Criteria, procedure, bounds and expected result ::
+  [[file:spec.org::#ot-003-1][OT003.1 - Source and security review]].
+- Required evidence :: Tested revision, reviewed source and bundle, reviewer,
+  findings, locked dependency audit result and absence of managed-file changes.
+
+* Recording rules
+
+Each executed result records its date, revision, environment and observed
+evidence. A later relevant change supersedes only affected results. PENDING,
+FAIL or stale results do not establish delivery acceptance.

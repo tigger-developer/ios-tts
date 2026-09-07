@@ -1,0 +1,431 @@
+#+TITLE: W003 - Full document reader for macOS and iOS
+#+SUBTITLE: Unified change specification
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:nil
+#+DEFINITION_GATE: PENDING
+#+OPERATOR_SIGNOFF: PENDING
+
+* Full document reader for macOS and iOS
+:PROPERTIES:
+:CUSTOM_ID: summary
+:END:
+
+- Outcome :: *Open the whole current note* so Apple's *Accessibility Reader*
+  can read it on *macOS and iOS*.
+- Before :: This project has *no implemented plugin*. Ordinary preview does
+  not establish that the native reader can reach the whole document.
+- After :: A *button or command* opens one *read-only snapshot*, rendered by
+  Obsidian in full. The user invokes Accessibility Reader and presses Play.
+- Changes :: Add the reader, short README instructions and installable plugin
+  files. Use *normal Markdown rendering*, with no custom title, properties,
+  link, embed or media rewriting and no separate settings page.
+- Unchanged :: *Obsidian owns rendering; Apple owns speech*. The plugin does
+  not edit notes, retain their contents, add network services or control audio.
+- Edge cases :: Handle *empty or unsupported notes*, rendering errors, repeated
+  invocation and closing during rendering without retaining stale content.
+- Decisions :: Target *Obsidian 1.13+*, *macOS 26+* and *iOS 26+*. Development
+  stays outside the vault; the operator manages the testing symlink and iOS copy.
+- Evidence :: One focused automated session test, *native user tests on both
+  platforms*, and one bounded security review. Complete native reading of a
+  *100,000-word text note remains unverified* until those user tests pass.
+- Next step :: Definition audit, then *operator sign-off*. This work defines
+  the plugin; it does not implement or install it.
+
+-----
+
+* Context
+:PROPERTIES:
+:CUSTOM_ID: context
+:END:
+
+** Problem and outcome
+
+The user needs the *complete current Markdown note* available to native
+Accessibility Reader, including content beyond the visible viewport. The
+plugin's responsibility is a *full document presentation*, not text-to-speech.
+
+** Scope
+
+- Included :: One *Open full document reader* ribbon button and equivalent
+  command; one scrollable reader; brief setup and usage documentation.
+- Content :: Pass the *entire current Markdown source* to Obsidian's public
+  renderer. Preserve its normal body rendering, including links and embeds.
+  Do not synthesize a separate filename title or properties panel, extract
+  media text, expand links independently, or rewrite rendered content.
+- Excluded :: Speech controls, settings UI, custom Markdown parsing, export,
+  EPUB/PDF conversion, live synchronization, background vault scanning,
+  marketplace submission and automated vault deployment.
+- Unchanged :: Existing editing, vault settings, other plugins and native
+  accessibility configuration remain under their existing owners.
+
+** Authority and starting point
+
+- Current authorities :: [[file:../../README.md][Project purpose]],
+  [[file:../../.sdlc/project.yaml][Project profile]] and
+  [[file:../../docs/work.org][Project work ledger]]. No current architecture,
+  implementation or regression pack exists at the starting revision.
+- Operator direction :: On 2026-09-07, Taḋg requested *macOS and iOS support*,
+  development outside the vault with an operator-created testing symlink, and
+  a *very simple plugin* under =define-change= after excessive old scope.
+- Historical evidence :: [[file:../../docs/archive/sdlc-v2/.specify/memory/constitution.md][Archived complete-document principle]]
+  and [[file:../../workflow-report-2026-09-05.md][Prior scope and test expansion]].
+  The deleted =spec.md=, =plan.md= and =validation.md= are recoverable under
+  =specs/001-full-document-reader/= at commit
+  =c786cee= (interrupted workflow checkpoint).
+- Baseline relationship :: *Preserve complete reading, source safety and native
+  speech ownership*. Replace the retired draft's iOS-only scope, custom content
+  normalization, settings help, publication copy and timing/action-count targets
+  with the explicitly proposed scope here. Its earlier audits do not approve
+  this specification. Historical identifiers 001 and 002 remain reserved.
+- External contracts :: [[https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts][Obsidian public API]],
+  [[https://docs.obsidian.md/plugins/guides/lifecycle-management][Obsidian component lifecycle]],
+  [[https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac][Mac Accessibility Reader]] and
+  [[https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26][iPhone Accessibility Reader]],
+  consulted on 2026-09-07. These document platform interfaces; they do not prove
+  complete native reading of this plugin's output.
+
+** Constraints, decisions and blockers
+
+- Compatibility :: Support *Obsidian 1.13 or later on macOS 26 and iOS 26 or
+  later*. The manifest is mobile-compatible. Other operating systems and
+  replacement speech facilities are outside the acceptance claim.
+- Proposed simplification :: Use *standard rendering and README help* as the
+  minimal interpretation of the operator's scope reset. Definition sign-off
+  approves these choices; no old special transformation is implicitly retained.
+- Size :: *Do not truncate or impose a plugin word limit*. A 100,000-word text
+  note is the representative long-document test, not an unlimited resource
+  guarantee. Converting or repairing binary or image-heavy imports is excluded.
+- Feasibility :: Native discovery of the *whole off-screen document* is an
+  integration risk. Test the minimal view early during delivery. If the public
+  renderer cannot satisfy it, record the failure and return the specific design
+  decision; do not add extraction engines or weaken completeness silently.
+- Unresolved blockers :: None for drafting. *Operator sign-off is pending*;
+  native integration evidence belongs to delivery.
+
+* Acceptance Criteria
+:PROPERTIES:
+:CUSTOM_ID: acceptance-criteria
+:END:
+
+** AC003.1 - Full current-note snapshot
+:PROPERTIES:
+:CUSTOM_ID: ac-003-1
+:END:
+
+- Criterion :: For an active Markdown note in editing or reading mode, the
+  reader button and command present its *complete current rendered body in
+  document order*, including current editor changes. Empty content is valid.
+  Opening again captures the *current note*, not the previous snapshot.
+- Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
+
+** AC003.2 - Complete native reading
+:PROPERTIES:
+:CUSTOM_ID: ac-003-2
+:END:
+
+- Criterion :: On each supported platform, Accessibility Reader can discover
+  and read the *whole rendered document through its final text*, without
+  manually scrolling the plugin view to reveal missing text. Plugin controls
+  do not interrupt the document's reading sequence.
+- Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
+
+** AC003.3 - Source preservation
+:PROPERTIES:
+:CUSTOM_ID: ac-003-3
+:END:
+
+- Criterion :: Reader use provides *no editing surface* and causes *no changes
+  to source notes or their properties*, including interaction with rendered
+  task checkboxes. The plugin retains *no note contents after the reader closes*.
+- Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]],
+  [[#ut-003-2][UT003.2 - iOS reading workflow]] and
+  [[#ot-003-1][OT003.1 - Source and security review]].
+
+** AC003.4 - Single transient reader
+:PROPERTIES:
+:CUSTOM_ID: ac-003-4
+:END:
+
+- Criterion :: At most *one current reader* exists. A later invocation replaces
+  the prior snapshot; closing or disabling the plugin releases its owned view
+  and resources. *Late rendering cannot reopen or replace a newer reader*.
+- Proven by :: [[#rt-003-1][RT003.1 - Reader session lifetime]],
+  [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
+
+** AC003.5 - Clear unsupported and failed states
+:PROPERTIES:
+:CUSTOM_ID: ac-003-5
+:END:
+
+- Criterion :: A missing or non-Markdown active note produces a *brief notice*
+  requesting a Markdown note. A failed render produces a *brief failure notice*.
+  Neither outcome shows *stale or partially prepared content* or alters a note.
+- Proven by :: [[#rt-003-1][RT003.1 - Reader session lifetime]],
+  [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
+
+** AC003.6 - Native speech and existing access boundaries
+:PROPERTIES:
+:CUSTOM_ID: ac-003-6
+:END:
+
+- Criterion :: The plugin *does not invoke speech*, send note content to a
+  service, save content to storage or logs, or add privileged access or network
+  operations beyond *Obsidian's normal rendering of the same note*. Presenting
+  local text does not require a network connection, account or API key.
+- Proven by :: [[#ot-003-1][OT003.1 - Source and security review]] and
+  [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
+
+** AC003.7 - Platform lifecycle and accessible controls
+:PROPERTIES:
+:CUSTOM_ID: ac-003-7
+:END:
+
+- Criterion :: On both supported platforms, enabling the plugin makes its
+  *named button and command available* without opening a reader or scanning
+  documents at startup. The reader is *scrollable and dismissible* using the
+  platform's normal pointer, touch or keyboard controls. Disabling and enabling
+  again leaves *one set of controls* and Obsidian usable.
+- Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]],
+  [[#ut-003-2][UT003.2 - iOS reading workflow]] and
+  [[#ot-003-1][OT003.1 - Source and security review]].
+
+** AC003.8 - Brief usable instructions
+:PROPERTIES:
+:CUSTOM_ID: ac-003-8
+:END:
+
+- Criterion :: The README identifies supported platforms, installation files
+  and the *open reader, invoke Accessibility Reader, Play* flow, with links to
+  Apple's setup instructions. It explains *native speech ownership* and the
+  standard-rendering boundary without requiring a plugin settings page.
+- Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
+  [[#ut-003-2][UT003.2 - iOS reading workflow]].
+
+* Test Definitions
+:PROPERTIES:
+:CUSTOM_ID: test-definitions
+:END:
+
+** RT003.1 - Reader session lifetime
+:PROPERTIES:
+:CUSTOM_ID: rt-003-1
+:END:
+
+- Covers :: [[#ac-003-4][AC003.4 - Single transient reader]] and
+  [[#ac-003-5][AC003.5 - Clear unsupported and failed states]].
+- Boundary :: The plugin-owned session helper's open and close operations.
+- Procedure :: Use controlled render promises and observable presentation,
+  notice and cleanup callbacks. Exercise success; A then B with A finishing
+  last; close during preparation; rejection; and an invalid invocation after
+  success. Assert the *currently visible result, notice and released resources*.
+- Expected :: *Only the newest valid result appears*. Close releases the
+  session; invalid input and rejection clear old content and report the correct
+  failure category. Superseded results and errors do not disturb a new session.
+- Retention :: One small test file using *Node's built-in test runner* under
+  =make test=. It tests owned asynchronous state, not Apple's reader or a fake
+  Markdown engine. Automated implementation starts with its expected RED.
+
+** Shared user-test conditions
+
+- Environment :: Use a *disposable vault*, the built plugin, default theme and
+  only core plugins. Record hardware, OS, Obsidian version and tested revision.
+- Fixtures :: Empty note; a short mixed-Markdown note with frontmatter, headings,
+  paragraphs, list, task checkbox, quote, table, code, footnote, local link and
+  local embed; a second distinguishable note; and a *100,000-word synthetic
+  prose note* with unique beginning, middle and ending markers. Retain the
+  generator recipe and fixture hashes with the evidence, not personal notes.
+- Verification :: Confirm *full text in document order*, not merely three
+  markers. Compare the rendered body with normal Obsidian rendering. Inspect
+  the native reader's extracted text through the ending, listen to the short
+  note throughout and use native playback navigation to hear the long ending.
+  *Scrolling the plugin view to feed missing text into native reading fails*.
+- Cleanup :: Remove only disposable test data and restore any changed native
+  accessibility settings. Record results in [[file:validation.org][Validation evidence]].
+
+** UT003.1 - macOS reading workflow
+:PROPERTIES:
+:CUSTOM_ID: ut-003-1
+:END:
+
+- Covers :: [[#ac-003-1][AC003.1 - Full current-note snapshot]],
+  [[#ac-003-2][AC003.2 - Complete native reading]],
+  [[#ac-003-3][AC003.3 - Source preservation]],
+  [[#ac-003-4][AC003.4 - Single transient reader]],
+  [[#ac-003-5][AC003.5 - Clear unsupported and failed states]],
+  [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]],
+  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]] and
+  [[#ac-003-8][AC003.8 - Brief usable instructions]].
+- Reviewer :: Taḋg or a named human tester, on macOS 26+ with Obsidian 1.13+.
+- Procedure :: Follow the README and shared conditions. Exercise button and
+  command, editing and reading modes, an unsaved edit, switching notes, reopening,
+  no note and a non-Markdown tab. Confirm empty content, checkbox safety,
+  keyboard dismissal and accessible control names. Disable, enable and restart
+  Obsidian once. Repeat local-text presentation offline with Autoplay off.
+  Take source hashes after deliberate fixture edits and before reader actions;
+  only the latter are the source-preservation comparison.
+- Expected :: All linked criteria hold; native reading reaches the *whole
+  long note*, controls remain usable, no audio begins merely by opening the
+  plugin, and fixture content/property hashes remain unchanged by reader use.
+
+** UT003.2 - iOS reading workflow
+:PROPERTIES:
+:CUSTOM_ID: ut-003-2
+:END:
+
+- Covers :: [[#ac-003-1][AC003.1 - Full current-note snapshot]],
+  [[#ac-003-2][AC003.2 - Complete native reading]],
+  [[#ac-003-3][AC003.3 - Source preservation]],
+  [[#ac-003-4][AC003.4 - Single transient reader]],
+  [[#ac-003-5][AC003.5 - Clear unsupported and failed states]],
+  [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]],
+  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]] and
+  [[#ac-003-8][AC003.8 - Brief usable instructions]].
+- Reviewer :: Taḋg or a named human tester, on a *physical iOS 26+ device*
+  with Obsidian 1.13+. Desktop mobile emulation does not establish this result.
+- Procedure and expected result :: Repeat the macOS workflow and shared
+  conditions using *touch, iOS dismissal and the configured accessibility
+  shortcut*. Keyboard-only interaction is not required on the phone. Record
+  actual native discovery and playback; a rendered DOM alone is insufficient.
+
+** OT003.1 - Source and security review
+:PROPERTIES:
+:CUSTOM_ID: ot-003-1
+:END:
+
+- Covers :: [[#ac-003-3][AC003.3 - Source preservation]] and
+  [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]] and
+  [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
+- Boundary :: The audited source, generated plugin and their host interfaces.
+- Procedure :: Review all plugin-owned call paths for writes, content logging,
+  network clients, speech APIs, executable HTML insertion and unmanaged
+  resources or startup document access. Confirm use of Obsidian's renderer
+  without enabling extra capabilities. Run =make vulncheck= against the
+  committed dependency lock.
+- Expected :: *No added content-transfer, persistence, speech or privileged
+  capability*; no raw-HTML injection; resources have cleanup; the dependency
+  check reports no non-exempt findings and modifies no managed files.
+- Bounds :: One review per final candidate; one non-mutating npm advisory
+  request, dependency metadata only, no note content or metered TTS. No live
+  malicious payload, remote media fixture or persistent security-test harness.
+- Record :: Result, revision and evidence in =validation.org=. Review is
+  not a claim to audit Obsidian or third-party plugins.
+
+* Edge Cases
+:PROPERTIES:
+:CUSTOM_ID: edge-cases
+:END:
+
+- Empty or frontmatter-only :: *Use the renderer's normal output*; do not
+  invent body text or show a previous note. See
+  [[#ac-003-1][AC003.1 - Full current-note snapshot]].
+- No valid note or render failure :: *Clear the previous presentation and
+  report a brief notice*. See [[#ac-003-5][AC003.5 - Clear unsupported and failed states]].
+- Reopen, close or disable during preparation :: *Discard stale results and
+  release resources*. See [[#ac-003-4][AC003.4 - Single transient reader]].
+- Rich content and large imports :: *Keep normal rendering behaviour*; do not
+  add conversion, image extraction or recursive loading. Full-document success
+  is required for the specified fixtures, not arbitrarily large binary imports.
+  See [[#ac-003-1][AC003.1 - Full current-note snapshot]] and
+  [[#ac-003-2][AC003.2 - Complete native reading]].
+
+* Solution Design
+:PROPERTIES:
+:CUSTOM_ID: solution-design
+:END:
+
+** Architecture and flow
+
+1. Register the *ribbon button and command* through Obsidian's =Plugin= API.
+   Perform no document work during plugin startup.
+2. Capture the active =MarkdownView=, its file path and =getViewData()= *once
+   before asynchronous work*. Validate a present Markdown file; do not read
+   a disk copy in place of current editor contents.
+3. Close the previous reader and open a *dismissible Obsidian Modal* with a
+   preparing notice. Render the *whole captured source* into one detached
+   article using =MarkdownRenderer.render= and a session-owned =Component=.
+   Pass the captured source path for normal relative references.
+4. After rendering succeeds, replace the preparing notice with the complete,
+   *scrollable article*. Do not use preview sections, virtualization, folding
+   or lazy body rendering. Keep the close control outside the article. Disable
+   task editing controls without hiding the article from accessibility.
+5. The user invokes *Apple's Accessibility Reader*. Closing, replacing or
+   unloading invalidates the session, detaches the article and unloads its
+   component. Late success or failure cannot publish into a later session.
+
+** Interfaces and state
+
+- Structure :: Start with =src/main.ts= for host integration and the modal,
+  one small =src/reader-session.ts= helper for asynchronous lifetime, and
+  =styles.css=. No content-normalization framework or six-module architecture.
+- Language :: Strict TypeScript compiled to a CommonJS Obsidian bundle, targeting
+  ECMAScript 2022. Node and npm are *development tooling only*; no Node or
+  Electron calls and no added runtime library in the plugin.
+- Build :: Use the ordinary Obsidian TypeScript/esbuild toolchain. Delivery
+  pins current compatible development versions and one npm lockfile. Provide
+  =make build=, =make lint=, =make test=, =make vulncheck=, =make install= and
+  =make sync= with their SDLC meanings; do not add a deployment service.
+- Installation :: =main.js=, =manifest.json= and =styles.css= form the plugin.
+  =make install= takes an explicit local plugin destination and copies only
+  these artefacts; the operator may instead symlink the checkout on macOS.
+  iOS receives the same built artefacts through the operator's existing process.
+  Installation never edits a vault's enabled-plugin list or guesses a vault path.
+- State :: Retain only the current captured source, render component and modal
+  for their session lifetime. No database, saved reader settings or migration.
+- Failure :: Release the current failed session and show a short Obsidian
+  =Notice= without note text, file paths or raw exceptions. No automatic retries.
+
+** Security impact
+
+- Threat boundary :: Note content enters *Obsidian's existing Markdown
+  renderer*. Do not insert untrusted HTML manually or add executable processors.
+- Existing rendering :: Normal embeds, remote resources and installed Markdown
+  processors remain host behaviour. This plugin is *not a sandbox* and does
+  not promise that arbitrary third-party rendering is offline or read-only.
+  The supported user-test baseline uses only core plugins and local fixtures.
+- Data and access :: The plugin *adds no external service, content logging,
+  durable content storage, credentials or privileged host API*. Do not change
+  the user's system settings or vault permissions.
+- Dependencies :: =make vulncheck= uses npm's non-mutating locked dependency
+  audit, including build dependencies. It remains separate from =make test=;
+  failure or an unavailable scanner blocks its result. Use the standard gate
+  directly, without a new exception-management framework.
+
+** Other relevant qualities
+
+- Accessibility :: Inherit Obsidian's theme and modal focus/dismissal behaviour.
+  Use semantic document markup and accessible names; verify native reading on
+  both platforms instead of inferring it from the DOM.
+- Performance :: Render only on invocation, once per snapshot. Avoid deliberate
+  truncation and background work. Record observed long-note responsiveness;
+  do not resurrect the old five-second or exact-action-count targets.
+- Maintainability :: Reuse public host APIs. The only retained automated test
+  protects *owned asynchronous session state*. Human tests cover rendering,
+  native discovery and interaction; do not add browser automation or a mock host.
+- Rollback :: Disable the plugin and remove its installed artefacts or testing
+  symlink. No source-note migration or recovery operation is required.
+
+* Delivery Handoff
+:PROPERTIES:
+:CUSTOM_ID: delivery-handoff
+:END:
+
+- Required reading :: This specification, project profile, README, and the
+  named public API and lifecycle contracts. The retired draft is *provenance,
+  not an additional implementation checklist*.
+- First step :: Write [[#rt-003-1][RT003.1 - Reader session lifetime]] and observe
+  its expected RED, then implement the smallest view. Exercise the native
+  reading flow early; any architectural expansion returns for operator decision.
+- Final verification :: After the implementation gate, record current results
+  for the regression test, both platform user tests and the bounded review.
+  Early feasibility trials do not silently count as final acceptance evidence.
+- Definition evidence :: [[file:audits.org][Definition audit evidence]].
+- Validation evidence :: [[file:validation.org][Planned and executed validation]].
+- Documentation impact :: README gains the brief setup/use/install instructions
+  and supported platform contract; preserve the archive and its history.
+- Authorization :: *Definition only*. Implementation starts only after the
+  definition gate passes and explicit operator sign-off is recorded.

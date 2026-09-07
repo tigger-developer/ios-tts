@@ -1,0 +1,47 @@
+#+TITLE: W003 - Full document reader audit evidence
+#+STARTUP: content
+#+OPTIONS: toc:2 num:nil
+
+* Definition gate
+
+- Artefact :: [[file:spec.org][W003 - Full document reader for macOS and iOS]].
+
+** Local review - round 1
+:PROPERTIES:
+:ROUND: 1
+:DATE: 2026-09-07
+:END:
+
+- Revision :: SHA-256
+  =afc5aa911b10c06eb7c1515a80d378321d4e0f45b600c0d25aa3ab8d2daa248f=.
+- Context :: Authoring context; not independent evidence.
+- Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= applied
+  together under the definition gate.
+- Verdict :: PASS.
+- Findings and remediation :: Local review clarified dismissal during pending
+  rendering, added explicit source-hash timing after intentional fixture edits,
+  and traced startup document-access review to the lifecycle criterion. The
+  reviewed revision contains these corrections.
+- Specification review :: Eight described criteria have reciprocal test links;
+  the opening summary matches the scope, design, platform and validation
+  boundaries. Historical requirements are explicitly superseded, with
+  simplification choices exposed for operator sign-off.
+- Design review :: Public host rendering and a modal keep the implementation
+  small. The session helper isolates cancellation and stale asynchronous work.
+  Native full-document discovery remains an explicit delivery risk, not a
+  documentation-derived success claim.
+- Test-definition review :: One retained test protects owned state transitions;
+  two real-platform user tests cover the central integration, and a bounded
+  source/security review covers non-functional boundaries. No simulated native
+  reader or permanent dependency-wrapper test is required.
+- Checks :: Pandoc parsed the Org hierarchy and links; sanitizer produced no
+  differences; =git diff --check= reported no whitespace errors. Product tests
+  were not executed during definition.
+
+** External review
+
+- State :: Pending; no independent verdict yet.
+
+* Implementation gate
+
+- State :: Not started; this workflow defines the change only.
