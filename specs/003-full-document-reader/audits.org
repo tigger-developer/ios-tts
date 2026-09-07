@@ -222,6 +222,52 @@
   pass. Product tests are still unexecuted.
 - Next review :: Resume the retained external context =/root/definition_audit=.
 
+** External review - round 3
+:PROPERTIES:
+:ROUND: 3
+:DATE: 2026-09-08
+:CONTEXT: /root/definition_audit
+:END:
+
+- Revision :: Specification SHA-256
+  =78944b46058e4985e55c5f1653e60aa6b061a7cf05de64255e50bb3ab00973bf=,
+  commit =cf755b4= (define reader settings help and configurable word limit).
+  Supporting document hashes are recorded in local round 3.
+- Auditor :: Codex, OpenAI =gpt-5.6-luna=, same retained context; timeout
+  8 minutes. The review returned within the limit.
+- Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= together.
+- Verdict :: PASS; no blocking finding or mechanical condition remains.
+- Specification advisory :: One settings panel, one preference, bundled help,
+  qualified speech comparison and listing preparation are bounded and
+  consistent across the summary, documents and detailed requirements. The
+  original README sentence retains its historical iOS motivation and existing
+  spelling; subsequent sections describe the current scope. It is preserved.
+- Design advisory :: The captured-source word check precedes rendering;
+  admitted notes remain complete. Persistence validation, explicit failure
+  handling and bundled offline help keep the implementation bounded. System
+  shortcut configuration remains user-owned.
+- Test-definition advisory :: The new regression definition covers preference
+  and admission cases. Existing user tests cover settings help, both requested
+  iPhone routes and native reading. Package/security checks remain proportionate;
+  listing preparation adds no marketplace automation.
+- Supersedes :: Earlier PASS dispositions for the amended candidate. The
+  earlier rounds and operator clarification remain historical evidence.
+- Limit :: This verdict does not establish implementation, build, security,
+  listing or native-device results.
+
+** Definition disposition - 2026-09-08
+
+- Effective gate :: PASS after local and retained external round 3. Across
+  the definition and amendment, three local and three external rounds used
+  one authoring context and one retained auditor; one external round failed.
+- Recording :: The specification gate is PASS and the work item remains REVIEW.
+  Lifecycle-only updates leave the audited requirements and design unchanged.
+- Operator sign-off :: PENDING. No implementation or release submission has
+  started. The original README wording is the sole editorial advisory.
+- Presentation :: =sdlc-preview= returned =Opened VISION.md= and
+  =Opened reader-help.md=, then =Opened spec.org=, with exit status 0
+  on 2026-09-08.
+
 * Implementation gate
 
 - State :: Not started; this workflow defines the change only.
