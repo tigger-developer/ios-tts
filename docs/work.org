@@ -78,7 +78,7 @@ classification; it is provenance, not current state.
 
 * Work items
 
-** REVIEW W003 - Full document reader for macOS and iOS :feature:
+** ACTIVE W003 - Full document reader for macOS and iOS :feature:
 :PROPERTIES:
 :CUSTOM_ID: w-003
 :PRIORITY: P1
@@ -94,7 +94,8 @@ classification; it is provenance, not current state.
   restart. Neither identifier is reused. The original draft remains recoverable
   before commit =58ff90f= (retire feature 001).
 - Scope direction :: On 2026-09-07 the operator requested a very simple reader
-  under SDLC v3, supporting both macOS and iOS. Definition sign-off is pending.
+  under SDLC v3, supporting both macOS and iOS. Taḋg approved the amended
+  definition and instructed implementation on 2026-09-08.
 - Scope amendment :: On 2026-09-08 the operator requested settings-panel shortcut
   help and benefits/limitations, a configurable 100,000-word default limit,
   [[file:VISION.md][Product vision]] and investigation of Community directory listing.

@@ -11,7 +11,7 @@ reading; the operating system owns speech.
 The proposed lean definition is
 [W003 - Full document reader for macOS and iOS](specs/003-full-document-reader/spec.org).
 The settings-help and word-limit amendment passed its definition audit;
-operator sign-off is pending. No plugin is implemented yet.
+Taḋg approved implementation on 2026-09-08. Delivery is underway.
 
 The [product vision](docs/VISION.md) describes the purpose, limits and proposed
 Community directory listing. The [settings-panel help](docs/reader-help.md)

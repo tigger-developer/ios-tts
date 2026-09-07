@@ -3,7 +3,9 @@
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
 #+DEFINITION_GATE: PASS
-#+OPERATOR_SIGNOFF: PENDING
+#+OPERATOR_SIGNOFF: APPROVED
+#+OPERATOR_AUTHORITY: Taḋg
+#+OPERATOR_SIGNOFF_DATE: 2026-09-08
 
 * Full document reader for macOS and iOS
 :PROPERTIES:
@@ -38,8 +40,8 @@
 - Evidence :: Focused session and word-limit tests, *native user tests on both
   platforms*, and bounded package and security checks. Complete native reading of a
   *100,000-word text note remains unverified* until those user tests pass.
-- Next step :: The amendment's *definition audit passed; sign-off is pending*. This work defines
-  the plugin; it does not implement or install it.
+- Next step :: The *definition audit passed and Taḋg approved implementation*
+  on 2026-09-08. Deliver the specified plugin and record its validation.
 
 -----
 
@@ -131,8 +133,8 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   integration risk. Test the minimal view early during delivery. If the public
   renderer cannot satisfy it, record the failure and return the specific design
   decision; do not add extraction engines or weaken completeness silently.
-- Unresolved blockers :: None for drafting. *Operator sign-off is pending*;
-  native integration evidence belongs to delivery.
+- Unresolved blockers :: No definition blocker. *Operator sign-off was given
+  on 2026-09-08*; native integration evidence belongs to delivery.
 
 * Acceptance Criteria
 :PROPERTIES:
@@ -648,5 +650,6 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   proposed name/description and submission readiness route are in
   =docs/VISION.md=; validate claims before any separately authorized publication.
   Preserve the archive and its history.
-- Authorization :: *Definition only*. Implementation starts only after the
-  definition gate passes and explicit operator sign-off is recorded.
+- Authorization :: Taḋg approved this definition and instructed implementation
+  on 2026-09-08: "approved, let's implement". The definition gate is PASS;
+  delivery is authorized. Release publication remains outside this change.

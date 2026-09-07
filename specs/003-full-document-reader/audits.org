@@ -270,4 +270,8 @@
 
 * Implementation gate
 
-- State :: Not started; this workflow defines the change only.
+- Admission :: Taḋg approved the audited amendment on 2026-09-08:
+  "approved, let's implement". The specification records approval and the work
+  item is ACTIVE. Definition round 3 remains current; no material requirement,
+  design or test change accompanied the approval recording.
+- State :: Delivery started; implementation audit has not run.
