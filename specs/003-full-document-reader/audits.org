@@ -38,9 +38,63 @@
   differences; =git diff --check= reported no whitespace errors. Product tests
   were not executed during definition.
 
-** External review
+** External review - round 1
+:PROPERTIES:
+:ROUND: 1
+:DATE: 2026-09-07
+:CONTEXT: /root/definition_audit
+:END:
 
-- State :: Pending; no independent verdict yet.
+- Revision :: SHA-256
+  =afc5aa911b10c06eb7c1515a80d378321d4e0f45b600c0d25aa3ab8d2daa248f=.
+- Auditor :: Codex, OpenAI =gpt-5.6-luna=, one retained context; timeout 8 minutes.
+- Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= together.
+- Verdict :: FAIL.
+- Finding 1 :: [audit-test-definitions] [BLOCKING] The stated build, package,
+  manifest and installation contract lacked a criterion and observable
+  artefact/destination verification.
+- Finding 2 :: [audit-design] [BLOCKING] Installation did not specify its
+  destination interface, invalid-target behaviour, replacement semantics or
+  path boundary.
+- Finding 3 :: [audit-spec] [ADVISORY] Notice and documentation brevity needed
+  required message content or explicit human wording review.
+- Remediation :: Added [[file:spec.org::#ac-003-9][AC003.9 - Installable package and explicit destination]]
+  and [[file:spec.org::#ot-003-2][OT003.2 - Build and local installation]]. Defined
+  =PLUGIN_DIR=, fixed-file copying, preservation, invalid targets, explicit
+  partial-copy failure and the existing operator-managed symlink route.
+  Defined notice content and left exact phrasing to human review. The reader's
+  product behaviour was not expanded.
+- Supersedes :: None; first independent review. Revised-candidate review is pending.
+
+** Local review - round 2
+:PROPERTIES:
+:ROUND: 2
+:DATE: 2026-09-07
+:END:
+
+- Revision :: SHA-256
+  =9a54776bb07f54cf5163f46600d6d75640286bcb582c5a695a82a571c89e71c5=.
+- Context :: Authoring context; not independent evidence.
+- Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= applied
+  together to the remediation and adjacent scope.
+- Verdict :: PASS.
+- Remediation :: The package criterion and bounded installation check cover
+  the missing build and destination contract. Destination selection, fixed-file
+  replacement, unchanged-copy behaviour, invalid paths, the symlink workflow
+  and partial-copy failure are explicit. Notice content is defined; exact
+  wording and README brevity remain human review. No new reader feature or
+  permanent installation-test framework was introduced.
+- Specification and design review :: The opening summary includes package
+  failures and evidence. Build and copy responsibilities are separated; a
+  failed copy cannot claim a successful installation. Operator-managed symlink
+  testing and manual iOS transfer remain supported.
+- Test-definition review :: Nine criteria and five test definitions have
+  reciprocal links. The new one-off check observes artefacts and destination
+  effects; source inspection covers copy-error propagation without requiring
+  fault-injection infrastructure.
+- Checks :: Pandoc parsing, reciprocal traceability, sanitizer comparison and
+  =git diff --check= passed. No product test was executed during definition.
+- Next review :: Resume the retained external context =/root/definition_audit=.
 
 * Implementation gate
 

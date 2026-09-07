@@ -23,10 +23,11 @@
   not edit notes, retain their contents, add network services or control audio.
 - Edge cases :: Handle *empty or unsupported notes*, rendering errors, repeated
   invocation and closing during rendering without retaining stale content.
+  Invalid install targets fail before copying; partial-copy errors are reported.
 - Decisions :: Target *Obsidian 1.13+*, *macOS 26+* and *iOS 26+*. Development
   stays outside the vault; the operator manages the testing symlink and iOS copy.
 - Evidence :: One focused automated session test, *native user tests on both
-  platforms*, and one bounded security review. Complete native reading of a
+  platforms*, and bounded package and security checks. Complete native reading of a
   *100,000-word text note remains unverified* until those user tests pass.
 - Next step :: Definition audit, then *operator sign-off*. This work defines
   the plugin; it does not implement or install it.
@@ -206,6 +207,19 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
   [[#ut-003-2][UT003.2 - iOS reading workflow]].
 
+** AC003.9 - Installable package and explicit destination
+:PROPERTIES:
+:CUSTOM_ID: ac-003-9
+:END:
+
+- Criterion :: The locked build produces *main.js, manifest.json and styles.css*
+  for both supported platforms. Local installation writes *only those three
+  files into the explicitly supplied destination*, preserves other files and
+  skips copying artefacts whose contents already match. Invalid
+  destinations fail before installation writes; an incomplete copy is reported
+  as failure, never success.
+- Proven by :: [[#ot-003-2][OT003.2 - Build and local installation]].
+
 * Test Definitions
 :PROPERTIES:
 :CUSTOM_ID: test-definitions
@@ -315,6 +329,36 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Record :: Result, revision and evidence in =validation.org=. Review is
   not a claim to audit Obsidian or third-party plugins.
 
+** OT003.2 - Build and local installation
+:PROPERTIES:
+:CUSTOM_ID: ot-003-2
+:END:
+
+- Covers :: [[#ac-003-9][AC003.9 - Installable package and explicit destination]].
+- Boundary :: The locked build, package and =make install= entry point.
+- Procedure :: In an OS-allocated temporary checkout and destinations, build
+  twice from the same revision, pinned tool versions and npm lock; compare
+  artefact hashes. Parse the manifest for =id: ios-tts=,
+  =minAppVersion: 1.13.0= and =isDesktopOnly: false=. Install to an existing
+  destination containing an unrelated sentinel, then repeat unchanged; verify
+  the exact three installed artefacts, their hashes, unchanged second-run
+  modification times and preservation of the sentinel.
+- Negative cases :: Omit the destination; supply a relative path, nonexistent
+  path or regular file; or make an artefact target a symlink or directory.
+  Each must fail before copying and leave destination contents unchanged.
+  Exercise a destination symlink back to the checkout: it builds and verifies
+  artefacts without copying over the source. A failed build must not install.
+  Inspect the copy-error path for a non-zero exit and partial-installation
+  warning; no fault-injection framework is required.
+- Expected :: The package and all stated install/failure cases satisfy
+  [[#ac-003-9][AC003.9 - Installable package and explicit destination]].
+- Bounds :: One bounded verification run per final candidate. Use synthetic
+  sentinels, an existing local dependency installation and temporary paths;
+  no primary-vault writes, iOS transfer or network calls. Remove the exact
+  temporary test directory afterwards and retain the results in =validation.org=.
+  This checks the thin installation recipe once; it does not require a permanent
+  installer-testing framework.
+
 * Edge Cases
 :PROPERTIES:
 :CUSTOM_ID: edge-cases
@@ -327,6 +371,8 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   report a brief notice*. See [[#ac-003-5][AC003.5 - Clear unsupported and failed states]].
 - Reopen, close or disable during preparation :: *Discard stale results and
   release resources*. See [[#ac-003-4][AC003.4 - Single transient reader]].
+- Invalid installation target or copy failure :: *Fail explicitly* under the
+  installation contract. See [[#ac-003-9][AC003.9 - Installable package and explicit destination]].
 - Rich content and large imports :: *Keep normal rendering behaviour*; do not
   add conversion, image extraction or recursive loading. Full-document success
   is required for the specified fixtures, not arbitrarily large binary imports.
@@ -369,15 +415,33 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   pins current compatible development versions and one npm lockfile. Provide
   =make build=, =make lint=, =make test=, =make vulncheck=, =make install= and
   =make sync= with their SDLC meanings; do not add a deployment service.
-- Installation :: =main.js=, =manifest.json= and =styles.css= form the plugin.
-  =make install= takes an explicit local plugin destination and copies only
-  these artefacts; the operator may instead symlink the checkout on macOS.
-  iOS receives the same built artefacts through the operator's existing process.
-  Installation never edits a vault's enabled-plugin list or guesses a vault path.
+- Package :: =main.js=, =manifest.json= and =styles.css= form the plugin.
+  Use manifest identifier =ios-tts=, =minAppVersion: 1.13.0= and
+  =isDesktopOnly: false=. README documents the additional OS requirements.
+- Installation :: Invoke =make install PLUGIN_DIR=/absolute/plugin/directory=.
+  Require an explicit existing directory, resolve it to its canonical target
+  and build before copying. Validate all three destination entries before any
+  copy: each must be absent or a regular file, never a symlink or directory.
+  Fixed artefact basenames stay within that canonical destination; no recursive
+  copy or inferred destination is allowed. A directory symlink is permitted
+  because the operator explicitly selected it.
+- Replacement :: Replace only changed artefacts and preserve all other files.
+  Installation requires the plugin disabled. Individual copies are not a
+  transaction: an I/O error exits non-zero, reports possible partial installation
+  and directs a retry before re-enabling. Do not replace or remove the whole
+  destination directory. The copy step leaves identical files untouched;
+  rebuilding may regenerate the checkout's own build outputs.
+- Symlink workflow :: If the canonical destination is the checkout itself,
+  the build already publishes the artefacts through the operator's symlink;
+  verify the three files and skip copying. iOS receives the same files through
+  the operator's existing process. Never edit the enabled-plugin list.
 - State :: Retain only the current captured source, render component and modal
   for their session lifetime. No database, saved reader settings or migration.
 - Failure :: Release the current failed session and show a short Obsidian
-  =Notice= without note text, file paths or raw exceptions. No automatic retries.
+  =Notice= without note text, file paths or raw exceptions. Missing or unsupported
+  input says to open a Markdown note; rendering failure says the reader could
+  not open it. Exact wording and README brevity receive human review, not
+  string-matching tests. No automatic retries.
 
 ** Security impact
 
@@ -421,7 +485,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   its expected RED, then implement the smallest view. Exercise the native
   reading flow early; any architectural expansion returns for operator decision.
 - Final verification :: After the implementation gate, record current results
-  for the regression test, both platform user tests and the bounded review.
+  for the regression test, both platform user tests and both bounded checks.
   Early feasibility trials do not silently count as final acceptance evidence.
 - Definition evidence :: [[file:audits.org][Definition audit evidence]].
 - Validation evidence :: [[file:validation.org][Planned and executed validation]].

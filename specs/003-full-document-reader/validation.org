@@ -51,6 +51,19 @@
 - Required evidence :: Tested revision, reviewed source and bundle, reviewer,
   findings, locked dependency audit result and absence of managed-file changes.
 
+** OT003.2 - Build and local installation
+:PROPERTIES:
+:CUSTOM_ID: ot-003-2-result
+:END:
+
+- Category :: Bounded one-off check.
+- Status :: PENDING.
+- Criteria, procedure, bounds and expected result ::
+  [[file:spec.org::#ot-003-2][OT003.2 - Build and local installation]].
+- Required evidence :: Tested revision, pinned tool versions and lock, repeated
+  build hashes, parsed manifest, installed file set, repeated-copy timestamps,
+  invalid-destination and symlink results, sentinel preservation and cleanup.
+
 * Recording rules
 
 Each executed result records its date, revision, environment and observed
