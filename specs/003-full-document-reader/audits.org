@@ -96,6 +96,50 @@
   =git diff --check= passed. No product test was executed during definition.
 - Next review :: Resume the retained external context =/root/definition_audit=.
 
+** External review - round 2
+:PROPERTIES:
+:ROUND: 2
+:DATE: 2026-09-07
+:CONTEXT: /root/definition_audit
+:END:
+
+- Revision :: SHA-256
+  =9a54776bb07f54cf5163f46600d6d75640286bcb582c5a695a82a571c89e71c5=,
+  committed as =6cf0b0d= (clarify reader package installation and audit evidence).
+- Auditor :: Codex, OpenAI =gpt-5.6-luna=, same retained context; timeout
+  8 minutes. The review returned within that limit.
+- Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= together.
+- Verdict :: PASS.
+- Specification advisory :: Summary, scope, criteria, edge cases, design and
+  handoff correspond. The bounded package contract does not restore retired
+  feature requirements.
+- Design advisory :: Explicit destination handling, the fixed three-file
+  boundary, validation, unchanged copying, symlink handling and partial-copy
+  warning provide a context-independent design. Non-transactional copying is
+  an explicit trade-off.
+- Test-definition advisory :: The package criterion has a traced bounded
+  check covering build hashes, manifest compatibility, destination effects,
+  unchanged repeats, invalid targets, symlink handling, failed builds and
+  copy-error propagation. Source inspection of the error branch is
+  proportionate; no permanent fault-injection framework is needed.
+- Required corrections :: None remain in this revision.
+- Supersedes :: External round 1 for the revised candidate; the earlier FAIL
+  remains recorded above.
+- Limit :: Definition evidence only. No implementation, build, package,
+  security or native reading result is established by this verdict.
+
+** Definition disposition
+
+- Effective gate :: PASS after two local and two external rounds, using one
+  authoring context and one retained external context.
+- Recording :: The specification gate marker is PASS and the work ledger
+  item is REVIEW. These lifecycle-only updates do not alter audited scope.
+- Operator sign-off :: PENDING; only explicit operator authority can approve
+  the definition. Implementation has not started.
+- Presentation :: =sdlc-preview specs/003-full-document-reader/spec.org=
+  returned =Opened spec.org= with exit status 0 on 2026-09-07. Presentation
+  does not establish operator approval.
+
 * Implementation gate
 
 - State :: Not started; this workflow defines the change only.

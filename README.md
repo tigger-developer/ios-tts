@@ -10,4 +10,5 @@ reading; the operating system owns speech.
 
 The proposed lean definition is
 [W003 - Full document reader for macOS and iOS](specs/003-full-document-reader/spec.org).
-It awaits definition audit and operator sign-off. No plugin is implemented yet.
+Its definition audit passed; operator sign-off is pending. No plugin is
+implemented yet.

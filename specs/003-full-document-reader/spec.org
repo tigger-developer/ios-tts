@@ -2,7 +2,7 @@
 #+SUBTITLE: Unified change specification
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
-#+DEFINITION_GATE: PENDING
+#+DEFINITION_GATE: PASS
 #+OPERATOR_SIGNOFF: PENDING
 
 * Full document reader for macOS and iOS
@@ -29,7 +29,7 @@
 - Evidence :: One focused automated session test, *native user tests on both
   platforms*, and bounded package and security checks. Complete native reading of a
   *100,000-word text note remains unverified* until those user tests pass.
-- Next step :: Definition audit, then *operator sign-off*. This work defines
+- Next step :: Definition audit *PASS*; *operator sign-off is pending*. This work defines
   the plugin; it does not implement or install it.
 
 -----
