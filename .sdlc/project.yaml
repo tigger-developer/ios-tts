@@ -1,0 +1,21 @@
+authorities:
+    architecture: []
+    product:
+        - README.md
+    requirements:
+        - docs/work.org
+infrastructure:
+    role: none
+migration:
+    archive_branch: sdlc_v2_state_2026-09-07
+    branch: sdlc-v3-migration-2026-09-07
+    date: "2026-09-07"
+project:
+    kind: other
+    migration_source: v2
+    primary_branch: master
+standards:
+    technologies:
+        - JAVASCRIPT
+        - WEB
+version: 3
