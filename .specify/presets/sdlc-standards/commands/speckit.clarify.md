@@ -3,11 +3,16 @@
 If `~/.agents/sdlc/MAIN.md` is absent or unreadable, report that exact path;
 never search for another copy.
 
-Read `~/.agents/sdlc/MAIN.md`, `~/.agents/sdlc/AUDITS.md`, and
-`~/.agents/sdlc/ISSUES.md` in full. Prioritize ambiguities that can change
+Read `~/.agents/sdlc/MAIN.md`, `~/.agents/sdlc/AUDITS.md`,
+`~/.agents/sdlc/GIT.md`, and `~/.agents/sdlc/ISSUES.md` in full. Prioritize ambiguities that can change
 observable behaviour, scope, architecture, security, persisted data, access,
 compatibility, or irreversible outcomes. Resolve those facts in the
 specification rather than leaving them to implementation.
+
+After applying clarification answers, regenerate the opening Specification
+Summary from the detailed specification. Retain its exact labels and `***`
+section break. Ensure it neither introduces nor contradicts anything in the
+current specification and omits no material content.
 
 Read `.specify/memory/constitution.md` and its `Specification Baseline`. For a
 brownfield delta, preserve the specification's context pass and consult the

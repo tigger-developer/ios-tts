@@ -16,8 +16,8 @@ handoffs:
 If `~/.agents/sdlc/MAIN.md` is absent or unreadable, report that exact path;
 never search for another copy.
 
-Read `~/.agents/sdlc/MAIN.md`, `~/.agents/sdlc/AUDITS.md`, and
-`~/.agents/sdlc/ISSUES.md` in full. Apply their defined-specification,
+Read `~/.agents/sdlc/MAIN.md`, `~/.agents/sdlc/AUDITS.md`,
+`~/.agents/sdlc/GIT.md`, and `~/.agents/sdlc/ISSUES.md` in full. Apply their defined-specification,
 requirement-quality, acceptance-criteria, traceability, and identifier rules
 throughout this command. Do not put implementation or test procedures into
 requirements.
@@ -52,11 +52,57 @@ or test-oracle requirements merely to fill the core template. If a material
 baseline source is missing, conflicting, or unresolved, make that clarification
 explicit rather than guessing.
 
+Treat the text supplied with `$speckit-specify` as a feature brief, not
+necessarily as a complete specification. Before drafting, establish from that
+brief and the verified project authorities:
+
+- the observable outcome and affected user or system;
+- the scope, exclusions, and important behaviour that must remain unchanged;
+  and
+- the credible validation path and any material security, data, migration,
+  external-service, compatibility, cost, or irreversible-operation risk.
+
+If any of those cannot be established, ask one batch of no more than three
+short questions in ordinary prose. Do not use a multiple-choice interface, ask
+anything already answered by the brief or project evidence, or presume that a
+one-line brief is complete merely because it is grammatical. After the answers
+are sufficient, draft without another handback. Industry conventions and
+common patterns may identify a question; they MUST NOT become requirements
+without authority.
+
+Select one feature profile and record it in the specification:
+
+- **Compact:** one bounded outcome with no material change to data or schema,
+  security or trust, an external contract, compatibility, an irreversible
+  operation, or multiple independently deliverable stories.
+- **Full:** any feature outside the Compact boundary.
+
+Both profiles use the same canonical template. A Compact specification keeps
+one brief user story and only the scenarios, requirements, edge cases,
+assumptions, and success criteria needed to define that outcome. A Full
+specification adds detail only where the feature and evidence require it.
+
+Every requirement must be traceable to the operator's brief or clarification,
+an approved current requirement, or a necessary boundary directly implied by
+one of those sources. Unsupported elaboration is a specification defect, not a
+helpful assumption.
+
 The resolved SDLC `spec-template` is authoritative for the specification's
-structure. Preserve its Spec Kit-compatible User Scenarios and Testing,
-Acceptance Scenarios, Requirements, Success Criteria, Assumptions, and optional
-Key Entities sections. Preserve Scope and, for brownfield work, Existing
-Baseline.
+structure. Preserve its opening Specification Summary and following `***`
+section break, Spec Kit-compatible User Scenarios and Testing, Acceptance
+Scenarios, Requirements, Success Criteria, Assumptions, and optional Key
+Entities sections. Preserve Scope and, for brownfield work, Existing Baseline.
+
+Write the detailed specification first, then derive the opening Specification
+Summary from that current text. Preserve the exact Outcome, Before, After,
+Changes, Unchanged, Edge cases, Decisions, Evidence, and Next step labels in
+their template order. Use the summary to expose the behavioural delta and its
+important boundaries for rapid operator review. It is not a second authority:
+it MUST introduce no requirement or interpretation absent below the section
+break, contradict none, and omit no material change, unchanged boundary,
+decision, or applicable edge case. Evidence names the sources supporting the
+summary and refers to `audits.md`; it never copies a mutable audit verdict into
+the audited specification.
 
 Give those sections distinct jobs:
 
@@ -88,10 +134,17 @@ Before audit, replace the stock specification checklist expectations with these
 checks:
 
 - every segment is Accurate, Brief, and Clear;
+- the Specification Summary is the opening section, is followed by an exact
+  `***` section break, retains every required label in order, and accurately
+  represents the current detailed specification without material omission;
 - each required section performs its distinct job without unnecessary narrative
   repetition;
 - user stories remain brief while acceptance scenarios carry concrete
   behavioural examples;
+- the recorded Compact or Full profile is proportionate to the feature;
+- every requirement has an authoritative source and no industry convention,
+  common pattern, template placeholder, or test convenience has been promoted
+  into an unsupported requirement;
 - every requirement is observable, falsifiable, bounded, and has a descriptor;
 - the bold semantic spine captures the distinctive state, action, qualifier,
   quantity, boundary, and outcome without emphasizing surrounding context;
