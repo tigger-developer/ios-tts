@@ -1,1 +1,8 @@
 .env
+node_modules/
+main.js
+data.json
+.agent/
+.agents/
+.claude/
+.codex/
