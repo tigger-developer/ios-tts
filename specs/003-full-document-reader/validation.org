@@ -108,7 +108,13 @@
 :END:
 
 - Category :: Bounded one-off check.
-- Status :: PASS.
+- Status :: PENDING for the interactive installer amendment.
+- Previous result :: PASS for the explicit-destination installer, as recorded
+  below. The new prompt and directory-creation cases are not yet executed.
+- Amendment plan :: Repeat affected OT003.2 cases after the implementation
+  gate, using only OS temporary vaults, existing locked dependencies and a real
+  terminal smoke check. Runtime regressions and security evidence are unchanged
+  unless the built artefacts or dependency lock change.
 - Criteria, procedure, bounds and expected result ::
   [[file:spec.org::#ot-003-2][OT003.2 - Build and local installation]].
 - Required evidence :: Tested revision, pinned tool versions and lock, repeated

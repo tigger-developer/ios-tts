@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="sdlc-preview">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>spec.org</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { max-width: 76rem; margin: 2rem auto; padding: 0 1.5rem 4rem;
+      font: 18px/1.55 system-ui, sans-serif; }
+    h1, h2, h3, h4 { line-height: 1.2; margin-top: 1.8em; }
+    a { color: #2673c9; }
+    code, pre { font-family: ui-monospace, monospace; }
+    pre { overflow: auto; padding: 1rem; border: 1px solid #8886;
+      border-radius: .4rem; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #8886; padding: .45rem; text-align: left; }
+    blockquote { margin-left: 0; padding-left: 1rem; border-left: .25rem solid #8888; }
+  </style>
+</head>
+<body>
+<h1 id="summary">Full document reader for macOS and iOS</h1>
+<dl>
+<dt>Outcome</dt>
+<dd>
+<strong>Open the whole current note</strong> so Apple's
+<strong>Accessibility Reader</strong> can read it on <strong>macOS and
+iOS</strong>.
+</dd>
+<dt>Before</dt>
+<dd>
+For long documents, <strong>Obsidian preview loads only a
+portion</strong> for display, so <strong>Accessibility Reader cannot
+access the whole document</strong>. This project has <strong>no
+implemented plugin</strong>.
+</dd>
+<dt>After</dt>
+<dd>
+A <strong>button or command</strong> opens one <strong>read-only
+snapshot</strong> within the configured limit, rendered in full. The
+user invokes Accessibility Reader and presses Play.
+</dd>
+<dt>Changes</dt>
+<dd>
+Add the reader, <strong>settings-panel shortcut help</strong> and a
+saved <strong>100,000-word default limit</strong>. Use normal Markdown
+rendering. README and <strong>docs/VISION.md</strong> explain the same
+benefits, limitations and listing intent.
+</dd>
+<dt>Installation amendment</dt>
+<dd>
+<strong>make install asks for the vault root</strong>, then puts the
+three built files in <code
+class="verbatim">.obsidian/plugins/ios-tts/</code>. Missing plugin
+directories are created; settings and unrelated files are preserved. The
+explicit <code class="verbatim">PLUGIN_DIR</code> route remains
+available for compatibility.
+</dd>
+<dt>Unchanged</dt>
+<dd>
+<strong>Obsidian owns rendering; Apple owns speech</strong>. The plugin
+does not edit notes, retain their contents, add network services or
+control audio.
+</dd>
+<dt>Edge cases</dt>
+<dd>
+Handle <strong>empty or unsupported notes</strong>, rendering errors,
+repeated invocation and closing during rendering without retaining stale
+content. <strong>Over-limit notes are refused, never truncated</strong>.
+Invalid settings retain the active limit; load failures use the default
+with a notice and no silent rewrite. Invalid install targets fail before
+copying; partial-copy errors are reported.
+</dd>
+<dt>Decisions</dt>
+<dd>
+Target <strong>Obsidian 1.13+</strong>, <strong>macOS 26+</strong> and
+<strong>iOS 26+</strong>. Development stays outside the vault; the
+operator manages the testing symlink and iOS copy.
+</dd>
+<dt>Settings</dt>
+<dd>
+Save <strong>only the word-limit preference</strong> in Obsidian plugin
+data. Help covers <strong>triple-clicking the side/lock button</strong>,
+<strong>double-tap Back Tap</strong>, native speech without usage fees,
+and macOS setup. No system settings change.
+</dd>
+<dt>Distribution</dt>
+<dd>
+Prepare <strong>Community directory copy and readiness
+guidance</strong>; actual release and listing submission follow operator
+review.
+</dd>
+<dt>Evidence</dt>
+<dd>
+Focused session and word-limit tests, <strong>native user tests on both
+platforms</strong>, and bounded package and security checks. Complete
+native reading of a <strong>100,000-word text note remains
+unverified</strong> until those user tests pass.
+</dd>
+<dt>Next step</dt>
+<dd>
+The <strong>definition audit passed and Taḋg approved
+implementation</strong> on 2026-09-08. The development implementation
+and its audit now have recorded evidence. Perform the <strong>native
+macOS and physical-iPhone tests</strong> before closure. The
+interactive-install amendment passed its scoped definition review and is
+authorized by the operator's direct implementation instruction.
+</dd>
+</dl>
+<hr />
+<h1 id="context">Context</h1>
+<h2 id="problem-and-outcome">Problem and outcome</h2>
+<p>For long documents, <strong>Obsidian preview loads only a
+portion</strong> of the document for display. <strong>Accessibility
+Reader cannot access the unloaded content</strong>, so it cannot read
+the whole document.</p>
+<p>The user needs the <strong>complete current Markdown note</strong>
+available to native Accessibility Reader, including content beyond the
+visible viewport. The plugin's responsibility is a <strong>full document
+presentation</strong>, not text-to-speech.</p>
+<h2 id="scope">Scope</h2>
+<dl>
+<dt>Included</dt>
+<dd>
+One <strong>Open full document reader</strong> ribbon button and
+equivalent command; one scrollable reader; one settings panel containing
+<strong>shortcut help and a maximum-word setting</strong>; README,
+vision and listing preparation.
+</dd>
+<dt>Content</dt>
+<dd>
+Pass the <strong>entire current Markdown source</strong> to Obsidian's
+public renderer. Preserve its normal body rendering, including links and
+embeds. Do not synthesize a separate filename title or properties panel,
+extract media text, expand links independently, or rewrite rendered
+content.
+</dd>
+<dt>Excluded</dt>
+<dd>
+Speech controls, custom Markdown parsing, export, EPUB/PDF conversion,
+live synchronization, background vault scanning, release publication,
+marketplace submission and automated vault deployment.
+</dd>
+<dt>Unchanged</dt>
+<dd>
+Existing editing, vault settings, other plugins and native accessibility
+configuration remain under their existing owners.
+</dd>
+</dl>
+<h2 id="authority-and-starting-point">Authority and starting point</h2>
+<dl>
+<dt>Current authorities</dt>
+<dd>
+<a href="../../README.md">Project overview</a>, <a
+href="../../docs/VISION.md">Product vision and listing intent</a>, <a
+href="../../.sdlc/project.yaml">Project profile</a> and <a
+href="../../docs/work.org">Project work ledger</a>. No current
+architecture, implementation or regression pack exists at the starting
+revision.
+</dd>
+<dt>Operator direction</dt>
+<dd>
+On 2026-09-07, Taḋg requested <strong>macOS and iOS support</strong>,
+development outside the vault with an operator-created testing symlink,
+and a <strong>very simple plugin</strong> under <code
+class="verbatim">define-change</code> after excessive old scope.
+</dd>
+<dt>Operator amendment</dt>
+<dd>
+On 2026-09-08, add <strong>settings-panel guidance</strong>, a
+<strong>configurable word limit defaulting to 100,000</strong>, <code
+class="verbatim">docs/VISION.md</code> and investigation of marketplace
+listing with the same benefits and limitations.
+</dd>
+<dt>Historical evidence</dt>
+<dd>
+<a
+href="../../docs/archive/sdlc-v2/.specify/memory/constitution.md">Archived
+complete-document principle</a> and <a
+href="../../workflow-report-2026-09-05.md">Prior scope and test
+expansion</a>. The deleted <code class="verbatim">spec.md</code>, <code
+class="verbatim">plan.md</code> and <code
+class="verbatim">validation.md</code> are recoverable under <code
+class="verbatim">specs/001-full-document-reader/</code> at commit <code
+class="verbatim">c786cee</code> (interrupted workflow checkpoint).
+</dd>
+<dt>Baseline relationship</dt>
+<dd>
+<strong>Preserve complete reading, source safety and native speech
+ownership</strong>. Replace the retired draft's iOS-only scope, custom
+content normalization, settings help, publication copy and
+timing/action-count targets with the explicitly proposed scope here. Its
+earlier audits do not approve this specification. Historical identifiers
+001 and 002 remain reserved.
+</dd>
+<dt>Amendment relationship</dt>
+<dd>
+The 2026-09-08 direction supersedes the initial README-only help,
+absence of settings/persistence and absence of a word limit.
+<strong>Complete-note rendering remains mandatory</strong>: refuse an
+oversized note rather than cut it off. Listing research and copy do not
+authorize publication.
+</dd>
+<dt>External contracts</dt>
+<dd>
+<a
+href="https://github.com/obsidianmd/obsidian-api/blob/master/obsidian.d.ts">Obsidian
+public API</a>, <a
+href="https://docs.obsidian.md/plugins/guides/lifecycle-management">Obsidian
+component lifecycle</a>, <a
+href="https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac">Mac
+Accessibility Reader</a> and <a
+href="https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26">iPhone
+Accessibility Reader</a>, consulted on 2026-09-07 and refreshed on
+2026-09-08. The linked <a
+href="../../docs/reader-help.md">Settings-panel help</a> includes
+Apple's shortcut and Back Tap references; <code
+class="verbatim">docs/VISION.md</code> records current Community
+directory submission requirements and evidence for the cloud-TTS
+comparison. These document platform interfaces; they do not prove
+complete native reading of this plugin's output.
+</dd>
+</dl>
+<h2 id="constraints-decisions-and-blockers">Constraints, decisions and
+blockers</h2>
+<dl>
+<dt>Installation direction</dt>
+<dd>
+<p>On 2026-09-08, Taḋg instructed: "give me an install script that `make
+install` triggers, it should interactively ask for the path of the
+obsidian vault root". This explicitly authorizes the prompt and
+vault-root installation amendment. At <code
+class="verbatim">a34f42b</code>, <code
+class="verbatim">scripts/install.mjs</code> required an existing <code
+class="verbatim">PLUGIN_DIR</code> and no prompt existed. The prior rule
+that missing <code class="verbatim">PLUGIN_DIR</code> must fail is
+superseded. Reader behaviour is unchanged.</p>
+</dd>
+<dt>Compatibility</dt>
+<dd>
+Support <strong>Obsidian 1.13 or later on macOS 26 and iOS 26 or
+later</strong>. The manifest is mobile-compatible. Other operating
+systems and replacement speech facilities are outside the acceptance
+claim.
+</dd>
+<dt>Simplicity</dt>
+<dd>
+Use <strong>standard rendering</strong>, one settings panel, bundled
+help and one saved number. No old special content transformation is
+retained.
+</dd>
+<dt>Size</dt>
+<dd>
+<strong>Never truncate</strong>. The default maximum is <strong>100,000
+words</strong>, configurable as a positive whole number. Higher values
+permit attempts on larger notes; they do not establish a tested capacity
+or an unlimited resource guarantee. Word count is not a byte or
+image-memory limit. Conversion and repair of binary or image-heavy
+imports remain excluded.
+</dd>
+<dt>Comparison</dt>
+<dd>
+Explain that <strong>some cloud TTS plugins require API keys and paid
+generation</strong>, which can accumulate for long or repeated
+conversions. Apple devices already provide native speech without a
+speech API usage bill. Do not imply all other TTS plugins are paid or
+that cloud voices have no value.
+</dd>
+<dt>Feasibility</dt>
+<dd>
+Native discovery of the <strong>whole off-screen document</strong> is an
+integration risk. Test the minimal view early during delivery. If the
+public renderer cannot satisfy it, record the failure and return the
+specific design decision; do not add extraction engines or weaken
+completeness silently.
+</dd>
+<dt>Unresolved blockers</dt>
+<dd>
+No definition blocker. <strong>Operator sign-off was given on
+2026-09-08</strong>; native integration evidence belongs to delivery.
+</dd>
+</dl>
+<h1 id="acceptance-criteria">Acceptance Criteria</h1>
+<h2 id="ac-003-1">AC003.1 - Full current-note snapshot</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+For an active Markdown note <strong>within the configured word
+limit</strong> in editing or reading mode, the reader button and command
+present its <strong>complete current rendered body in document
+order</strong>, including current editor changes. Empty content is
+valid. Opening again captures the <strong>current note</strong>, not the
+previous snapshot.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h2 id="ac-003-2">AC003.2 - Complete native reading</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+On each supported platform, for an accepted note within the configured
+limit, Accessibility Reader can discover and read the <strong>whole
+rendered document through its final text</strong>, without manually
+scrolling the plugin view to reveal missing text. Plugin controls do not
+interrupt the document's reading sequence.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h2 id="ac-003-3">AC003.3 - Source preservation</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+Reader use provides <strong>no editing surface</strong> and causes
+<strong>no changes to source notes or their properties</strong>,
+including interaction with rendered task checkboxes. The plugin retains
+<strong>no note contents after the reader closes</strong>.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ut-003-1">UT003.1 - macOS reading workflow</a>, <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a> and <a
+href="#ot-003-1">OT003.1 - Source and security review</a>.
+</dd>
+</dl>
+<h2 id="ac-003-4">AC003.4 - Single transient reader</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+At most <strong>one current reader</strong> exists. A later invocation
+replaces the prior snapshot; closing or disabling the plugin releases
+its owned view and resources. <strong>Late rendering cannot reopen or
+replace a newer reader</strong>.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#rt-003-1">RT003.1 - Reader session lifetime</a>, <a
+href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h2 id="ac-003-5">AC003.5 - Clear unsupported and failed states</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+A missing or non-Markdown active note produces a <strong>brief
+notice</strong> requesting a Markdown note. A failed render produces a
+<strong>brief failure notice</strong>. Neither outcome shows
+<strong>stale or partially prepared content</strong> or alters a note.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#rt-003-1">RT003.1 - Reader session lifetime</a>, <a
+href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h2 id="ac-003-6">AC003.6 - Native speech and existing access
+boundaries</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+The plugin <strong>does not invoke speech</strong>, send note content to
+a service, save note content to storage or logs, or add privileged
+access or network operations beyond <strong>Obsidian's normal rendering
+of the same note</strong>. Presenting local text does not require a
+network connection, account or API key.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ot-003-1">OT003.1 - Source and security review</a> and <a
+href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h2 id="ac-003-7">AC003.7 - Platform lifecycle and accessible
+controls</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+On both supported platforms, enabling the plugin makes its <strong>named
+button and command available</strong> without opening a reader or
+scanning documents at startup. The reader is <strong>scrollable and
+dismissible</strong> using the platform's normal pointer, touch or
+keyboard controls. Disabling and enabling again leaves <strong>one set
+of controls</strong> and Obsidian usable.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ut-003-1">UT003.1 - macOS reading workflow</a>, <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a> and <a
+href="#ot-003-1">OT003.1 - Source and security review</a>.
+</dd>
+</dl>
+<h2 id="ac-003-8">AC003.8 - Brief usable instructions</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+The README identifies supported platforms, installation files and the
+<strong>open reader, invoke Accessibility Reader, Play</strong> flow,
+with links to Apple's setup instructions. The <strong>plugin settings
+panel contains bundled setup instructions and
+benefits/limitations</strong>, including triple-clicking the side/lock
+button, the Home-button alternative, double-tap Back Tap through
+Accessibility Shortcut, and the Mac shortcut. It explains <strong>native
+speech ownership</strong>, cloud-TTS costs, the word limit and
+normal-rendering boundary. README and <code
+class="verbatim">docs/VISION.md</code> present consistent claims and
+listing intent. Help remains readable offline; following an external
+link is optional.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h2 id="ac-003-9">AC003.9 - Installable package and explicit
+destination</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+The locked build produces <strong>main.js, manifest.json and
+styles.css</strong> for both supported platforms. Local installation
+writes <strong>only those three files into the explicitly supplied
+destination</strong>, preserves other files and skips copying artefacts
+whose contents already match. Invalid destinations fail before
+installation writes; an incomplete copy is reported as failure, never
+success.
+</dd>
+<dt>Vault-root flow</dt>
+<dd>
+Plain <strong>make install prompts for the Obsidian vault root</strong>
+and installs to its <code
+class="verbatim">.obsidian/plugins/ios-tts/</code> directory, creating
+missing <code class="verbatim">plugins/</code> and <code
+class="verbatim">ios-tts/</code> directories. The root and its <code
+class="verbatim">.obsidian/</code> directory must already exist. Blank
+input, EOF/cancellation and invalid roots produce an actionable non-zero
+failure without destination writes. Existing symlinks below the root are
+refused without replacement. Explicit <code
+class="verbatim">PLUGIN_DIR</code> continues to select the former
+non-interactive existing-directory route.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#ot-003-2">OT003.2 - Build and local installation</a>.
+</dd>
+</dl>
+<h2 id="ac-003-10">AC003.10 - Configurable maximum words</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+Settings expose <strong>Maximum words</strong>, initially
+<strong>100,000</strong>, and Save. A valid saved positive whole number
+<strong>persists across plugin reloads</strong> and applies to the
+<strong>next reader invocation</strong>. Invalid input or a failed save
+shows an actionable error and retains the active value. Missing settings
+use the default; malformed settings or a failed load use it with a
+notice, without silently overwriting stored data. Saving changes
+<strong>only this preference</strong>.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#rt-003-2">RT003.2 - Word limit and preference</a>, <a
+href="#ut-003-1">UT003.1 - macOS reading workflow</a>, <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a> and <a
+href="#ot-003-1">OT003.1 - Source and security review</a>.
+</dd>
+</dl>
+<h2 id="ac-003-11">AC003.11 - Explicit refusal above the word limit</h2>
+<dl>
+<dt>Criterion</dt>
+<dd>
+A note <strong>at or below the configured limit</strong> remains
+eligible for complete rendering. A note <strong>above it</strong> clears
+any previous reader and receives a notice identifying the limit and
+explaining how to raise it in settings. It is <strong>not rendered or
+truncated</strong>. The check uses the full current Markdown source,
+counting each whitespace-separated non-empty token as one word;
+properties and markup count, and empty source counts as zero.
+</dd>
+<dt>Proven by</dt>
+<dd>
+<a href="#rt-003-2">RT003.2 - Word limit and preference</a>, <a
+href="#ut-003-1">UT003.1 - macOS reading workflow</a> and <a
+href="#ut-003-2">UT003.2 - iOS reading workflow</a>.
+</dd>
+</dl>
+<h1 id="test-definitions">Test Definitions</h1>
+<h2 id="rt-003-1">RT003.1 - Reader session lifetime</h2>
+<dl>
+<dt>Covers</dt>
+<dd>
+<a href="#ac-003-4">AC003.4 - Single transient reader</a> and <a
+href="#ac-003-5">AC003.5 - Clear unsupported and failed states</a>.
+</dd>
+<dt>Boundary</dt>
+<dd>
+The plugin-owned session helper's open and close operations.
+</dd>
+<dt>Procedure</dt>
+<dd>
+Use controlled render promises and observable presentation, notice and
+cleanup callbacks. Exercise success; A then B with A finishing last;
+close during preparation; rejection; and an invalid invocation after
+success. Assert the <strong>currently visible result, notice and
+released resources</strong>.
+</dd>
+<dt>Expected</dt>
+<dd>
+<strong>Only the newest valid result appears</strong>. Close releases
+the session; invalid input and rejection clear old content and report
+the correct failure category. Superseded results and errors do not
+disturb a new session.
+</dd>
+<dt>Retention</dt>
+<dd>
+One small test file using <strong>Node's built-in test runner</strong>
+under <code class="verbatim">make test</code>. It tests owned
+asynchronous state, not Apple's reader or a fake Markdown engine.
+Automated implementation starts with its expected RED.
+</dd>
+</dl>
+<h2 id="rt-003-2">RT003.2 - Word limit and preference</h2>
+<dl>
+<dt>Covers</dt>
+<dd>
+<a href="#ac-003-10">AC003.10 - Configurable maximum words</a> and <a
+href="#ac-003-11">AC003.11 - Explicit refusal above the word limit</a>.
+</dd>
+<dt>Boundary</dt>
+<dd>
+Owned preference load/save and reader admission, with host persistence
+and rendering supplied as narrow callbacks.
+</dd>
+<dt>Procedure</dt>
+<dd>
+Exercise absent, valid, malformed and rejected loads; save a valid value
+and reload it; reject blank, zero, negative, fractional, nonnumeric and
+unsafe-integer input; force a rejected save. Observe the active value,
+stored preference and error category. A pending save blocks a second
+save; the old value remains active until success. An already-open
+snapshot remains unchanged, while the next invocation uses the saved
+value.
+</dd>
+<dt>Limit cases</dt>
+<dd>
+Exercise empty and whitespace-only source, mixed whitespace,
+frontmatter/markup tokens, limit minus one, exact limit and limit plus
+one. Above the limit, assert no render and no previous presentation;
+increasing the limit admits the same complete source. Include the
+100,000-word default.
+</dd>
+<dt>Expected</dt>
+<dd>
+Valid preferences persist; invalid or failed operations never replace
+the active value or silently rewrite storage. Admission implements <a
+href="#ac-003-11">AC003.11 - Explicit refusal above the word limit</a>
+exactly.
+</dd>
+<dt>Retention</dt>
+<dd>
+A second small Node test file under <code
+class="verbatim">make test</code>, written first with its expected RED.
+It protects limit decisions and persistence failures; it does not
+simulate settings widgets, Apple shortcuts or the Markdown engine.
+</dd>
+</dl>
+<h2 id="shared-user-test-conditions">Shared user-test conditions</h2>
+<dl>
+<dt>Environment</dt>
+<dd>
+Use a <strong>disposable vault</strong>, the built plugin, default theme
+and only core plugins. Record hardware, OS, Obsidian version and tested
+revision.
+</dd>
+<dt>Fixtures</dt>
+<dd>
+Empty note; a short mixed-Markdown note with frontmatter, headings,
+paragraphs, list, task checkbox, quote, table, code, footnote, local
+link and local embed; a second distinguishable note; and a
+<strong>100,000-word synthetic prose note</strong> with unique
+beginning, middle and ending markers. Retain the generator recipe and
+fixture hashes with the evidence, not personal notes.
+</dd>
+<dt>Verification</dt>
+<dd>
+Confirm <strong>full text in document order</strong>, not merely three
+markers. Compare the rendered body with normal Obsidian rendering.
+Inspect the native reader's extracted text through the ending, listen to
+the short note throughout and use native playback navigation to hear the
+long ending. <strong>Scrolling the plugin view to feed missing text into
+native reading fails</strong>.
+</dd>
+<dt>Settings and copy</dt>
+<dd>
+In the real settings panel, read the bundled help and compare its
+benefits/limitations with README and <code
+class="verbatim">docs/VISION.md</code>. Use the relevant setup steps.
+Change the limit to a small value; exercise notes below, at and above
+it, including rejection after a previous successful reader. Save a
+larger value and reopen; check invalid-input feedback, reload
+persistence and that an existing snapshot is unaffected by a limit
+change. Restore 100,000 before the long-note test. Confirm offline help
+and usable labelled input, Save button and links with keyboard or touch
+as appropriate.
+</dd>
+<dt>Cleanup</dt>
+<dd>
+Remove only disposable test data and restore any changed native
+accessibility settings. Record results in <a
+href="validation.org">Validation evidence</a>.
+</dd>
+</dl>
+<h2 id="ut-003-1">UT003.1 - macOS reading workflow</h2>
+<dl>
+<dt>Covers</dt>
+<dd>
+<a href="#ac-003-1">AC003.1 - Full current-note snapshot</a>, <a
+href="#ac-003-2">AC003.2 - Complete native reading</a>, <a
+href="#ac-003-3">AC003.3 - Source preservation</a>, <a
+href="#ac-003-4">AC003.4 - Single transient reader</a>, <a
+href="#ac-003-5">AC003.5 - Clear unsupported and failed states</a>, <a
+href="#ac-003-6">AC003.6 - Native speech and existing access
+boundaries</a>, <a href="#ac-003-7">AC003.7 - Platform lifecycle and
+accessible controls</a>, <a href="#ac-003-8">AC003.8 - Brief usable
+instructions</a>, <a href="#ac-003-10">AC003.10 - Configurable maximum
+words</a> and <a href="#ac-003-11">AC003.11 - Explicit refusal above the
+word limit</a>.
+</dd>
+<dt>Reviewer</dt>
+<dd>
+Taḋg or a named human tester, on macOS 26+ with Obsidian 1.13+.
+</dd>
+<dt>Procedure</dt>
+<dd>
+Follow the README and shared conditions. Exercise button and command,
+editing and reading modes, an unsaved edit, switching notes, reopening,
+no note and a non-Markdown tab. Confirm empty content, checkbox safety,
+keyboard dismissal and accessible control names. Disable, enable and
+restart Obsidian once. Repeat local-text presentation offline with
+Autoplay off. Take source hashes after deliberate fixture edits and
+before reader actions; only the latter are the source-preservation
+comparison.
+</dd>
+<dt>Expected</dt>
+<dd>
+All linked criteria hold; native reading reaches the <strong>whole long
+note</strong>, controls remain usable, no audio begins merely by opening
+the plugin, and fixture content/property hashes remain unchanged by
+reader use.
+</dd>
+</dl>
+<h2 id="ut-003-2">UT003.2 - iOS reading workflow</h2>
+<dl>
+<dt>Covers</dt>
+<dd>
+<a href="#ac-003-1">AC003.1 - Full current-note snapshot</a>, <a
+href="#ac-003-2">AC003.2 - Complete native reading</a>, <a
+href="#ac-003-3">AC003.3 - Source preservation</a>, <a
+href="#ac-003-4">AC003.4 - Single transient reader</a>, <a
+href="#ac-003-5">AC003.5 - Clear unsupported and failed states</a>, <a
+href="#ac-003-6">AC003.6 - Native speech and existing access
+boundaries</a>, <a href="#ac-003-7">AC003.7 - Platform lifecycle and
+accessible controls</a>, <a href="#ac-003-8">AC003.8 - Brief usable
+instructions</a>, <a href="#ac-003-10">AC003.10 - Configurable maximum
+words</a> and <a href="#ac-003-11">AC003.11 - Explicit refusal above the
+word limit</a>.
+</dd>
+<dt>Reviewer</dt>
+<dd>
+Taḋg or a named human tester, on a <strong>physical iOS 26+
+device</strong> with Obsidian 1.13+. Desktop mobile emulation does not
+establish this result.
+</dd>
+<dt>Procedure and expected result</dt>
+<dd>
+Repeat the macOS workflow and shared conditions using <strong>touch, iOS
+dismissal and the configured accessibility shortcut</strong>.
+Keyboard-only interaction is not required on the phone. Record actual
+native discovery and playback; a rendered DOM alone is insufficient.
+Verify both the triple-click route and <strong>Double Tap &gt;
+Accessibility Shortcut</strong> Back Tap route from the bundled
+instructions. Test the shortcut-selection menu when multiple
+accessibility features are selected. Record which device button was
+tested; the Home-button alternative can be documentation-reviewed if the
+available test phone has a side-button shortcut.
+</dd>
+</dl>
+<h2 id="ot-003-1">OT003.1 - Source and security review</h2>
+<dl>
+<dt>Covers</dt>
+<dd>
+<a href="#ac-003-3">AC003.3 - Source preservation</a> and <a
+href="#ac-003-6">AC003.6 - Native speech and existing access
+boundaries</a> and <a href="#ac-003-7">AC003.7 - Platform lifecycle and
+accessible controls</a> and <a href="#ac-003-10">AC003.10 - Configurable
+maximum words</a>.
+</dd>
+<dt>Boundary</dt>
+<dd>
+The audited source, generated plugin and their host interfaces.
+</dd>
+<dt>Procedure</dt>
+<dd>
+Review all plugin-owned call paths for writes, content logging, network
+clients, speech APIs, executable HTML insertion and unmanaged resources
+or startup document access. Confirm use of Obsidian's renderer without
+enabling extra capabilities. Confirm settings writes contain only <code
+class="verbatim">maxWords</code>, help is bundled rather than
+downloaded, and no system shortcut is configured by the plugin. Run
+<code class="verbatim">make vulncheck</code> against the committed
+dependency lock.
+</dd>
+<dt>Expected</dt>
+<dd>
+<strong>No added content-transfer, note persistence, speech or
+privileged capability</strong>; no raw-HTML injection; resources have
+cleanup; the dependency check reports no non-exempt findings and
+modifies no managed files.
+</dd>
+<dt>Bounds</dt>
+<dd>
+One review per final candidate; one non-mutating npm advisory request,
+dependency metadata only, no note content or metered TTS. No live
+malicious payload, remote media fixture or persistent security-test
+harness.
+</dd>
+<dt>Record</dt>
+<dd>
+Result, revision and evidence in <code
+class="verbatim">validation.org</code>. Review is not a claim to audit
+Obsidian or third-party plugins.
+</dd>
+</dl>
+<h2 id="ot-003-2">OT003.2 - Build and local installation</h2>
+<dl>
+<dt>Covers</dt>
+<dd>
+<a href="#ac-003-9">AC003.9 - Installable package and explicit
+destination</a>.
+</dd>
+<dt>Boundary</dt>
+<dd>
+The locked build, package and <code class="verbatim">make install</code>
+entry point.
+</dd>
+<dt>Procedure</dt>
+<dd>
+In an OS-allocated temporary checkout and destinations, build twice from
+the same revision, pinned tool versions and npm lock; compare artefact
+hashes. Parse the manifest for <code
+class="verbatim">id: ios-tts</code>, <code
+class="verbatim">minAppVersion: 1.13.0</code> and <code
+class="verbatim">isDesktopOnly: false</code>. Install to an existing
+destination containing an unrelated sentinel, then repeat unchanged;
+verify the exact three installed artefacts, their hashes, unchanged
+second-run modification times and preservation of the sentinel.
+</dd>
+<dt>Negative cases</dt>
+<dd>
+In explicit <code class="verbatim">PLUGIN_DIR</code> mode, supply a
+relative path, nonexistent path or regular file; or make an artefact
+target a symlink or directory. Each must fail before copying and leave
+destination contents unchanged. Exercise a destination symlink back to
+the checkout: it builds and verifies artefacts without copying over the
+source. A failed build must not install. Inspect the copy-error path for
+a non-zero exit and partial-installation warning; no fault-injection
+framework is required.
+</dd>
+<dt>Prompt cases</dt>
+<dd>
+Exercise the real <code class="verbatim">make install</code> prompt with
+a temporary vault root containing spaces; verify creation of missing
+plugin directories, exactly three installed files, sentinel preservation
+and unchanged repeats. Check a <code class="verbatim">~/</code> input,
+optional surrounding quotes, empty input, EOF and Ctrl-C; reject
+nonexistent roots, regular files, roots lacking <code
+class="verbatim">.obsidian/</code> and symlink/non-directory entries at
+<code class="verbatim">.obsidian</code>, <code
+class="verbatim">plugins</code> or <code class="verbatim">ios-tts</code>
+without changing their contents or targets. Verify the final destination
+is reported. Check script <code class="verbatim">-h</code>, <code
+class="verbatim">--help</code> and <code
+class="verbatim">--version</code> are side-effect-free, and unknown
+arguments fail. Use a terminal for the interactive smoke check; pipe
+input for deterministic cases. Retain the bounded one-off
+classification: this is a small local copy recipe, without a new
+persistent test framework.
+</dd>
+<dt>Expected</dt>
+<dd>
+The package and all stated install/failure cases satisfy <a
+href="#ac-003-9">AC003.9 - Installable package and explicit
+destination</a>.
+</dd>
+<dt>Bounds</dt>
+<dd>
+One bounded verification run per final candidate. Use synthetic
+sentinels, an existing local dependency installation and temporary
+paths; no primary-vault writes, iOS transfer or network calls. Remove
+the exact temporary test directory afterwards and retain the results in
+<code class="verbatim">validation.org</code>. This checks the thin
+installation recipe once; it does not require a permanent
+installer-testing framework.
+</dd>
+</dl>
+<h1 id="edge-cases">Edge Cases</h1>
+<dl>
+<dt>Empty or frontmatter-only</dt>
+<dd>
+<strong>Use the renderer's normal output</strong>; do not invent body
+text or show a previous note. See <a href="#ac-003-1">AC003.1 - Full
+current-note snapshot</a>.
+</dd>
+<dt>No valid note or render failure</dt>
+<dd>
+<strong>Clear the previous presentation and report a brief
+notice</strong>. See <a href="#ac-003-5">AC003.5 - Clear unsupported and
+failed states</a>.
+</dd>
+<dt>Oversized note</dt>
+<dd>
+<strong>Refuse before rendering and explain the setting</strong>; never
+publish a partial note. See <a href="#ac-003-11">AC003.11 - Explicit
+refusal above the word limit</a>.
+</dd>
+<dt>Invalid or unavailable settings</dt>
+<dd>
+<strong>Keep the active limit on invalid input or save failure</strong>.
+Use the default with a notice for malformed data or load failure. See <a
+href="#ac-003-10">AC003.10 - Configurable maximum words</a>.
+</dd>
+<dt>Reopen, close or disable during preparation</dt>
+<dd>
+<strong>Discard stale results and release resources</strong>. See <a
+href="#ac-003-4">AC003.4 - Single transient reader</a>.
+</dd>
+<dt>Invalid installation target or copy failure</dt>
+<dd>
+<strong>Fail explicitly</strong> under the installation contract. See <a
+href="#ac-003-9">AC003.9 - Installable package and explicit
+destination</a>.
+</dd>
+<dt>Rich content and large imports</dt>
+<dd>
+<strong>Keep normal rendering behaviour</strong>; do not add conversion,
+image extraction or recursive loading. Full-document success is required
+for the specified fixtures, not arbitrarily large binary imports. See <a
+href="#ac-003-1">AC003.1 - Full current-note snapshot</a> and <a
+href="#ac-003-2">AC003.2 - Complete native reading</a>.
+</dd>
+</dl>
+<h1 id="solution-design">Solution Design</h1>
+<h2 id="architecture-and-flow">Architecture and flow</h2>
+<ol>
+<li>Load and validate the word-limit preference, then register the
+<strong>ribbon button, command and settings tab</strong> through
+Obsidian's <code class="verbatim">Plugin</code> API. Perform no document
+work during plugin startup.</li>
+<li>Capture the active <code class="verbatim">MarkdownView</code>, its
+file path and <code class="verbatim">getViewData()</code> <strong>once
+before asynchronous work</strong>. Validate a present Markdown file; do
+not read a disk copy in place of current editor contents. Capture the
+current saved limit too. Clear the prior session and check the source
+word count before rendering; over-limit input receives the settings
+guidance notice.</li>
+<li>Close the previous reader and open a <strong>dismissible Obsidian
+Modal</strong> with a preparing notice. Render the <strong>whole
+captured source</strong> into one detached article using <code
+class="verbatim">MarkdownRenderer.render</code> and a session-owned
+<code class="verbatim">Component</code>. Pass the captured source path
+for normal relative references.</li>
+<li>After rendering succeeds, replace the preparing notice with the
+complete, <strong>scrollable article</strong>. Do not use preview
+sections, virtualization, folding or lazy body rendering. Keep the close
+control outside the article. Disable task editing controls without
+hiding the article from accessibility.</li>
+<li>The user invokes <strong>Apple's Accessibility Reader</strong>.
+Closing, replacing or unloading invalidates the session, detaches the
+article and unloads its component. Late success or failure cannot
+publish into a later session.</li>
+</ol>
+<h2 id="interfaces-and-state">Interfaces and state</h2>
+<dl>
+<dt>Structure</dt>
+<dd>
+Start with <code class="verbatim">src/main.ts</code> for host
+integration, settings UI and the modal; <code
+class="verbatim">src/reader-session.ts</code> for asynchronous lifetime;
+<code class="verbatim">src/reader-settings.ts</code> for preference
+validation and word-limit admission; and <code
+class="verbatim">styles.css</code>. No content-normalization framework
+or six-module architecture.
+</dd>
+<dt>Language</dt>
+<dd>
+Strict TypeScript compiled to a CommonJS Obsidian bundle, targeting
+ECMAScript 2022. Node and npm are <strong>development tooling
+only</strong>; no Node or Electron calls and no added runtime library in
+the plugin.
+</dd>
+<dt>Build</dt>
+<dd>
+Use the ordinary Obsidian TypeScript/esbuild toolchain. Delivery pins
+current compatible development versions and one npm lockfile. Provide
+<code class="verbatim">make build</code>, <code
+class="verbatim">make lint</code>, <code
+class="verbatim">make test</code>, <code
+class="verbatim">make vulncheck</code>, <code
+class="verbatim">make install</code> and <code
+class="verbatim">make sync</code> with their SDLC meanings; do not add a
+deployment service.
+</dd>
+<dt>Package</dt>
+<dd>
+<code class="verbatim">main.js</code>, <code
+class="verbatim">manifest.json</code> and <code
+class="verbatim">styles.css</code> form the plugin. Use manifest
+identifier <code class="verbatim">ios-tts</code>, <code
+class="verbatim">minAppVersion: 1.13.0</code> and <code
+class="verbatim">isDesktopOnly: false</code>. README documents the
+additional OS requirements.
+</dd>
+<dt>Installation</dt>
+<dd>
+<code class="verbatim">make install</code> builds, then runs <code
+class="verbatim">scripts/install.mjs</code>. Unless <code
+class="verbatim">PLUGIN_DIR</code> is non-empty, prompt for the
+<strong>vault root</strong>, trim the input, allow optional matching
+surrounding quotes and expand leading <code class="verbatim">~/</code>
+using the platform home-directory API. Require an absolute existing
+directory and resolve that explicitly selected root canonically. Require
+an existing real <code class="verbatim">.obsidian/</code> directory.
+Reject symlinks or non-directories at <code
+class="verbatim">.obsidian</code>, <code class="verbatim">plugins</code>
+and <code class="verbatim">ios-tts</code> before creating missing plugin
+directories. These child names are fixed; no vault search or shell
+evaluation is used. Blank input, EOF and Ctrl-C abort. Readline is
+closed on every exit.
+</dd>
+<dt>Compatibility</dt>
+<dd>
+<code
+class="verbatim">make install PLUGIN_DIR=/absolute/plugin/directory</code>
+keeps its non-interactive explicit existing-directory semantics,
+including a directory symlink that the operator explicitly supplied.
+This route does not prompt or create directories. Both modes validate
+all artefacts before any copy: each must be absent or a regular file,
+never a symlink or directory. Fixed artefact basenames stay within that
+canonical destination; no recursive copy is allowed. The prompt route
+creates missing directories only after validation. Report the installed
+destination and remind the user to enable the plugin in Obsidian. Print
+the disabled-plugin prerequisite before prompting.
+</dd>
+<dt>Replacement</dt>
+<dd>
+Replace only changed artefacts and preserve all other files.
+Installation requires the plugin disabled. Individual copies are not a
+transaction: an I/O error exits non-zero, reports possible partial
+installation and directs a retry before re-enabling. Do not replace or
+remove the whole destination directory. The copy step leaves identical
+files untouched; rebuilding may regenerate the checkout's own build
+outputs.
+</dd>
+<dt>Symlink workflow</dt>
+<dd>
+If the canonical destination is the checkout itself, the build already
+publishes the artefacts through the operator's symlink; verify the three
+files and skip copying. iOS receives the same files through the
+operator's existing process. Never edit the enabled-plugin list.
+</dd>
+<dt>Settings</dt>
+<dd>
+Use Obsidian's <code class="verbatim">PluginSettingTab</code> and <code
+class="verbatim">Setting</code> controls for one <strong>Maximum
+words</strong> field and Save. Accept trimmed decimal digits
+representing a positive safe integer; reject other input rather than
+coercing it. Use <code class="verbatim">loadData()</code> and <code
+class="verbatim">saveData()</code> for <code
+class="verbatim">{ maxWords: 100000 }</code>; persist no note data.
+Disable Save while a write is pending and update the active limit only
+after success. On failure retain it and show a retryable error. A
+missing setting defaults normally; malformed data or a rejected read
+defaults with a notice and no write until an explicit valid Save. Use
+host-managed storage only. Ignore its <code
+class="verbatim">data.json</code> in Git during symlink testing;
+installation preserves it.
+</dd>
+<dt>Admission</dt>
+<dd>
+Count non-empty whitespace-delimited tokens in captured Markdown source,
+including properties and markup. A linear scan may stop as soon as it
+exceeds the captured limit. Do not allocate a second whole-document
+token array or expand embeds just to count. Invalid/over-limit input
+clears the previous reader without invoking the renderer.
+</dd>
+<dt>Help</dt>
+<dd>
+Bundle <code class="verbatim">docs/reader-help.md</code> into <code
+class="verbatim">main.js</code> as a static text import; render it with
+the host renderer in the settings tab and clean up its owned component
+on hide/unload. No runtime fetch, images or embedded resources in help.
+Its external links open only on user action. Keep the maintained text in
+the document, not a second copy embedded in TypeScript.
+</dd>
+<dt>State</dt>
+<dd>
+Retain captured source, render component and modal only for their
+session lifetime. The sole durable state is the word-limit preference;
+no database, note-content storage or migration is introduced.
+</dd>
+<dt>Failure</dt>
+<dd>
+Release the current failed session and show a short Obsidian <code
+class="verbatim">Notice</code> without note text, file paths or raw
+exceptions. Missing or unsupported input says to open a Markdown note;
+rendering failure says the reader could not open it. Over-limit input
+identifies the maximum and says to increase Maximum words in plugin
+settings. Exact wording and documentation brevity receive human review,
+not string-matching tests. No automatic retries.
+</dd>
+</dl>
+<h2 id="security-impact">Security impact</h2>
+<dl>
+<dt>Threat boundary</dt>
+<dd>
+Note content enters <strong>Obsidian's existing Markdown
+renderer</strong>. Do not insert untrusted HTML manually or add
+executable processors.
+</dd>
+<dt>Existing rendering</dt>
+<dd>
+Normal embeds, remote resources and installed Markdown processors remain
+host behaviour. This plugin is <strong>not a sandbox</strong> and does
+not promise that arbitrary third-party rendering is offline or
+read-only. The supported user-test baseline uses only core plugins and
+local fixtures.
+</dd>
+<dt>Data and access</dt>
+<dd>
+The plugin <strong>adds no external service, content logging, durable
+content storage, credentials or privileged host API</strong>. Do not
+change the user's system settings or vault permissions. Save only the
+validated word-limit number through Obsidian's plugin storage. The word
+limit reduces oversized-text rendering attempts; it is not a byte-size
+limit or a defence against arbitrary embedded content.
+</dd>
+<dt>Dependencies</dt>
+<dd>
+<code class="verbatim">make vulncheck</code> uses npm's non-mutating
+locked dependency audit, including build dependencies. It remains
+separate from <code class="verbatim">make test</code>; failure or an
+unavailable scanner blocks its result. Use the standard gate directly,
+without a new exception-management framework.
+</dd>
+</dl>
+<h2 id="other-relevant-qualities">Other relevant qualities</h2>
+<dl>
+<dt>Accessibility</dt>
+<dd>
+Inherit Obsidian's theme and modal focus/dismissal behaviour. Use
+semantic document markup and accessible names; verify native reading on
+both platforms instead of inferring it from the DOM.
+</dd>
+<dt>Performance</dt>
+<dd>
+Render only on invocation, once per snapshot. Avoid deliberate
+truncation and background work. Record observed long-note
+responsiveness; do not resurrect the old five-second or
+exact-action-count targets.
+</dd>
+<dt>Maintainability</dt>
+<dd>
+Reuse public host APIs. The only retained automated test areas are
+<strong>owned asynchronous session state and word-limit
+preferences</strong>. Human tests cover settings help, rendering, native
+discovery and interaction; do not add browser automation or a mock host.
+</dd>
+<dt>Rollback</dt>
+<dd>
+Disable the plugin and remove its installed artefacts or testing
+symlink. Its saved word-limit preference may remain in host-managed
+plugin data; no source-note migration or recovery operation is required.
+</dd>
+</dl>
+<h1 id="delivery-handoff">Delivery Handoff</h1>
+<dl>
+<dt>Required reading</dt>
+<dd>
+This specification, project profile, README, <code
+class="verbatim">docs/VISION.md</code>, <code
+class="verbatim">docs/reader-help.md</code> and the named public API and
+lifecycle contracts. The retired draft is <strong>provenance, not an
+additional implementation checklist</strong>.
+</dd>
+<dt>First step</dt>
+<dd>
+Write <a href="#rt-003-1">RT003.1 - Reader session lifetime</a> and <a
+href="#rt-003-2">RT003.2 - Word limit and preference</a> and observe
+their expected RED, then implement the smallest view and settings panel.
+Exercise the native reading flow early; any architectural expansion
+returns for operator decision.
+</dd>
+<dt>Final verification</dt>
+<dd>
+After the implementation gate, record current results for both
+regression definitions, both platform user tests and both bounded
+checks. Early feasibility trials do not silently count as final
+acceptance evidence.
+</dd>
+<dt>Definition evidence</dt>
+<dd>
+<a href="audits.org">Definition audit evidence</a>.
+</dd>
+<dt>Validation evidence</dt>
+<dd>
+<a href="validation.org">Planned and executed validation</a>.
+</dd>
+<dt>Documentation impact</dt>
+<dd>
+Keep README, bundled settings help and vision aligned on shortcut setup,
+free native speech, cloud costs, platform support, the configurable
+limit and limitations. README receives release installation instructions
+and the same pros/cons for its public listing excerpt. The proposed
+name/description and submission readiness route are in <code
+class="verbatim">docs/VISION.md</code>; validate claims before any
+separately authorized publication. Preserve the archive and its history.
+</dd>
+<dt>Authorization</dt>
+<dd>
+Taḋg approved this definition and instructed implementation on
+2026-09-08: "approved, let's implement". The later direct instruction to
+provide an interactive vault-root installer authorizes that bounded
+amendment; its definition gate passed review. Release publication
+remains outside this change.
+</dd>
+</dl>
+</body>
+</html>
