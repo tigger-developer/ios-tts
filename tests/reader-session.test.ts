@@ -4,6 +4,16 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { ReaderSession } from "../src/reader-session.ts";
 
+function deferred() {
+  let resolve!: () => void;
+  let reject!: (error: Error) => void;
+  const promise = new Promise<void>((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
 function harness() {
   let visible: string | null = null;
   const notices: string[] = [];
@@ -17,7 +27,7 @@ function harness() {
   const reader = new ReaderSession({
     notice: (reason) => notices.push(reason),
     create: () => {
-      const pending = Promise.withResolvers<void>();
+      const pending = deferred();
       const render = { source: "", path: "", ...pending, released: false };
       renders.push(render);
       return {
@@ -39,14 +49,14 @@ function harness() {
   return { reader, notices, renders, visible: () => visible };
 }
 
-test("RT003.1 publishes the complete snapshot and releases it on close", async () => {
+void test("RT003.1 publishes the complete snapshot and releases it on close", async () => {
   const h = harness();
   const source = "# First\n\nMiddle **text**\n\nLast.";
   const opening = h.reader.open({ source, path: "folder/note.md" }, 100);
   assert.equal(h.visible(), null);
   assert.equal(h.renders[0]?.source, source);
   assert.equal(h.renders[0]?.path, "folder/note.md");
-  h.renders[0]!.resolve();
+  h.renders[0].resolve();
   await opening;
   assert.equal(h.visible(), source);
   h.reader.close();
@@ -57,15 +67,15 @@ test("RT003.1 publishes the complete snapshot and releases it on close", async (
 });
 
 for (const late of ["success", "failure"] as const) {
-  test(`RT003.1 superseded ${late} cannot replace the newer reader`, async () => {
+  void test(`RT003.1 superseded ${late} cannot replace the newer reader`, async () => {
     const h = harness();
     const first = h.reader.open({ source: "A", path: "a.md" }, 100);
     const second = h.reader.open({ source: "B", path: "b.md" }, 100);
     assert.equal(h.renders[0]?.released, true);
     h.renders[1]!.resolve();
     await second;
-    if (late === "success") h.renders[0]!.resolve();
-    else h.renders[0]!.reject(new Error("private note detail"));
+    if (late === "success") h.renders[0].resolve();
+    else h.renders[0].reject(new Error("private note detail"));
     await first;
     assert.equal(h.visible(), "B");
     assert.deepEqual(h.notices, []);
@@ -73,18 +83,18 @@ for (const late of ["success", "failure"] as const) {
   });
 }
 
-test("RT003.1 closing preparation prevents later publication", async () => {
+void test("RT003.1 closing preparation prevents later publication", async () => {
   const h = harness();
   const opening = h.reader.open({ source: "A", path: "a.md" }, 100);
   h.reader.close();
   assert.equal(h.renders[0]?.released, true);
-  h.renders[0]!.resolve();
+  h.renders[0].resolve();
   await opening;
   assert.equal(h.visible(), null);
   assert.deepEqual(h.notices, []);
 });
 
-test("RT003.1 rejection clears presentation and reports only a failure category", async () => {
+void test("RT003.1 rejection clears presentation and reports only a failure category", async () => {
   const h = harness();
   const opening = h.reader.open({ source: "private", path: "private.md" }, 100);
   assert.equal(h.renders.length, 1);
@@ -95,7 +105,7 @@ test("RT003.1 rejection clears presentation and reports only a failure category"
   assert.deepEqual(h.notices, ["render"]);
 });
 
-test("RT003.1 unsupported input clears a prior successful reader without rendering", async () => {
+void test("RT003.1 unsupported input clears a prior successful reader without rendering", async () => {
   const h = harness();
   const opening = h.reader.open({ source: "A", path: "a.md" }, 100);
   assert.equal(h.renders.length, 1);

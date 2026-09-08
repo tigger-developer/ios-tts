@@ -5,7 +5,8 @@ Last updated: 2026-09-08
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
 The [current specification](../specs/003-full-document-reader/spec.org) defines
-the proposed behaviour. Implementation and native-device validation are pending.
+the approved behaviour. The development implementation is available; native-device
+validation remains pending in the linked validation record.
 
 ## Why this plugin exists
 
@@ -81,11 +82,15 @@ The [submission requirements](https://docs.obsidian.md/community-directory/submi
 require a short description of at most 250 characters, ending with a full stop,
 and accurate mobile compatibility.
 
-**Readiness:** the project has no implementation, licence, manifest or release
-artefacts yet. Before submission, record successful platform tests, choose the
+**Readiness:** the development build now supplies the implementation, manifest
+and three local installation artefacts. No licence or published release has
+been selected. Before submission, record successful platform tests, choose the
 licence and final name, check identifier availability, and prepare the release.
 Account linking and submission are operator actions following review of that
-concrete release; this definition prepares the copy and records the route.
+concrete release; this change prepares the copy and records the route.
+
+At definition time there was no implementation, manifest or release package;
+the local development build is the delivery update to that starting position.
 
 ## Definition history
 

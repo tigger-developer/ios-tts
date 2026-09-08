@@ -9,6 +9,16 @@ import {
 } from "../src/reader-settings.ts";
 import { ReaderSession } from "../src/reader-session.ts";
 
+function deferred() {
+  let resolve!: () => void;
+  let reject!: (error: Error) => void;
+  const promise = new Promise<void>((yes, no) => {
+    resolve = yes;
+    reject = no;
+  });
+  return { promise, resolve, reject };
+}
+
 function settings(initial: unknown = null) {
   let stored = initial;
   let writes = 0;
@@ -23,7 +33,7 @@ function settings(initial: unknown = null) {
   return { preference, stored: () => stored, writes: () => writes };
 }
 
-test("RT003.2 absent preferences default without a write; valid preferences reload", async () => {
+void test("RT003.2 absent preferences default without a write; valid preferences reload", async () => {
   for (const raw of [null, undefined, {}]) {
     const h = settings(raw);
     assert.equal(await h.preference.load(), null);
@@ -40,7 +50,7 @@ test("RT003.2 absent preferences default without a write; valid preferences relo
   assert.equal(reloaded.preference.maxWords, 123);
 });
 
-test("RT003.2 malformed and rejected loads default with an error and no rewrite", async () => {
+void test("RT003.2 malformed and rejected loads default with an error and no rewrite", async () => {
   for (const raw of [
     [],
     "100",
@@ -69,7 +79,7 @@ test("RT003.2 malformed and rejected loads default with an error and no rewrite"
   assert.equal(preference.maxWords, DEFAULT_MAX_WORDS);
 });
 
-test("RT003.2 invalid input preserves the active limit and storage", async () => {
+void test("RT003.2 invalid input preserves the active limit and storage", async () => {
   const h = settings({ maxWords: 20 });
   await h.preference.load();
   for (const raw of [
@@ -93,8 +103,8 @@ test("RT003.2 invalid input preserves the active limit and storage", async () =>
   assert.equal(h.preference.maxWords, Number.MAX_SAFE_INTEGER);
 });
 
-test("RT003.2 pending saves exclude overlaps; failure retains the limit and permits retry", async () => {
-  let pending = Promise.withResolvers<void>();
+void test("RT003.2 pending saves exclude overlaps; failure retains the limit and permits retry", async () => {
+  let pending = deferred();
   const writes: unknown[] = [];
   const preference = new ReaderSettings({
     load: () => Promise.resolve({ maxWords: 3 }),
@@ -113,14 +123,14 @@ test("RT003.2 pending saves exclude overlaps; failure retains the limit and perm
   assert.equal(await first, "save");
   assert.equal(preference.maxWords, 3);
   assert.equal(preference.saving, false);
-  pending = Promise.withResolvers<void>();
+  pending = deferred();
   const retry = preference.save("5");
   pending.resolve();
   assert.equal(await retry, null);
   assert.equal(preference.maxWords, 5);
 });
 
-test("RT003.2 counts source tokens at empty, markup and limit boundaries", () => {
+void test("RT003.2 counts source tokens at empty, markup and limit boundaries", () => {
   for (const source of ["", " \n\t", "one", "one\t two\nthree"]) {
     assert.equal(exceedsWordLimit(source, 3), false);
   }
@@ -134,7 +144,7 @@ test("RT003.2 counts source tokens at empty, markup and limit boundaries", () =>
   assert.equal(exceedsWordLimit(long + "end", DEFAULT_MAX_WORDS), true);
 });
 
-test("RT003.2 saved limits affect the next invocation; refusal clears without rendering", async () => {
+void test("RT003.2 saved limits affect the next invocation; refusal clears without rendering", async () => {
   const h = settings({ maxWords: 3 });
   await h.preference.load();
   let visible: string | null = null;

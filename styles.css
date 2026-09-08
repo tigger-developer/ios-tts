@@ -1,0 +1,25 @@
+/* ABOUTME: Gives the full document one scrollable surface in the host modal.
+ * ABOUTME: Uses the active theme and keeps native text and focus semantics. */
+.full-document-reader {
+  display: flex;
+  flex-direction: column;
+  width: min(56rem, 100%);
+  height: 90dvh;
+  max-height: 90dvh;
+}
+
+.full-document-reader .modal-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.full-document-reader-article {
+  width: 100%;
+  min-height: 0;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding: 0.5rem;
+  user-select: text;
+}

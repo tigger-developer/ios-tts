@@ -6,7 +6,17 @@
 
 - Definition :: [[file:spec.org::#rt-003-1][RT003.1 - Reader session lifetime]].
 - Additional definition :: [[file:spec.org::#rt-003-2][RT003.2 - Word limit and preference]].
-- State :: Not run; implementation has not started.
+- Starting state :: Not run at definition approval; no implementation existed.
+- RED, 2026-09-08 :: Revision =d7e113e= contains the two test files and empty
+  contract stubs. Node 24.20.0 ran 12 tests: 0 passed and 12 failed with assertion
+  failures for missing publication, cleanup, validation, persistence and limits.
+  This was executable test evidence, not an import or runner failure.
+- Initial GREEN :: The implementation subsequently passed all 12 cases. Final
+  candidate results and implementation-gate evidence follow below when executed.
+- Test-tooling adjustment :: Replaced test-only =Promise.withResolvers= with
+  explicit controlled promises so the same ES2022 type check covers all files.
+  Assertions and expected behaviour were preserved; lint now handles test
+  runner promises explicitly. No host simulation or new runtime dependency.
 
 * User tests
 
