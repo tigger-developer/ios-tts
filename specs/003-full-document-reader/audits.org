@@ -274,4 +274,30 @@
   "approved, let's implement". The specification records approval and the work
   item is ACTIVE. Definition round 3 remains current; no material requirement,
   design or test change accompanied the approval recording.
-- State :: Delivery started; implementation audit has not run.
+- Admission state :: Delivery started; implementation audit had not run.
+
+** Local implementation round 1 - 2026-09-08
+
+- Gate :: implementation.
+- Revision :: =792508b= (full document reader and word-limit settings).
+- Context :: Authoring/delivery context, =/root=.
+- Audits :: =audit-test-code= and =audit-code= together.
+- Verdict :: PASS; no required correction remains in the local review.
+- Test review :: The two retained regression files cover the signed session,
+  preference and admission boundaries. RED at =d7e113e= was 12 assertion
+  failures; GREEN is 12 passes. No host/browser simulation or metered test.
+  Coverage is 99.16% lines across the two imported helpers only; host UI and
+  native reading remain user-test responsibilities, not inferred coverage.
+- Code review :: One complete-source render, single-session invalidation,
+  transient render ownership, disabled task controls, saved-number-only
+  persistence and bundled help follow the signed design. Review also covered
+  explicit installer preflight/copy failure, build isolation and Git sequencing.
+- Preflight corrections :: Kept pending-save controls synchronized when settings
+  is reopened, used the public cross-window DOM check for task events, retained
+  late-render cleanup, and made the article's flex height explicitly scrollable.
+  TypeScript/ESLint/CSS/formatting issues were corrected without suppressions.
+- Evidence :: =make build=, =make lint= and all 12 =make test= cases pass.
+  =npm ci --ignore-scripts --offline= restored all 211 locked development
+  packages successfully before the latest build and regression run.
+- Limits :: Both native user tests and final bounded OT checks remain pending.
+  This review permits the independent implementation audit, not closure.
