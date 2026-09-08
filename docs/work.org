@@ -78,7 +78,7 @@ classification; it is provenance, not current state.
 
 * Work items
 
-** REVIEW W003 - Full document reader for macOS and iOS :feature:
+** ACTIVE W003 - Full document reader for macOS and iOS :feature:
 :PROPERTIES:
 :CUSTOM_ID: w-003
 :PRIORITY: P1
@@ -103,6 +103,9 @@ classification; it is provenance, not current state.
   12 regression tests and both bounded checks passed for the development build.
   [[file:native-testing.md][Native macOS/iOS test checklist]] awaits human evidence.
   No operator closure or release publication is recorded.
+- Installer amendment :: On 2026-09-08, Taḋg directly requested implementation
+  of the =make install= vault-root prompt. Its scoped definition audit passed;
+  delivery continues on the existing feature branch.
 
 * Migration record
 :PROPERTIES:

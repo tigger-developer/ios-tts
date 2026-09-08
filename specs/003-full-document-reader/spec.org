@@ -2,8 +2,8 @@
 #+SUBTITLE: Unified change specification
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
-#+DEFINITION_GATE: PENDING
-#+OPERATOR_SIGNOFF: PENDING
+#+DEFINITION_GATE: PASS
+#+OPERATOR_SIGNOFF: APPROVED
 #+OPERATOR_AUTHORITY: Taḋg
 #+OPERATOR_SIGNOFF_DATE: 2026-09-08
 
@@ -47,7 +47,8 @@
 - Next step :: The *definition audit passed and Taḋg approved implementation*
   on 2026-09-08. The development implementation and its audit now have recorded
   evidence. Perform the *native macOS and physical-iPhone tests* before closure.
-  The requested interactive-install amendment is undergoing its scoped review.
+  The interactive-install amendment passed its scoped definition review and
+  is authorized by the operator's direct implementation instruction.
 
 -----
 
@@ -695,4 +696,4 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Authorization :: Taḋg approved this definition and instructed implementation
   on 2026-09-08: "approved, let's implement". The later direct instruction to
   provide an interactive vault-root installer authorizes that bounded amendment;
-  its gate is reset for review. Release publication remains outside this change.
+  its definition gate passed review. Release publication remains outside this change.

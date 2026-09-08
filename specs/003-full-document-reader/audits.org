@@ -291,6 +291,23 @@
   The two existing runtime regression files are unchanged.
 - Review route :: Resume the same retained =/root/definition_audit= context.
 
+** External installer definition review - round 4
+
+- Date and revision :: 2026-09-08, =d5acbdd=; specification SHA-256
+  =39785af3cc2ed836ea76d14b5ff5af1e79ad279948d9b60b7fe9117d2a235446=.
+- Context :: =/root/definition_audit=, retained Codex/OpenAI =gpt-5.6-luna=;
+  response returned within the configured eight minutes.
+- Audits and verdict :: =audit-spec=, =audit-design= and
+  =audit-test-definitions= together: PASS, no required correction.
+- Findings :: The root prompt, fixed installation path, directory creation,
+  preservation and legacy compatibility are bounded. Validation precedes
+  writes and symlinked child paths are refused. OT003.2 covers the new
+  interface without a persistent installer-test framework.
+- Admission :: Gate PASS and approval record restored for the amended
+  definition. Taḋg's direct instruction to provide this installer is the
+  implementation authority; no new product decision or permission is inferred.
+  The work item is ACTIVE. Earlier verdicts remain scope-specific history.
+
 - Admission :: Taḋg approved the audited amendment on 2026-09-08:
   "approved, let's implement". The specification records approval and the work
   item is ACTIVE. Definition round 3 remains current; no material requirement,
