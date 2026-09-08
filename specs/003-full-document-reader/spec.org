@@ -2,8 +2,8 @@
 #+SUBTITLE: Unified change specification
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
-#+DEFINITION_GATE: PASS
-#+OPERATOR_SIGNOFF: APPROVED
+#+DEFINITION_GATE: PENDING
+#+OPERATOR_SIGNOFF: PENDING
 #+OPERATOR_AUTHORITY: Taḋg
 #+OPERATOR_SIGNOFF_DATE: 2026-09-08
 
@@ -23,6 +23,10 @@
 - Changes :: Add the reader, *settings-panel shortcut help* and a saved
   *100,000-word default limit*. Use normal Markdown rendering. README and
   *docs/VISION.md* explain the same benefits, limitations and listing intent.
+- Installation amendment :: *make install asks for the vault root*, then puts
+  the three built files in =.obsidian/plugins/ios-tts/=. Missing plugin
+  directories are created; settings and unrelated files are preserved.
+  The explicit =PLUGIN_DIR= route remains available for compatibility.
 - Unchanged :: *Obsidian owns rendering; Apple owns speech*. The plugin does
   not edit notes, retain their contents, add network services or control audio.
 - Edge cases :: Handle *empty or unsupported notes*, rendering errors, repeated
@@ -43,6 +47,7 @@
 - Next step :: The *definition audit passed and Taḋg approved implementation*
   on 2026-09-08. The development implementation and its audit now have recorded
   evidence. Perform the *native macOS and physical-iPhone tests* before closure.
+  The requested interactive-install amendment is undergoing its scoped review.
 
 -----
 
@@ -115,6 +120,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   complete native reading of this plugin's output.
 
 ** Constraints, decisions and blockers
+
+- Installation direction :: On 2026-09-08, Taḋg instructed: "give me an install
+  script that `make install` triggers, it should interactively ask for the path
+  of the obsidian vault root". This explicitly authorizes the prompt and
+  vault-root installation amendment. At =a34f42b=, =scripts/install.mjs=
+  required an existing =PLUGIN_DIR= and no prompt existed. The prior rule that
+  missing =PLUGIN_DIR= must fail is superseded. Reader behaviour is unchanged.
 
 - Compatibility :: Support *Obsidian 1.13 or later on macOS 26 and iOS 26 or
   later*. The manifest is mobile-compatible. Other operating systems and
@@ -259,6 +271,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   skips copying artefacts whose contents already match. Invalid
   destinations fail before installation writes; an incomplete copy is reported
   as failure, never success.
+- Vault-root flow :: Plain *make install prompts for the Obsidian vault root*
+  and installs to its =.obsidian/plugins/ios-tts/= directory, creating missing
+  =plugins/= and =ios-tts/= directories. The root and its =.obsidian/= directory
+  must already exist. Blank input, EOF/cancellation and invalid roots produce
+  an actionable non-zero failure without destination writes. Existing symlinks
+  below the root are refused without replacement. Explicit =PLUGIN_DIR=
+  continues to select the former non-interactive existing-directory route.
 - Proven by :: [[#ot-003-2][OT003.2 - Build and local installation]].
 
 ** AC003.10 - Configurable maximum words
@@ -461,13 +480,24 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   destination containing an unrelated sentinel, then repeat unchanged; verify
   the exact three installed artefacts, their hashes, unchanged second-run
   modification times and preservation of the sentinel.
-- Negative cases :: Omit the destination; supply a relative path, nonexistent
+- Negative cases :: In explicit =PLUGIN_DIR= mode, supply a relative path, nonexistent
   path or regular file; or make an artefact target a symlink or directory.
   Each must fail before copying and leave destination contents unchanged.
   Exercise a destination symlink back to the checkout: it builds and verifies
   artefacts without copying over the source. A failed build must not install.
   Inspect the copy-error path for a non-zero exit and partial-installation
   warning; no fault-injection framework is required.
+- Prompt cases :: Exercise the real =make install= prompt with a temporary
+  vault root containing spaces; verify creation of missing plugin directories,
+  exactly three installed files, sentinel preservation and unchanged repeats.
+  Check a =~/= input, optional surrounding quotes, empty input, EOF and Ctrl-C;
+  reject nonexistent roots, regular files, roots lacking =.obsidian/= and
+  symlink/non-directory entries at =.obsidian=, =plugins= or =ios-tts= without
+  changing their contents or targets. Verify the final destination is reported.
+  Check script =-h=, =--help= and =--version= are side-effect-free, and unknown
+  arguments fail. Use a terminal for the interactive smoke check; pipe input for
+  deterministic cases. Retain the bounded one-off classification: this is a
+  small local copy recipe, without a new persistent test framework.
 - Expected :: The package and all stated install/failure cases satisfy
   [[#ac-003-9][AC003.9 - Installable package and explicit destination]].
 - Bounds :: One bounded verification run per final candidate. Use synthetic
@@ -545,13 +575,24 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Package :: =main.js=, =manifest.json= and =styles.css= form the plugin.
   Use manifest identifier =ios-tts=, =minAppVersion: 1.13.0= and
   =isDesktopOnly: false=. README documents the additional OS requirements.
-- Installation :: Invoke =make install PLUGIN_DIR=/absolute/plugin/directory=.
-  Require an explicit existing directory, resolve it to its canonical target
-  and build before copying. Validate all three destination entries before any
+- Installation :: =make install= builds, then runs =scripts/install.mjs=.
+  Unless =PLUGIN_DIR= is non-empty, prompt for the *vault root*, trim the input,
+  allow optional matching surrounding quotes and expand leading =~/= using
+  the platform home-directory API. Require an absolute existing directory and
+  resolve that explicitly selected root canonically. Require an existing real
+  =.obsidian/= directory. Reject symlinks or non-directories at =.obsidian=,
+  =plugins= and =ios-tts= before creating missing plugin directories. These
+  child names are fixed; no vault search or shell evaluation is used.
+  Blank input, EOF and Ctrl-C abort. Readline is closed on every exit.
+- Compatibility :: =make install PLUGIN_DIR=/absolute/plugin/directory= keeps
+  its non-interactive explicit existing-directory semantics, including a
+  directory symlink that the operator explicitly supplied. This route does not
+  prompt or create directories. Both modes validate all artefacts before any
   copy: each must be absent or a regular file, never a symlink or directory.
   Fixed artefact basenames stay within that canonical destination; no recursive
-  copy or inferred destination is allowed. A directory symlink is permitted
-  because the operator explicitly selected it.
+  copy is allowed. The prompt route creates missing directories only after
+  validation. Report the installed destination and remind the user to enable
+  the plugin in Obsidian. Print the disabled-plugin prerequisite before prompting.
 - Replacement :: Replace only changed artefacts and preserve all other files.
   Installation requires the plugin disabled. Individual copies are not a
   transaction: an I/O error exits non-zero, reports possible partial installation
@@ -652,5 +693,6 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   =docs/VISION.md=; validate claims before any separately authorized publication.
   Preserve the archive and its history.
 - Authorization :: Taḋg approved this definition and instructed implementation
-  on 2026-09-08: "approved, let's implement". The definition gate is PASS;
-  delivery is authorized. Release publication remains outside this change.
+  on 2026-09-08: "approved, let's implement". The later direct instruction to
+  provide an interactive vault-root installer authorizes that bounded amendment;
+  its gate is reset for review. Release publication remains outside this change.

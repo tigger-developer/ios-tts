@@ -47,7 +47,20 @@ The build writes `main.js` beside the tracked manifest and stylesheet. You can
 symlink this checkout as the vault's `ios-tts` plugin directory yourself.
 `data.json`, build output and development dependencies are ignored by Git.
 
-For a separate copy, supply an **existing, absolute destination** explicitly:
+For a separate installation, run:
+
+```sh
+make install
+```
+
+The requested installer amendment will ask for the **Obsidian vault root**, such
+as `/Users/yourname/notes`, then install to `.obsidian/plugins/ios-tts/` within
+it. The vault must already contain `.obsidian/`; missing plugin directories
+will be created. Enter the absolute path (spaces need no escaping), or use
+`~/notes`. Blank input or Ctrl-C cancels. Keep the plugin disabled while installing.
+
+The existing non-interactive route remains available for an **existing,
+absolute plugin directory**:
 
 ```sh
 make install PLUGIN_DIR=/absolute/path/to/vault/.obsidian/plugins/ios-tts
@@ -55,8 +68,11 @@ make install PLUGIN_DIR=/absolute/path/to/vault/.obsidian/plugins/ios-tts
 
 Installation builds first, validates all three targets, preserves unrelated
 files (including settings), and leaves identical destination files untouched.
-A destination directory symlink is allowed. A symlink back to this checkout
-needs no copy. Symlinks or directories at individual artefact paths are refused.
+The explicit `PLUGIN_DIR` route allows a destination directory symlink; a
+symlink back to this checkout needs no copy. The vault-root prompt refuses
+symlinked configuration/plugin directories so the synced installation contains
+real files. Existing links are never replaced automatically. Symlinks or
+directories at individual artefact paths are refused.
 Copies are not transactional: after an I/O failure, keep the plugin disabled
 and retry before enabling it. The command never changes the enabled-plugin list.
 

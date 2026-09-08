@@ -270,6 +270,27 @@
 
 * Implementation gate
 
+** Interactive installer definition amendment - 2026-09-08
+
+- Authority :: Taḋg explicitly requested an install script called by
+  =make install= that asks for the Obsidian vault root. This changes the former
+  missing-=PLUGIN_DIR= failure into a prompt; the previous definition and
+  implementation verdicts remain historical for the earlier installer.
+- Gate reset :: Definition gate and sign-off are PENDING while the bounded
+  amendment is audited. The work item remains REVIEW. The direct instruction
+  already authorizes implementing this exact requested installer behaviour.
+- Local round 4 :: =audit-spec=, =audit-design= and =audit-test-definitions=
+  reviewed the amendment together. PASS for specification SHA-256
+  =39785af3cc2ed836ea76d14b5ff5af1e79ad279948d9b60b7fe9117d2a235446=.
+- Findings :: No required correction remains. AC003.9 and OT003.2 cover the
+  prompt, existing vault recognition, fixed child path, missing directories,
+  cancellation, path handling, symlink refusal, compatibility and unchanged
+  file preservation. The README labels the new interface as pending delivery.
+- Test choice :: Extend the bounded installer check and exercise a real
+  terminal; no new persistent test framework or mirrored implementation test.
+  The two existing runtime regression files are unchanged.
+- Review route :: Resume the same retained =/root/definition_audit= context.
+
 - Admission :: Taḋg approved the audited amendment on 2026-09-08:
   "approved, let's implement". The specification records approval and the work
   item is ACTIVE. Definition round 3 remains current; no material requirement,
