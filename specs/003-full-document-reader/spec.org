@@ -41,7 +41,8 @@
   platforms*, and bounded package and security checks. Complete native reading of a
   *100,000-word text note remains unverified* until those user tests pass.
 - Next step :: The *definition audit passed and Taḋg approved implementation*
-  on 2026-09-08. Deliver the specified plugin and record its validation.
+  on 2026-09-08. The development implementation and its audit now have recorded
+  evidence. Perform the *native macOS and physical-iPhone tests* before closure.
 
 -----
 

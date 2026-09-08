@@ -12,11 +12,23 @@
   failures for missing publication, cleanup, validation, persistence and limits.
   This was executable test evidence, not an import or runner failure.
 - Initial GREEN :: The implementation subsequently passed all 12 cases. Final
-  candidate results and implementation-gate evidence follow below when executed.
+  candidate results and implementation-gate evidence are recorded below.
 - Test-tooling adjustment :: Replaced test-only =Promise.withResolvers= with
   explicit controlled promises so the same ES2022 type check covers all files.
   Assertions and expected behaviour were preserved; lint now handles test
   runner promises explicitly. No host simulation or new runtime dependency.
+- Final result :: PASS on 2026-09-08 after the implementation gate, candidate
+  =13e1476= (implementation =792508b=). =make test= exited 0: 12 passed, 0 failed,
+  0 skipped. Session-helper line coverage was 98.21%; preference-helper coverage
+  was 100%, combined 99.16%. This measures only the two imported helpers,
+  not host UI, Markdown rendering or Apple's accessibility implementation.
+- Build and lint :: =make build= and =make lint= exited 0 for the same code,
+  including strict TypeScript, type-aware ESLint, Stylelint and Prettier.
+- Environment :: macOS arm64; isolated official Node 24.20.0 and npm 11.19.0;
+  pinned lock restored with =npm ci --ignore-scripts --offline= (211 packages).
+  The system Node 22 executable failed to load =libsimdutf.34.dylib=; no global
+  installation was changed. The official Node archive's SHA-256 was verified
+  against its published checksum before use. Caches stayed in OS temporary space.
 
 * User tests
 
@@ -35,6 +47,10 @@
   preservation, cleanup and named human authority.
 - Amendment evidence :: Settings help, agreement with README/vision, Mac setup,
   limit boundaries, validation feedback, Save/reload persistence and offline help.
+- Execution :: Not executed by the agent. The built candidate and synthetic
+  fixtures are available for Taḋg's native test; an early macOS reading result
+  was requested. No hardware/version, extraction, playback or source-safety
+  observation has yet been supplied by a human tester.
 
 ** UT003.2 - iOS reading workflow
 :PROPERTIES:
@@ -52,6 +68,8 @@
 - Amendment evidence :: Settings help, triple-click and double-tap Back Tap
   invocation, multi-feature shortcut menu, tested button type, limit boundaries,
   Save/reload persistence and offline help.
+- Execution :: Not executed. A physical iPhone and named human observations
+  are required. No emulation or desktop result substitutes for this test.
 
 * One-off tests
 
@@ -61,13 +79,28 @@
 :END:
 
 - Category :: Bounded one-off review.
-- Status :: PENDING.
+- Status :: PASS.
 - Criteria, procedure, bounds and expected result ::
   [[file:spec.org::#ot-003-1][OT003.1 - Source and security review]].
 - Required evidence :: Tested revision, reviewed source and bundle, reviewer,
   findings, locked dependency audit result and absence of managed-file changes.
 - Amendment evidence :: Preference-only storage, bundled help and absence of
   plugin-owned system-shortcut changes or help downloads.
+- Execution :: 2026-09-08, candidate =13e1476= (implementation =792508b=),
+  authoring context after the independent implementation gate.
+- Review :: Read all three production modules and the generated =main.js= in
+  full. The only runtime module is host-supplied =obsidian=. The note enters
+  =MarkdownRenderer.render= from the current Markdown view. There is no owned
+  network client, speech API, content log, note-write call, raw-HTML insertion
+  or startup document scan. Help is bundled text; the only saved value is
+  validated ={ maxWords }=. Modal/help disposal and stale completion paths
+  release their owned components and DOM. No system shortcut changes.
+- Dependency check :: =make vulncheck= ran one
+  =npm audit --package-lock-only --include=dev= request and exited 0 with
+  =found 0 vulnerabilities=. No dependency mutation or exemption. Git status
+  was empty both before and after the bounded checks.
+- Limit :: This reviews owned source and bundle; it does not audit Obsidian,
+  third-party processors or native extraction. Those are not implied PASS.
 
 ** OT003.2 - Build and local installation
 :PROPERTIES:
@@ -75,15 +108,103 @@
 :END:
 
 - Category :: Bounded one-off check.
-- Status :: PENDING.
+- Status :: PASS.
 - Criteria, procedure, bounds and expected result ::
   [[file:spec.org::#ot-003-2][OT003.2 - Build and local installation]].
 - Required evidence :: Tested revision, pinned tool versions and lock, repeated
   build hashes, parsed manifest, installed file set, repeated-copy timestamps,
   invalid-destination and symlink results, sentinel preservation and cleanup.
+- Execution :: 2026-09-08, candidate =13e1476= (implementation =792508b=),
+  Node 24.20.0/npm 11.19.0. One bounded run in an OS-allocated temporary
+  checkout with the existing local locked dependencies, without network.
+- Positive cases :: Two builds produced identical hashes; the parsed manifest
+  has =id: ios-tts=, =minAppVersion: 1.13.0= and =isDesktopOnly: false=.
+  Installation produced exactly the three artefacts beside unchanged
+  =data.json= sentinel content. Repeating installation preserved every
+  destination hash and modification time. A directory symlink back to the
+  checkout built successfully and reported no copy needed.
+- Negative cases :: Missing, relative, nonexistent and regular-file
+  destinations failed; artefact symlink and directory targets failed before
+  any copy. Existing destination contents remained identical. An intentional
+  TypeScript syntax error in the temporary checkout made the build fail and
+  left the destination unchanged. All 12 recorded case groups passed.
+- Copy-error review :: =scripts/install.mjs= catches a copy error, sets exit
+  status 1 and warns of a possible partial installation with retry instructions.
+  This failure branch was inspected as specified, not fault-injected.
+- Cleanup :: The check's exact temporary directory was removed by its own
+  teardown. The verifier exited 0 and recorded =temporaryDirectoryRemoved: true=.
+  No primary-vault write, enabled-plugin change, iOS transfer or publication.
+- Artefact SHA-256 ::
+  - =main.js= :: =fb53f7ceeb5002c178b0c6703aa3deee03a6ced5cf3d9c85f366a4790a25fff0=
+  - =manifest.json= :: =486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7=
+  - =styles.css= :: =7aaec382de80dbaf0a276f3a2d8535ef1680abbd52e34a6ea6aa3bffdb76c1a0=
+- Lock SHA-256 :: =e8b05edb8fd88eb7b8c85c6798e67b9263ac8d1f0f034317155c1b519d062753=.
+
+* Documentation and handoff
+
+- Updated :: README now explains the three-file installation, symlink workflow,
+  commands, setup flow, platform requirements and listing benefits/limitations.
+  =docs/VISION.md= records the development package and pending release work.
+  The work ledger records the human-validation handoff; this file and
+  =audits.org= retain the implementation evidence.
+- Not affected :: =docs/reader-help.md= already matched the approved setup and
+  limits; it is bundled unchanged. Archived SDLC v2 documents remain historical
+  provenance. No current architecture authority exists to reconcile.
+- Human handoff :: [[file:../../docs/native-testing.md][Native test checklist]].
+  Native macOS/iOS evidence, final listing/name/licence decisions and publication
+  are not established by the automated checks. Only native tests and operator
+  closure remain in this implementation's acceptance path; publication is
+  separately scoped.
 
 * Recording rules
 
 Each executed result records its date, revision, environment and observed
 evidence. A later relevant change supersedes only affected results. PENDING,
 FAIL or stale results do not establish delivery acceptance.
+
+* Synthetic native-test fixtures
+:PROPERTIES:
+:CUSTOM_ID: native-fixtures
+:VISIBILITY: folded
+:END:
+
+- Prepared :: 2026-09-08. These files are test inputs, not executed native tests.
+- Current temporary directory ::
+  =/var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/full-document-reader-fixtures-hAgXGw=.
+- Source hashes before any intentional editing ::
+  - =Empty.md= (0 words) :: =e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855=
+  - =Second.md= (8 words) :: =f9181466a429e79e6338d703adf159ca02078dc6af42e6f03b8a877d82501be8=
+  - =Mixed.md= (71 words) :: =f2f1bd9a8b85cc19e8b381c9308fe662e7f84de016d65d0887b2cab13f326ace=
+  - =Long.md= (100,000 words) :: =2ff168632dceb44ffab17e5107b0cd399847da3f2e4a6897480f456ff890567b=
+- Recipe :: Save this JavaScript as a temporary =.mjs= file and run it with
+  Node 24. It allocates a new OS temporary directory, writes only synthetic
+  Markdown and prints its path and hashes. Move the fixtures into a disposable
+  vault through the operator's normal process. No personal notes are read.
+
+#+begin_src js
+// Native-test fixture recipe. Synthetic text only; never reads the user's vault.
+import fs from "node:fs";
+import path from "node:path";
+import { tmpdir } from "node:os";
+import { createHash } from "node:crypto";
+const destination = fs.mkdtempSync(path.join(tmpdir(), "full-document-reader-fixtures-"));
+const sentence = "The morning tide carried small boats past the harbour while people watched from the stone wall in quiet sunlight.".split(" ");
+const words = Array.from({ length: 100000 }, (_, index) => sentence[index % sentence.length]);
+words[0] = "BEGIN-READER-003";
+words[50000] = "MIDDLE-READER-003";
+words[99999] = "END-READER-003";
+const paragraphs = [];
+for (let index = 0; index < words.length; index += 100) paragraphs.push(words.slice(index, index + 100).join(" "));
+const fixtures = {
+  "Empty.md": "",
+  "Second.md": "# A different note\n\nSecond-note text ends here.\n",
+  "Mixed.md": "---\ntitle: Mixed reader fixture\n---\n\n# Beginning\n\nThis is a **short** complete reading sample, with a [local link](Second.md).\n\n- A list item\n- [ ] A task that must stay unchanged\n\n> A quoted sentence.\n\n| Place | Item |\n| --- | --- |\n| Harbour | Boat |\n\n\`\`\`text\nA code sample.\n\`\`\`\n\nA footnote reference.[^1]\n\n![[Second]]\n\n[^1]: The local footnote.\n\nThe mixed document ends with this sentence.\n",
+  "Long.md": paragraphs.join("\n\n") + "\n"
+};
+const files = {};
+for (const [name, text] of Object.entries(fixtures)) {
+  fs.writeFileSync(path.join(destination, name), text);
+  files[name] = { words: text.match(/\S+/gu)?.length ?? 0, sha256: createHash("sha256").update(text).digest("hex") };
+}
+console.log(JSON.stringify({ destination, files }, null, 2));
+#+end_src

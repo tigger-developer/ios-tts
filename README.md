@@ -86,7 +86,9 @@ reading; the operating system owns speech.
 The approved lean definition is
 [W003 - Full document reader for macOS and iOS](specs/003-full-document-reader/spec.org).
 The settings-help and word-limit amendment passed its definition audit;
-Taḋg approved implementation on 2026-09-08. Delivery is underway.
+Taḋg approved implementation on 2026-09-08. The implementation audit, 12
+regression tests and bounded build/install/security checks passed. The
+[native test checklist](docs/native-testing.md) awaits human evidence.
 
 The [product vision](docs/VISION.md) describes the purpose, limits and proposed
 Community directory listing. The [settings-panel help](docs/reader-help.md)

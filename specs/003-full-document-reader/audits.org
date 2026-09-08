@@ -301,3 +301,27 @@
   packages successfully before the latest build and regression run.
 - Limits :: Both native user tests and final bounded OT checks remain pending.
   This review permits the independent implementation audit, not closure.
+
+** External implementation round 1 - 2026-09-08
+
+- Gate :: implementation.
+- Revision :: Candidate =13e1476=; implementation =792508b=.
+- Retained context :: =/root/implementation_audit=, Codex/OpenAI
+  =gpt-5.6-luna=, with the configured eight-minute timeout.
+- Audits :: =audit-test-code= and =audit-code= together.
+- Verdict :: PASS; no required correction or unresolved finding.
+- Test-code evidence :: The auditor examined both regression files against
+  RT003.1 and RT003.2, their observable assertions and the recorded RED/GREEN
+  evidence. No host, browser or Markdown-engine simulation was added.
+- Code evidence :: The reviewer found the signed complete-source rendering,
+  lifetime cleanup, read-only task handling, preference-only persistence,
+  bundled help and build/install boundaries represented in the candidate.
+- Report correction :: The initial response said PASS but used "Component
+  audit" instead of the required component audit name. It was not admitted as
+  an effective gate. The same retained context confirmed its test-code review
+  and reissued =audit-test-code= and =audit-code= labels, with no source changes,
+  within the original timeout. This was a report-format incident, not a failed
+  code round or a replacement auditor.
+- Disposition :: One local round and one external review round, no failed
+  code round. Effective implementation PASS permits final validation.
+  Native results and operator closure are separate requirements.

@@ -78,7 +78,7 @@ classification; it is provenance, not current state.
 
 * Work items
 
-** ACTIVE W003 - Full document reader for macOS and iOS :feature:
+** REVIEW W003 - Full document reader for macOS and iOS :feature:
 :PROPERTIES:
 :CUSTOM_ID: w-003
 :PRIORITY: P1
@@ -99,6 +99,10 @@ classification; it is provenance, not current state.
 - Scope amendment :: On 2026-09-08 the operator requested settings-panel shortcut
   help and benefits/limitations, a configurable 100,000-word default limit,
   [[file:VISION.md][Product vision]] and investigation of Community directory listing.
+- Validation handoff :: The local and independent implementation audits passed;
+  12 regression tests and both bounded checks passed for the development build.
+  [[file:native-testing.md][Native macOS/iOS test checklist]] awaits human evidence.
+  No operator closure or release publication is recorded.
 
 * Migration record
 :PROPERTIES:
