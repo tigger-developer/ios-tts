@@ -10,12 +10,20 @@
   for Automation against the pre-rewrite package and the maintained JavaScript.
   No new product behaviour or new assertion was introduced. This is preservation
   evidence, not a claimed new RED/GREEN cycle. Static checks use native tools.
-- OT003.1 - Source and security review :: PENDING for the maintained package.
-  Review the final =main.js=, its sole host import, source safety, cleanup and
-  preference-only writes. Earlier package-manager evidence below is historical.
-- OT003.2 - Package and local installation :: PENDING for the Bash replacement.
-  Execute the amended procedure in =spec.org= after the implementation gate,
-  using OS temporary vaults and local repositories with no Node/npm or network.
+- OT003.1 - Source and security review :: PASS on 2026-09-10, candidate
+  =5f55f71= (verified maintained JavaScript package). After the implementation
+  gate, the authoring context read =main.js= in full: its sole import is the
+  host's Obsidian API; note rendering, checkbox protection, resource cleanup,
+  static help and ={ maxWords }=-only writes are preserved. No Node/Electron
+  API, speech service, content log or note persistence is introduced. There is
+  no package-managed dependency graph to scan. Earlier npm evidence is historical.
+- OT003.2 - Package and local installation :: PASS on 2026-09-10 for the same
+  candidate. The bounded verifier repeated all 13 groups below after the gate
+  and exited 0. It used temporary vaults/local Git repositories, stock macOS
+  PATH for installation and the normal hook environment for synchronization.
+  Its own temporary directories were removed by teardown. A separate real
+  terminal check confirmed Ctrl-C failure and a repeat installation reporting
+  zero changed files. No primary vault or real remote was involved in testing.
 - UT003.1 - macOS reading workflow :: PENDING for the rewritten package's native
   smoke test. The operator's earlier report remains recorded below.
 - UT003.2 - iOS reading workflow :: PENDING; no physical-iPhone result is inferred.
@@ -37,6 +45,12 @@
   =557a9d0c8268d8e4f3547c9babc1d33dd6dc2bb0d80d240b4da5bb9460493e95=.
   Manifest, stylesheet and help documentation are byte-identical to the earlier
   package. No primary vault was installed or modified.
+- Tool versions :: macOS JavaScript for Automation; oxlint 1.82.0, Biome 2.5.12;
+  stock Bash 3.2 for installation and the existing Bash 5.3.9 hook environment
+  for Git verification. =make test= reports 12/12 passing assertions.
+- Documentation outcome :: README, Vision, native-test instructions, command
+  help and this specification/validation record describe maintained JavaScript
+  and Bash. The settings-help text, stylesheet and manifest are unchanged.
 
 * Automated regression
 
