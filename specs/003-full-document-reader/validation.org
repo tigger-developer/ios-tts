@@ -6,6 +6,17 @@
 
 - Authority :: The operator authorized a book icon in each note's top toolbar
   with =BYPASS-GATE-7=. It opens the note belonging to that pane.
+- Local evidence :: Candidate =4eb5c58= (note toolbar reader action) passed
+  =make lint= and all 12 =make test= cases on macOS after implementation review.
+- OT003.1 - Source and security review :: PASS for this candidate on 2026-09-10.
+  The authoring context read the maintained package after the gate. Toolbar
+  setup reads view identities only; note text is captured on activation. Each
+  callback uses its own view. Closed-view controls are removed; unload clears
+  all controls and registered workspace events, with a guard for late layout
+  readiness. No note writes, speech, network or dependency changes are added.
+- Documentation outcome :: Specification, README, Vision and native checklist
+  describe the toolbar action. Settings help and installation are unaffected.
+  Existing package verification remains applicable to the unchanged installer.
 - UT003.1 - macOS reading workflow :: PENDING. In a disposable vault, use two
   different notes in split panes. Activate each toolbar icon, including the
   inactive pane's icon, and verify the reader shows that pane's current text.
