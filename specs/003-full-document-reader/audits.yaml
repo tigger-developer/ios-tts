@@ -3,14 +3,14 @@ audits:
     - work_item: W003-full-document-reader
       gate: implementation
       session_id: 01a08bc7-660d-7ae1-9abe-5eb663732302
-      external_round: 2
+      external_round: 3
       status: passed
-      updated: "2026-09-10T17:10:22Z"
-      revision: 5f55f71edc672d7244e99c2c20a102f5ac092a7c
+      updated: "2026-09-10T17:56:45Z"
+      revision: 919631fbb2a1a779e38bf54a1ae76eba791ee10d
       verdict: PASS
       response: |-
         GATE: implementation
-        REVISION: 5f55f71edc672d7244e99c2c20a102f5ac092a7c
+        REVISION: 919631fbb2a1a779e38bf54a1ae76eba791ee10d
         VERDICT: PASS
       history:
         - evidence:
@@ -103,6 +103,72 @@ audits:
             REVISION: 5f55f71edc672d7244e99c2c20a102f5ac092a7c
             VERDICT: PASS
           updated: "2026-09-10T17:10:22Z"
+        - evidence:
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: bb4cc3fd2deb8b497edce8724332429467dcfdfbb62a717c0e3d9081380ce02b
+              bytes: 6465
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/install-help.md
+              sha256: ab1052bd7f7a8901a53a8bed946dd2dca61f6539068d877ffe8c766e5e0da734
+              bytes: 1245
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/native-testing.md
+              sha256: 63cff179034ff23a018d203228a6c15f474ca3b7bffe4f027d8ce9d3d1bb7f78
+              bytes: 2689
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 7ed2577cd5fd68917ca88f300189c423b23e5f9968c82017fa2a7b2e16e26dc7
+              bytes: 3484
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/sync-help.md
+              sha256: af44f731dc34df34446a9076657959196b323146e3ef2569223af04fdc6538b2
+              bytes: 417
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/test-help.md
+              sha256: 50aea646d1efe13bfcc1ee6ec084b7943d447be815a8bef6ae5bcf4e19aae4ff
+              bytes: 495
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 333d29af318be8ee83e7860a91c626e451fca5f24fb81e3e2c47ff18053beaa2
+              bytes: 13654
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7
+              bytes: 264
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/install.sh
+              sha256: 549ad190f42bec813bec2111f17991f38ed71a1c7b2f0e8d4d82fdb3e8a963d6
+              bytes: 2814
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/sync.sh
+              sha256: 75d0120abcf8fdce3ccad4232968ccb7d49f225c7b2db68c08337aba1b729b31
+              bytes: 758
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: 69f875caa7c4e5221476d25c46b6f21e3ceaadd4c0f1dc8a261a7c8b42891f9b
+              bytes: 43014
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: 7aaec382de80dbaf0a276f3a2d8535ef1680abbd52e34a6ea6aa3bffdb76c1a0
+              bytes: 551
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 3
+          revision: 919631fbb2a1a779e38bf54a1ae76eba791ee10d
+          verdict: PASS
+          response: |-
+            GATE: implementation
+            REVISION: 919631fbb2a1a779e38bf54a1ae76eba791ee10d
+            VERDICT: PASS
+          updated: "2026-09-10T17:56:45Z"
 legacy:
     - path: audits.org
       content: |

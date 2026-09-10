@@ -5,6 +5,14 @@
 * Settings Back button amendment, 2026-09-10
 
 - Requirement :: [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
+- Local evidence :: Candidate =919631f= (settings Back button) passed =make
+  lint= and all 12 =make test= cases on macOS after the implementation review.
+  Source review confirmed the new control invokes no save, note operation or
+  speech API, and its listener is released with the settings render owner.
+  These checks do not establish native dismissal or layout.
+- Documentation outcome :: The specification, README and native checklist
+  describe Back and explicit Save. Shortcut help, product benefits, installer
+  and Vision are unaffected by this navigation control.
 - UT003.1 - macOS reading workflow :: PENDING for Back: in a disposable vault,
   activate the button with the keyboard and confirm settings closes. Reopen
   after editing Maximum words without Save; the stored value remains active.
