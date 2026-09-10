@@ -1,0 +1,411 @@
+version: 1
+audits:
+    - work_item: W003-full-document-reader
+      gate: implementation
+      session_id: 01a08bc7-660d-7ae1-9abe-5eb663732302
+      external_round: 1
+      status: passed
+      updated: "2026-09-10T14:49:36Z"
+      revision: 60b0d78
+      verdict: PASS
+      response: |-
+        GATE: implementation
+        REVISION: 60b0d78
+        VERDICT: PASS
+      history:
+        - evidence:
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 642cc24a7b4d0d0afd8a854924ae0560d32300babb3eb4780ab49a06a342b402
+              bytes: 437
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: d11abbc3a63c869815faf519f62af31a162f3c075917739bcc1e4bb2c3a38d3d
+              bytes: 428
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: f7e33d9791f32fc48836df742a9305904d6284c63f6cac219d21640530f7cb0f
+              bytes: 6290
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/package.json
+              sha256: fce89dc77be0d5f7fa308679c68a8f5a163062c86a6cd8d9b74790cc3b136c4f
+              bytes: 724
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/install.mjs
+              sha256: 277d4827c313bc1cfe220fa50ca73c899c5f88e662f0d2c8f49544860715a731
+              bytes: 5027
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: a44d8962889b12a4157aa45c96584c797803d89df80926ef8d539cd264d0f739
+              bytes: 40546
+          round: 1
+          revision: 60b0d78
+          verdict: PASS
+          response: |-
+            GATE: implementation
+            REVISION: 60b0d78
+            VERDICT: PASS
+          updated: "2026-09-10T14:49:36Z"
+legacy:
+    - path: audits.org
+      content: |
+        #+TITLE: W003 - Full document reader audit evidence
+        #+STARTUP: content
+        #+OPTIONS: toc:2 num:nil
+
+        * Definition gate
+
+        - Artefact :: [[file:spec.org][W003 - Full document reader for macOS and iOS]].
+
+        ** Local review - round 1
+        :PROPERTIES:
+        :ROUND: 1
+        :DATE: 2026-09-07
+        :END:
+
+        - Revision :: SHA-256
+          =afc5aa911b10c06eb7c1515a80d378321d4e0f45b600c0d25aa3ab8d2daa248f=.
+        - Context :: Authoring context; not independent evidence.
+        - Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= applied
+          together under the definition gate.
+        - Verdict :: PASS.
+        - Findings and remediation :: Local review clarified dismissal during pending
+          rendering, added explicit source-hash timing after intentional fixture edits,
+          and traced startup document-access review to the lifecycle criterion. The
+          reviewed revision contains these corrections.
+        - Specification review :: Eight described criteria have reciprocal test links;
+          the opening summary matches the scope, design, platform and validation
+          boundaries. Historical requirements are explicitly superseded, with
+          simplification choices exposed for operator sign-off.
+        - Design review :: Public host rendering and a modal keep the implementation
+          small. The session helper isolates cancellation and stale asynchronous work.
+          Native full-document discovery remains an explicit delivery risk, not a
+          documentation-derived success claim.
+        - Test-definition review :: One retained test protects owned state transitions;
+          two real-platform user tests cover the central integration, and a bounded
+          source/security review covers non-functional boundaries. No simulated native
+          reader or permanent dependency-wrapper test is required.
+        - Checks :: Pandoc parsed the Org hierarchy and links; sanitizer produced no
+          differences; =git diff --check= reported no whitespace errors. Product tests
+          were not executed during definition.
+
+        ** External review - round 1
+        :PROPERTIES:
+        :ROUND: 1
+        :DATE: 2026-09-07
+        :CONTEXT: /root/definition_audit
+        :END:
+
+        - Revision :: SHA-256
+          =afc5aa911b10c06eb7c1515a80d378321d4e0f45b600c0d25aa3ab8d2daa248f=.
+        - Auditor :: Codex, OpenAI =gpt-5.6-luna=, one retained context; timeout 8 minutes.
+        - Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= together.
+        - Verdict :: FAIL.
+        - Finding 1 :: [audit-test-definitions] [BLOCKING] The stated build, package,
+          manifest and installation contract lacked a criterion and observable
+          artefact/destination verification.
+        - Finding 2 :: [audit-design] [BLOCKING] Installation did not specify its
+          destination interface, invalid-target behaviour, replacement semantics or
+          path boundary.
+        - Finding 3 :: [audit-spec] [ADVISORY] Notice and documentation brevity needed
+          required message content or explicit human wording review.
+        - Remediation :: Added [[file:spec.org::#ac-003-9][AC003.9 - Installable package and explicit destination]]
+          and [[file:spec.org::#ot-003-2][OT003.2 - Build and local installation]]. Defined
+          =PLUGIN_DIR=, fixed-file copying, preservation, invalid targets, explicit
+          partial-copy failure and the existing operator-managed symlink route.
+          Defined notice content and left exact phrasing to human review. The reader's
+          product behaviour was not expanded.
+        - Supersedes :: None; first independent review. Revised-candidate review is pending.
+
+        ** Local review - round 2
+        :PROPERTIES:
+        :ROUND: 2
+        :DATE: 2026-09-07
+        :END:
+
+        - Revision :: SHA-256
+          =9a54776bb07f54cf5163f46600d6d75640286bcb582c5a695a82a571c89e71c5=.
+        - Context :: Authoring context; not independent evidence.
+        - Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= applied
+          together to the remediation and adjacent scope.
+        - Verdict :: PASS.
+        - Remediation :: The package criterion and bounded installation check cover
+          the missing build and destination contract. Destination selection, fixed-file
+          replacement, unchanged-copy behaviour, invalid paths, the symlink workflow
+          and partial-copy failure are explicit. Notice content is defined; exact
+          wording and README brevity remain human review. No new reader feature or
+          permanent installation-test framework was introduced.
+        - Specification and design review :: The opening summary includes package
+          failures and evidence. Build and copy responsibilities are separated; a
+          failed copy cannot claim a successful installation. Operator-managed symlink
+          testing and manual iOS transfer remain supported.
+        - Test-definition review :: Nine criteria and five test definitions have
+          reciprocal links. The new one-off check observes artefacts and destination
+          effects; source inspection covers copy-error propagation without requiring
+          fault-injection infrastructure.
+        - Checks :: Pandoc parsing, reciprocal traceability, sanitizer comparison and
+          =git diff --check= passed. No product test was executed during definition.
+        - Next review :: Resume the retained external context =/root/definition_audit=.
+
+        ** External review - round 2
+        :PROPERTIES:
+        :ROUND: 2
+        :DATE: 2026-09-07
+        :CONTEXT: /root/definition_audit
+        :END:
+
+        - Revision :: SHA-256
+          =9a54776bb07f54cf5163f46600d6d75640286bcb582c5a695a82a571c89e71c5=,
+          committed as =6cf0b0d= (clarify reader package installation and audit evidence).
+        - Auditor :: Codex, OpenAI =gpt-5.6-luna=, same retained context; timeout
+          8 minutes. The review returned within that limit.
+        - Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= together.
+        - Verdict :: PASS.
+        - Specification advisory :: Summary, scope, criteria, edge cases, design and
+          handoff correspond. The bounded package contract does not restore retired
+          feature requirements.
+        - Design advisory :: Explicit destination handling, the fixed three-file
+          boundary, validation, unchanged copying, symlink handling and partial-copy
+          warning provide a context-independent design. Non-transactional copying is
+          an explicit trade-off.
+        - Test-definition advisory :: The package criterion has a traced bounded
+          check covering build hashes, manifest compatibility, destination effects,
+          unchanged repeats, invalid targets, symlink handling, failed builds and
+          copy-error propagation. Source inspection of the error branch is
+          proportionate; no permanent fault-injection framework is needed.
+        - Required corrections :: None remain in this revision.
+        - Supersedes :: External round 1 for the revised candidate; the earlier FAIL
+          remains recorded above.
+        - Limit :: Definition evidence only. No implementation, build, package,
+          security or native reading result is established by this verdict.
+
+        ** Definition disposition - 2026-09-07
+
+        - Effective gate :: PASS after two local and two external rounds, using one
+          authoring context and one retained external context.
+        - Recording :: The specification gate marker is PASS and the work ledger
+          item is REVIEW. These lifecycle-only updates do not alter audited scope.
+        - Operator sign-off :: PENDING; only explicit operator authority can approve
+          the definition. Implementation has not started.
+        - Presentation :: =sdlc-preview specs/003-full-document-reader/spec.org=
+          returned =Opened spec.org= with exit status 0 on 2026-09-07. Presentation
+          does not establish operator approval.
+
+        ** Operator clarification - long-document preview
+        :PROPERTIES:
+        :DATE: 2026-09-07
+        :END:
+
+        - Revision :: SHA-256
+          =86d801c93c1cd0f3869dc427ff2b5ea5c8068ee661d60b66c5d2142dc3ea3546=.
+        - Authority :: The operator clarified: "long documents only load a portion
+          onto the screen, so the accessibility reader does not have access to the
+          whole document".
+        - Correction :: The summary and problem statement now state that reported
+          limitation directly. The former wording incorrectly presented the motivating
+          problem as uncertainty about what preview establishes.
+        - Scope check :: Local diff review and an exact comparison confirm that
+          acceptance criteria, tests, edge cases, design and handoff are unchanged.
+          This is an editorial clarification, not a material specification change;
+          the definition gate remains PASS and operator sign-off remains PENDING.
+        - Evidence boundary :: The problem statement records the operator's report.
+          The external round 2 verdict remains evidence for its identified revision;
+          no new independent audit or native integration test is claimed here.
+
+        ** Operator amendment - settings help, word limit and listing intent
+        :PROPERTIES:
+        :DATE: 2026-09-08
+        :END:
+
+        - Authority :: The operator requested settings-panel accessibility-shortcut
+          guidance, benefits and limitations, a configurable word limit, =docs/VISION.md=
+          and investigation of marketplace listing with the same pros and cons.
+        - Material changes :: Add bundled help and one saved preference. Replace the
+          no-limit policy with a 100,000-word default, configurable maximum and explicit
+          over-limit refusal. Preserve complete-note rendering for admitted notes.
+          Prepare listing copy and readiness guidance without publishing a release.
+        - Gate reset :: PENDING. The earlier PASS and editorial clarification remain
+          revision-specific history; they do not approve the amended scope. Operator
+          sign-off remains PENDING.
+        - Sources :: Apple reader, accessibility shortcut and Back Tap instructions;
+          Obsidian Community directory submission guidance; and examples of cloud and
+          native TTS alternatives were checked on 2026-09-08. Links are recorded in
+          =docs/VISION.md= and =docs/reader-help.md=.
+        - Review route :: Apply the local composite review, then resume the retained
+          external context =/root/definition_audit= with the amended candidate.
+
+        ** Local review - round 3
+        :PROPERTIES:
+        :ROUND: 3
+        :DATE: 2026-09-08
+        :END:
+
+        - Revision :: Specification SHA-256
+          =78944b46058e4985e55c5f1653e60aa6b061a7cf05de64255e50bb3ab00973bf=.
+        - Supporting revisions :: =docs/VISION.md= SHA-256
+          =6ab15de25e20399fb8bd56ba1cc6c1a948cd7424c1c0d1c62a67b30b30f19ba7=;
+          =docs/reader-help.md= SHA-256
+          =7ed2577cd5fd68917ca88f300189c423b23e5f9968c82017fa2a7b2e16e26dc7=.
+        - Context :: Authoring context; not independent evidence.
+        - Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= applied
+          together to the amendment and adjacent requirements.
+        - Verdict :: PASS.
+        - Specification review :: The operator's additions are explicit, the opening
+          summary represents them, and superseded no-settings/no-limit decisions remain
+          traceable. Complete rendering and refusal are distinct. Listing preparation
+          supplies the same pros/cons without authorizing release publication.
+        - Design review :: One saved number, host settings controls and bundled help
+          keep the addition bounded. Only preference data is persisted, save failures
+          preserve the active value, and admission occurs before Markdown rendering.
+          Native shortcut settings remain user-owned. Symlink-created =data.json= is
+          excluded from Git and preserved by installation.
+        - Test-definition review :: One additional retained definition protects limit
+          boundaries, validation and persistence failure. Existing real-platform user
+          tests cover settings, help and native invocation; the iOS test exercises both
+          requested shortcuts. No browser or marketplace automation was introduced.
+        - Remediation :: Clarified that prohibited persistence concerns note content,
+          added the symlink preference-file boundary, and qualified the cloud-TTS
+          comparison using both cloud and native examples.
+        - Checks :: Eleven criteria and six test definitions have reciprocal links.
+          All seven documents parse, their local file links resolve, the project profile
+          names existing authorities, and the 141-character listing description meets
+          the documented length/full-stop requirements. Sanitizer and whitespace checks
+          pass. Product tests are still unexecuted.
+        - Next review :: Resume the retained external context =/root/definition_audit=.
+
+        ** External review - round 3
+        :PROPERTIES:
+        :ROUND: 3
+        :DATE: 2026-09-08
+        :CONTEXT: /root/definition_audit
+        :END:
+
+        - Revision :: Specification SHA-256
+          =78944b46058e4985e55c5f1653e60aa6b061a7cf05de64255e50bb3ab00973bf=,
+          commit =cf755b4= (define reader settings help and configurable word limit).
+          Supporting document hashes are recorded in local round 3.
+        - Auditor :: Codex, OpenAI =gpt-5.6-luna=, same retained context; timeout
+          8 minutes. The review returned within the limit.
+        - Audits :: =audit-spec=, =audit-design= and =audit-test-definitions= together.
+        - Verdict :: PASS; no blocking finding or mechanical condition remains.
+        - Specification advisory :: One settings panel, one preference, bundled help,
+          qualified speech comparison and listing preparation are bounded and
+          consistent across the summary, documents and detailed requirements. The
+          original README sentence retains its historical iOS motivation and existing
+          spelling; subsequent sections describe the current scope. It is preserved.
+        - Design advisory :: The captured-source word check precedes rendering;
+          admitted notes remain complete. Persistence validation, explicit failure
+          handling and bundled offline help keep the implementation bounded. System
+          shortcut configuration remains user-owned.
+        - Test-definition advisory :: The new regression definition covers preference
+          and admission cases. Existing user tests cover settings help, both requested
+          iPhone routes and native reading. Package/security checks remain proportionate;
+          listing preparation adds no marketplace automation.
+        - Supersedes :: Earlier PASS dispositions for the amended candidate. The
+          earlier rounds and operator clarification remain historical evidence.
+        - Limit :: This verdict does not establish implementation, build, security,
+          listing or native-device results.
+
+        ** Definition disposition - 2026-09-08
+
+        - Effective gate :: PASS after local and retained external round 3. Across
+          the definition and amendment, three local and three external rounds used
+          one authoring context and one retained auditor; one external round failed.
+        - Recording :: The specification gate is PASS and the work item remains REVIEW.
+          Lifecycle-only updates leave the audited requirements and design unchanged.
+        - Operator sign-off :: PENDING. No implementation or release submission has
+          started. The original README wording is the sole editorial advisory.
+        - Presentation :: =sdlc-preview= returned =Opened VISION.md= and
+          =Opened reader-help.md=, then =Opened spec.org=, with exit status 0
+          on 2026-09-08.
+
+        * Implementation gate
+
+        ** Interactive installer definition amendment - 2026-09-08
+
+        - Authority :: Taḋg explicitly requested an install script called by
+          =make install= that asks for the Obsidian vault root. This changes the former
+          missing-=PLUGIN_DIR= failure into a prompt; the previous definition and
+          implementation verdicts remain historical for the earlier installer.
+        - Gate reset :: Definition gate and sign-off are PENDING while the bounded
+          amendment is audited. The work item remains REVIEW. The direct instruction
+          already authorizes implementing this exact requested installer behaviour.
+        - Local round 4 :: =audit-spec=, =audit-design= and =audit-test-definitions=
+          reviewed the amendment together. PASS for specification SHA-256
+          =39785af3cc2ed836ea76d14b5ff5af1e79ad279948d9b60b7fe9117d2a235446=.
+        - Findings :: No required correction remains. AC003.9 and OT003.2 cover the
+          prompt, existing vault recognition, fixed child path, missing directories,
+          cancellation, path handling, symlink refusal, compatibility and unchanged
+          file preservation. The README labels the new interface as pending delivery.
+        - Test choice :: Extend the bounded installer check and exercise a real
+          terminal; no new persistent test framework or mirrored implementation test.
+          The two existing runtime regression files are unchanged.
+        - Review route :: Resume the same retained =/root/definition_audit= context.
+
+        ** External installer definition review - round 4
+
+        - Date and revision :: 2026-09-08, =d5acbdd=; specification SHA-256
+          =39785af3cc2ed836ea76d14b5ff5af1e79ad279948d9b60b7fe9117d2a235446=.
+        - Context :: =/root/definition_audit=, retained Codex/OpenAI =gpt-5.6-luna=;
+          response returned within the configured eight minutes.
+        - Audits and verdict :: =audit-spec=, =audit-design= and
+          =audit-test-definitions= together: PASS, no required correction.
+        - Findings :: The root prompt, fixed installation path, directory creation,
+          preservation and legacy compatibility are bounded. Validation precedes
+          writes and symlinked child paths are refused. OT003.2 covers the new
+          interface without a persistent installer-test framework.
+        - Admission :: Gate PASS and approval record restored for the amended
+          definition. Taḋg's direct instruction to provide this installer is the
+          implementation authority; no new product decision or permission is inferred.
+          The work item is ACTIVE. Earlier verdicts remain scope-specific history.
+
+        - Admission :: Taḋg approved the audited amendment on 2026-09-08:
+          "approved, let's implement". The specification records approval and the work
+          item is ACTIVE. Definition round 3 remains current; no material requirement,
+          design or test change accompanied the approval recording.
+        - Admission state :: Delivery started; implementation audit had not run.
+
+        ** Local implementation round 1 - 2026-09-08
+
+        - Gate :: implementation.
+        - Revision :: =792508b= (full document reader and word-limit settings).
+        - Context :: Authoring/delivery context, =/root=.
+        - Audits :: =audit-test-code= and =audit-code= together.
+        - Verdict :: PASS; no required correction remains in the local review.
+        - Test review :: The two retained regression files cover the signed session,
+          preference and admission boundaries. RED at =d7e113e= was 12 assertion
+          failures; GREEN is 12 passes. No host/browser simulation or metered test.
+          Coverage is 99.16% lines across the two imported helpers only; host UI and
+          native reading remain user-test responsibilities, not inferred coverage.
+        - Code review :: One complete-source render, single-session invalidation,
+          transient render ownership, disabled task controls, saved-number-only
+          persistence and bundled help follow the signed design. Review also covered
+          explicit installer preflight/copy failure, build isolation and Git sequencing.
+        - Preflight corrections :: Kept pending-save controls synchronized when settings
+          is reopened, used the public cross-window DOM check for task events, retained
+          late-render cleanup, and made the article's flex height explicitly scrollable.
+          TypeScript/ESLint/CSS/formatting issues were corrected without suppressions.
+        - Evidence :: =make build=, =make lint= and all 12 =make test= cases pass.
+          =npm ci --ignore-scripts --offline= restored all 211 locked development
+          packages successfully before the latest build and regression run.
+        - Limits :: Both native user tests and final bounded OT checks remain pending.
+          This review permits the independent implementation audit, not closure.
+
+        ** External implementation round 1 - 2026-09-08
+
+        - Gate :: implementation.
+        - Revision :: Candidate =13e1476=; implementation =792508b=.
+        - Retained context :: =/root/implementation_audit=, Codex/OpenAI
+          =gpt-5.6-luna=, with the configured eight-minute timeout.
+        - Audits :: =audit-test-code= and =audit-code= together.
+        - Verdict :: PASS; no required correction or unresolved finding.
+        - Test-code evidence :: The auditor examined both regression files against
+          RT003.1 and RT003.2, their observable assertions and the recorded RED/GREEN
+          evidence. No host, browser or Markdown-engine simulation was added.
+        - Code evidence :: The reviewer found the signed complete-source rendering,
+          lifetime cleanup, read-only task handling, preference-only persistence,
+          bundled help and build/install boundaries represented in the candidate.
+        - Report correction :: The initial response said PASS but used "Component
+          audit" instead of the required component audit name. It was not admitted as
+          an effective gate. The same retained context confirmed its test-code review
+          and reissued =audit-test-code= and =audit-code= labels, with no source changes,
+          within the original timeout. This was a report-format incident, not a failed
+          code round or a replacement auditor.
+        - Disposition :: One local round and one external review round, no failed
+          code round. Effective implementation PASS permits final validation.
+          Native results and operator closure are separate requirements.
+      migrated: "2026-09-10T14:44:55Z"
