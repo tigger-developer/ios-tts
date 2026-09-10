@@ -21,6 +21,22 @@
 - UT003.2 - iOS reading workflow :: PENDING; no physical-iPhone result is inferred.
 - History :: The dated compiler, dependency-lock and Node-runner results below
   describe the superseded implementation and remain preserved as evidence.
+- Preliminary checks :: Candidate =465a3ba= (maintained JavaScript conversion)
+  passed =make lint= and all 12 =make test= cases. The temporary package verifier
+  passed all 13 check groups: stock PATH without Node/npm; manifest; exact files;
+  repeated installs preserving settings, notes and mtimes; root/checkout links;
+  invalid/empty/EOF inputs; invalid child paths; invalid artefact targets;
+  command help/version/errors; test-runner failure propagation; missing-source
+  preflight; identical help text; and local Git synchronization.
+- Verification environment :: Installation used only =/usr/bin:/bin:/usr/sbin:/sbin=.
+  An initial sync fixture encountered the configured global hook's =mapfile=
+  requirement under stock Bash 3.2. The fixture was corrected to use the normal
+  developer environment for Git, with Bash 5.3.9. No hook was changed or bypassed.
+  The temporary repositories and vaults were removed by their own teardown.
+- Package hashes :: =main.js= SHA-256
+  =557a9d0c8268d8e4f3547c9babc1d33dd6dc2bb0d80d240b4da5bb9460493e95=.
+  Manifest, stylesheet and help documentation are byte-identical to the earlier
+  package. No primary vault was installed or modified.
 
 * Automated regression
 
@@ -189,7 +205,7 @@ Each executed result records its date, revision, environment and observed
 evidence. A later relevant change supersedes only affected results. PENDING,
 FAIL or stale results do not establish delivery acceptance.
 
-* Synthetic native-test fixtures
+* Historical synthetic native-test fixtures
 :PROPERTIES:
 :CUSTOM_ID: native-fixtures
 :VISIBILITY: folded
@@ -203,7 +219,10 @@ FAIL or stale results do not establish delivery acceptance.
   - =Second.md= (8 words) :: =f9181466a429e79e6338d703adf159ca02078dc6af42e6f03b8a877d82501be8=
   - =Mixed.md= (71 words) :: =f2f1bd9a8b85cc19e8b381c9308fe662e7f84de016d65d0887b2cab13f326ace=
   - =Long.md= (100,000 words) :: =2ff168632dceb44ffab17e5107b0cd399847da3f2e4a6897480f456ff890567b=
-- Recipe :: Save this JavaScript as a temporary =.mjs= file and run it with
+- Historical recipe :: The following Node-based recipe is retained only as
+  provenance for the earlier fixture hashes. It is superseded as an operational
+  instruction; the maintained plugin and its tests do not use it.
+  The original instruction was to save this JavaScript as a temporary =.mjs= file and run it with
   Node 24. It allocates a new OS temporary directory, writes only synthetic
   Markdown and prints its path and hashes. Move the fixtures into a disposable
   vault through the operator's normal process. No personal notes are read.

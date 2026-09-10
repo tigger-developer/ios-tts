@@ -4,7 +4,8 @@ Open the whole current Markdown note for Apple's Accessibility Reader on
 **macOS and iOS**. Apple supplies speech; the plugin supplies a complete,
 read-only snapshot.
 
-**Development build:** the operator has reported a passing macOS test. Detailed
+**Development package:** the operator reported a passing macOS test before the
+JavaScript conversion; the rewritten package needs a native smoke test. Detailed
 long-note evidence and the physical-iPhone test remain pending. No release has
 been published.
 
@@ -118,5 +119,5 @@ contains the user instructions bundled with the plugin.
 - **Focused purpose:** read-only snapshots using normal Markdown rendering;
   no speech engine, audio export or EPUB/PDF conversion. Apple owns playback.
 
-These are proposed release claims. The development build is available locally;
+These are proposed release claims. The development package is available locally;
 publication requires native-platform evidence and a separate release review.

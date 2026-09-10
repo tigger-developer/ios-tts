@@ -16,7 +16,7 @@
   can read it on *macOS and iOS*.
 - Before :: For long documents, *Obsidian preview loads only a portion* for
   display, so *Accessibility Reader cannot access the whole document*.
-  This project has *no implemented plugin*.
+  At the original starting point, the project had *no implemented plugin*.
 - After :: A *button or command* opens one *read-only snapshot* within the
   configured limit, rendered in full. The user invokes Accessibility Reader
   and presses Play.
@@ -490,6 +490,8 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   unknown or additional arguments fail.
 - Other replaced glue :: Exercise =make sync= in OS temporary local repositories:
   changed commit, unchanged repeat and failed pull. No real remote is contacted.
+  Use the normal developer environment so configured Git hooks retain their
+  prerequisites; only installation is tested with the restricted stock PATH.
   In a temporary test checkout, verify a failed assertion and unresolved promise
   make the native regression runner fail.
 - Expected :: [[#ac-003-9][AC003.9 - Installable package and explicit destination]]
