@@ -90,7 +90,7 @@ classification; it is provenance, not current state.
 
 - Specification :: [[file:../specs/003-full-document-reader/spec.org][W003 - Full document reader for macOS and iOS]].
 - Evidence :: [[file:../specs/003-full-document-reader/audits.yaml][Current audit record]],
-  [[file:../specs/003-full-document-reader/audits.org][Historical reviews]] and
+  [[file:../specs/003-full-document-reader/audits.yaml][Preserved historical reviews]] and
   [[file:../specs/003-full-document-reader/validation.org][Validation record]].
 - Lineage :: Replaces the retired feature 001 draft and reserved feature 002
   restart. Neither identifier is reused. The original draft remains recoverable
@@ -109,6 +109,11 @@ classification; it is provenance, not current state.
   of the =make install= vault-root prompt. On 2026-09-10 the operator requested
   merging into =master= and continuing there under the global =current= branch
   strategy; this supersedes the former feature-branch delivery choice.
+
+- Implementation amendment :: On 2026-09-10 Taḋg explicitly invoked
+  =BYPASS-GATE-7= to remove Node/npm artefacts and maintain a plain JavaScript
+  plugin. Installation and Git synchronization use Bash; macOS supplies the
+  regression-test engine. Reader behaviour and stored settings remain unchanged.
 
 * Migration record
 :PROPERTIES:

@@ -2,6 +2,26 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Current amendment - maintained JavaScript, 2026-09-10
+
+- Authority :: The operator's =BYPASS-GATE-7= request to remove Node/npm and
+  TypeScript while preserving the plugin's behaviour.
+- Regression evidence :: The same 12 assertions passed using macOS JavaScript
+  for Automation against the pre-rewrite package and the maintained JavaScript.
+  No new product behaviour or new assertion was introduced. This is preservation
+  evidence, not a claimed new RED/GREEN cycle. Static checks use native tools.
+- OT003.1 - Source and security review :: PENDING for the maintained package.
+  Review the final =main.js=, its sole host import, source safety, cleanup and
+  preference-only writes. Earlier package-manager evidence below is historical.
+- OT003.2 - Package and local installation :: PENDING for the Bash replacement.
+  Execute the amended procedure in =spec.org= after the implementation gate,
+  using OS temporary vaults and local repositories with no Node/npm or network.
+- UT003.1 - macOS reading workflow :: PENDING for the rewritten package's native
+  smoke test. The operator's earlier report remains recorded below.
+- UT003.2 - iOS reading workflow :: PENDING; no physical-iPhone result is inferred.
+- History :: The dated compiler, dependency-lock and Node-runner results below
+  describe the superseded implementation and remain preserved as evidence.
+
 * Automated regression
 
 - Definition :: [[file:spec.org::#rt-003-1][RT003.1 - Reader session lifetime]].
@@ -153,7 +173,7 @@
   commands, setup flow, platform requirements and listing benefits/limitations.
   =docs/VISION.md= records the development package and pending release work.
   The work ledger records the human-validation handoff; this file and
-  =audits.org= retain the implementation evidence.
+  =audits.yaml= retains the implementation evidence.
 - Not affected :: =docs/reader-help.md= already matched the approved setup and
   limits; it is bundled unchanged. Archived SDLC v2 documents remain historical
   provenance. No current architecture authority exists to reconcile.

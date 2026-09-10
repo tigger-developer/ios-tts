@@ -23,8 +23,10 @@
 - Changes :: Add the reader, *settings-panel shortcut help* and a saved
   *100,000-word default limit*. Use normal Markdown rendering. README and
   *docs/VISION.md* explain the same benefits, limitations and listing intent.
+- Toolchain amendment :: *Maintained JavaScript, no Node/npm or TypeScript*,
+  authorized with =BYPASS-GATE-7= on 2026-09-10.
 - Installation amendment :: *make install asks for the vault root*, then puts
-  the three built files in =.obsidian/plugins/ios-tts/=. Missing plugin
+  the three maintained files in =.obsidian/plugins/ios-tts/=. Missing plugin
   directories are created; settings and unrelated files are preserved.
   The explicit =PLUGIN_DIR= route remains available for compatibility.
 - Unchanged :: *Obsidian owns rendering; Apple owns speech*. The plugin does
@@ -265,7 +267,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 :CUSTOM_ID: ac-003-9
 :END:
 
-- Criterion :: The locked build produces *main.js, manifest.json and styles.css*
+- Criterion :: The maintained package supplies *main.js, manifest.json and styles.css*
   for both supported platforms. Local installation writes *only those three
   files into the explicitly supplied destination*, preserves other files and
   skips copying artefacts whose contents already match. Invalid
@@ -331,7 +333,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Expected :: *Only the newest valid result appears*. Close releases the
   session; invalid input and rejection clear old content and report the correct
   failure category. Superseded results and errors do not disturb a new session.
-- Retention :: One small test file using *Node's built-in test runner* under
+- Retention :: One small JavaScript test file using *macOS JavaScript for Automation* under
   =make test=. It tests owned asynchronous state, not Apple's reader or a fake
   Markdown engine. Automated implementation starts with its expected RED.
 
@@ -357,7 +359,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Expected :: Valid preferences persist; invalid or failed operations never
   replace the active value or silently rewrite storage. Admission implements
   [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]] exactly.
-- Retention :: A second small Node test file under =make test=, written first
+- Retention :: A second small JavaScript test file under =make test=, written first
   with its expected RED. It protects limit decisions and persistence failures;
   it does not simulate settings widgets, Apple shortcuts or the Markdown engine.
 
@@ -449,19 +451,17 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[#ac-003-6][AC003.6 - Native speech and existing access boundaries]] and
   [[#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]] and
   [[#ac-003-10][AC003.10 - Configurable maximum words]].
-- Boundary :: The audited source, generated plugin and their host interfaces.
+- Boundary :: The audited source, maintained plugin and their host interfaces.
 - Procedure :: Review all plugin-owned call paths for writes, content logging,
   network clients, speech APIs, executable HTML insertion and unmanaged
   resources or startup document access. Confirm use of Obsidian's renderer
   without enabling extra capabilities. Confirm settings writes contain only
   =maxWords=, help is bundled rather than downloaded, and no system shortcut is
-  configured by the plugin. Run =make vulncheck= against the
-  committed dependency lock.
+  configured by the plugin. Confirm that only the host-provided Obsidian API
+  is imported and no package-managed dependencies remain.
 - Expected :: *No added content-transfer, note persistence, speech or privileged
-  capability*; no raw-HTML injection; resources have cleanup; the dependency
-  check reports no non-exempt findings and modifies no managed files.
-- Bounds :: One review per final candidate; one non-mutating npm advisory
-  request, dependency metadata only, no note content or metered TTS. No live
+  capability*; no raw-HTML injection; resources have cleanup and no new executable dependency is introduced.
+- Bounds :: One local review per final candidate; no network calls or metered TTS. No live
   malicious payload, remote media fixture or persistent security-test harness.
 - Record :: Result, revision and evidence in =validation.org=. Review is
   not a claim to audit Obsidian or third-party plugins.
@@ -472,40 +472,33 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 :END:
 
 - Covers :: [[#ac-003-9][AC003.9 - Installable package and explicit destination]].
-- Boundary :: The locked build, package and =make install= entry point.
-- Procedure :: In an OS-allocated temporary checkout and destinations, build
-  twice from the same revision, pinned tool versions and npm lock; compare
-  artefact hashes. Parse the manifest for =id: ios-tts=,
-  =minAppVersion: 1.13.0= and =isDesktopOnly: false=. Install to an existing
-  destination containing an unrelated sentinel, then repeat unchanged; verify
-  the exact three installed artefacts, their hashes, unchanged second-run
-  modification times and preservation of the sentinel.
-- Negative cases :: In explicit =PLUGIN_DIR= mode, supply a relative path, nonexistent
-  path or regular file; or make an artefact target a symlink or directory.
-  Each must fail before copying and leave destination contents unchanged.
-  Exercise a destination symlink back to the checkout: it builds and verifies
-  artefacts without copying over the source. A failed build must not install.
-  Inspect the copy-error path for a non-zero exit and partial-installation
-  warning; no fault-injection framework is required.
-- Prompt cases :: Exercise the real =make install= prompt with a temporary
-  vault root containing spaces; verify creation of missing plugin directories,
-  exactly three installed files, sentinel preservation and unchanged repeats.
-  Check a =~/= input, optional surrounding quotes, empty input, EOF and Ctrl-C;
-  reject nonexistent roots, regular files, roots lacking =.obsidian/= and
-  symlink/non-directory entries at =.obsidian=, =plugins= or =ios-tts= without
-  changing their contents or targets. Verify the final destination is reported.
-  Check script =-h=, =--help= and =--version= are side-effect-free, and unknown
-  arguments fail. Use a terminal for the interactive smoke check; pipe input for
-  deterministic cases. Retain the bounded one-off classification: this is a
-  small local copy recipe, without a new persistent test framework.
-- Expected :: The package and all stated install/failure cases satisfy
-  [[#ac-003-9][AC003.9 - Installable package and explicit destination]].
-- Bounds :: One bounded verification run per final candidate. Use synthetic
-  sentinels, an existing local dependency installation and temporary paths;
-  no primary-vault writes, iOS transfer or network calls. Remove the exact
-  temporary test directory afterwards and retain the results in =validation.org=.
-  This checks the thin installation recipe once; it does not require a permanent
-  installer-testing framework.
+- Boundary :: The maintained three-file package and =make install= entry point.
+- Procedure :: In OS temporary vaults, install with a PATH containing only stock
+  macOS tools, excluding Node/npm. Verify exactly =main.js=, =manifest.json= and
+  =styles.css= are copied byte-for-byte. Parse the manifest for =id: ios-tts=,
+  =minAppVersion: 1.13.0= and =isDesktopOnly: false=. Repeat unchanged and compare
+  file hashes, modification times and settings/note sentinels. Compare the help
+  literal with =docs/reader-help.md=.
+- Prompt cases :: Exercise spaces, matching quotes, =~/=, a selected root
+  symlink, blank input, EOF and Ctrl-C. Refuse absent/relative/file roots, absent
+  =.obsidian/= and symlink/file entries at each fixed child path. Include real
+  terminal success and cancellation.
+- Compatibility :: Test explicit =PLUGIN_DIR= and a link to the checkout;
+  reject invalid directories and symlink/directory artefact targets before
+  copying. Missing source artefacts fail before creating plugin directories.
+  Review partial-copy failure reporting. Help/version have no side effects;
+  unknown or additional arguments fail.
+- Other replaced glue :: Exercise =make sync= in OS temporary local repositories:
+  changed commit, unchanged repeat and failed pull. No real remote is contacted.
+  In a temporary test checkout, verify a failed assertion and unresolved promise
+  make the native regression runner fail.
+- Expected :: [[#ac-003-9][AC003.9 - Installable package and explicit destination]]
+  holds without a compiler or Node/npm. No primary-vault or source-note changes.
+- Bounds :: One bounded final run after the implementation gate, synthetic data
+  only, no network or device transfer. Remove only the exact temporary data
+  created by the check and record results in =validation.org=. No persistent
+  installer framework is added.
+
 
 * Edge Cases
 :PROPERTIES:
@@ -561,29 +554,33 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 ** Interfaces and state
 
-- Structure :: Start with =src/main.ts= for host integration, settings UI and
-  the modal; =src/reader-session.ts= for asynchronous lifetime;
-  =src/reader-settings.ts= for preference validation and word-limit admission; and
-  =styles.css=. No content-normalization framework or six-module architecture.
-- Language :: Strict TypeScript compiled to a CommonJS Obsidian bundle, targeting
-  ECMAScript 2022. Node and npm are *development tooling only*; no Node or
-  Electron calls and no added runtime library in the plugin.
-- Build :: Use the ordinary Obsidian TypeScript/esbuild toolchain. Delivery
-  pins current compatible development versions and one npm lockfile. Provide
-  =make build=, =make lint=, =make test=, =make vulncheck=, =make install= and
-  =make sync= with their SDLC meanings; do not add a deployment service.
+- Structure :: One maintained =main.js= with the existing settings, session and
+  Obsidian adapter classes, plus manifest and stylesheet. No bundler, compilation,
+  dependency installation or runtime library.
+- Language :: Plain JavaScript with a CommonJS plugin-class export. Obsidian
+  supplies =require("obsidian")=; no Node/Electron API is imported.
+- Commands :: =make install= and =make sync= use Bash. =make test= executes the
+  same 12 behavioural tests using macOS =osascript=. A small test-only prelude
+  supplies inert host base-class names to load the real package; no Obsidian UI
+  or native reader is instantiated or simulated. =make lint= uses native
+  oxlint/Biome and ShellCheck/shfmt, which are not installation prerequisites.
+  Scripts support stock macOS Bash 3.2 to avoid an extra installation dependency.
+- Removed targets :: =make build= and the npm-based =make vulncheck= are removed:
+  the project has neither compilation nor a package-managed dependency graph.
+  A future dependency requires explicit approval and an applicable security check.
+
 - Package :: =main.js=, =manifest.json= and =styles.css= form the plugin.
   Use manifest identifier =ios-tts=, =minAppVersion: 1.13.0= and
   =isDesktopOnly: false=. README documents the additional OS requirements.
-- Installation :: =make install= builds, then runs =scripts/install.mjs=.
+- Installation :: =make install= runs =scripts/install.sh= without a build.
   Unless =PLUGIN_DIR= is non-empty, prompt for the *vault root*, trim the input,
   allow optional matching surrounding quotes and expand leading =~/= using
-  the platform home-directory API. Require an absolute existing directory and
+  the existing shell home-directory value. Require an absolute existing directory and
   resolve that explicitly selected root canonically. Require an existing real
   =.obsidian/= directory. Reject symlinks or non-directories at =.obsidian=,
   =plugins= and =ios-tts= before creating missing plugin directories. These
   child names are fixed; no vault search or shell evaluation is used.
-  Blank input, EOF and Ctrl-C abort. Readline is closed on every exit.
+  Blank input, EOF and Ctrl-C abort. Bash read failure and interrupt signals abort before copying.
 - Compatibility :: =make install PLUGIN_DIR=/absolute/plugin/directory= keeps
   its non-interactive explicit existing-directory semantics, including a
   directory symlink that the operator explicitly supplied. This route does not
@@ -598,9 +595,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   transaction: an I/O error exits non-zero, reports possible partial installation
   and directs a retry before re-enabling. Do not replace or remove the whole
   destination directory. The copy step leaves identical files untouched;
-  rebuilding may regenerate the checkout's own build outputs.
+  the checkout's files are maintained source.
 - Symlink workflow :: If the canonical destination is the checkout itself,
-  the build already publishes the artefacts through the operator's symlink;
+  the maintained artefacts are already exposed through the operator's symlink;
   verify the three files and skip copying. iOS receives the same files through
   the operator's existing process. Never edit the enabled-plugin list.
 - Settings :: Use Obsidian's =PluginSettingTab= and =Setting= controls for one
@@ -617,11 +614,12 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   it exceeds the captured limit. Do not allocate a second whole-document token
   array or expand embeds just to count. Invalid/over-limit input clears the
   previous reader without invoking the renderer.
-- Help :: Bundle =docs/reader-help.md= into =main.js= as a static text import;
-  render it with the host renderer in the settings tab and clean up its owned
-  component on hide/unload. No runtime fetch, images or embedded resources in
-  help. Its external links open only on user action. Keep the maintained text
-  in the document, not a second copy embedded in TypeScript.
+- Help :: Preserve the existing Markdown help as a readable literal in =main.js=,
+  using the same host renderer and cleanup. =docs/reader-help.md= is its
+  documentation counterpart; review both together and compare their text when
+  either changes. This replaces the build-time import to keep the three-file
+  offline package without a runtime read or download.
+
 - State :: Retain captured source, render component and modal only for their
   session lifetime. The sole durable state is the word-limit preference;
   no database, note-content storage or migration is introduced.
@@ -646,10 +644,10 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   Save only the validated word-limit number through Obsidian's plugin storage.
   The word limit reduces oversized-text rendering attempts; it is not a
   byte-size limit or a defence against arbitrary embedded content.
-- Dependencies :: =make vulncheck= uses npm's non-mutating locked dependency
-  audit, including build dependencies. It remains separate from =make test=;
-  failure or an unavailable scanner blocks its result. Use the standard gate
-  directly, without a new exception-management framework.
+- Dependencies :: Only Obsidian's host API is required. There is no application-
+  managed dependency graph, lockfile, downloaded runtime or build dependency.
+  Native developer linters are not distributed with the plugin.
+
 
 ** Other relevant qualities
 
@@ -684,7 +682,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   for both regression definitions, both platform user tests and both bounded checks.
   Early feasibility trials do not silently count as final acceptance evidence.
 - Audit evidence :: [[file:audits.yaml][Current audit record]].
-- Historical reviews :: [[file:audits.org][Earlier definition and implementation reviews]]
+- Historical reviews :: [[file:audits.yaml][Preserved earlier definition and implementation reviews]]
   preserve the admission evidence. Under the 2026-09-10 SDLC rules, duplicated
   audit status is removed from this document; the historical record retains it.
 - Validation evidence :: [[file:validation.org][Planned and executed validation]].
@@ -699,3 +697,23 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   on 2026-09-08: "approved, let's implement". The later direct instruction to
   provide an interactive vault-root installer authorizes that bounded amendment;
   Release publication remains outside this change.
+
+* Emergency amendment - maintained JavaScript, 2026-09-10
+
+- Authority :: Taḋg instructed: "remove all node/npm artefacts and rewrite it as
+  a simple javascript plugin BYPASS-GATE-7". This request was the temporary
+  specification. This section records reconciliation after implementation.
+- Supersedes :: The TypeScript/esbuild/npm development and installation design.
+  Earlier compiler/build evidence remains historical in =validation.org= and
+  the harness audit record. No retrospective definition gate is requested.
+  Product behaviour and ={ maxWords }= persistence are unchanged.
+- Test choice :: Preserve the same 12 behavioural tests, comparing baseline and
+  rewritten results in the native engine. There is no new product behaviour or
+  new retained assertion, so no artificial RED is manufactured for type erasure.
+  The bounded package check covers toolchain removal and Bash replacements.
+- Assumptions :: Development targets macOS. Stock Bash and the operating system's
+  JavaScript engine replace Node-based glue and test execution. No new runtime,
+  browser automation or host simulator is introduced.
+- Remaining human evidence :: The earlier macOS report remains historical.
+  The rewritten package needs a native smoke test; physical-iPhone validation
+  and operator closure remain separate from automated checks.

@@ -1,25 +1,7 @@
 // ABOUTME: Exercises word counting and preference persistence at owned boundaries.
 // ABOUTME: RT003.2 checks limits and failures without simulating host widgets.
-import assert from "node:assert/strict";
-import { test } from "node:test";
-import {
-  ReaderSettings,
-  DEFAULT_MAX_WORDS,
-  exceedsWordLimit,
-} from "../src/reader-settings.ts";
-import { ReaderSession } from "../src/reader-session.ts";
 
-function deferred() {
-  let resolve!: () => void;
-  let reject!: (error: Error) => void;
-  const promise = new Promise<void>((yes, no) => {
-    resolve = yes;
-    reject = no;
-  });
-  return { promise, resolve, reject };
-}
-
-function settings(initial: unknown = null) {
+function settings(initial = null) {
   let stored = initial;
   let writes = 0;
   const preference = new ReaderSettings({
@@ -105,7 +87,7 @@ void test("RT003.2 invalid input preserves the active limit and storage", async 
 
 void test("RT003.2 pending saves exclude overlaps; failure retains the limit and permits retry", async () => {
   let pending = deferred();
-  const writes: unknown[] = [];
+  const writes = [];
   const preference = new ReaderSettings({
     load: () => Promise.resolve({ maxWords: 3 }),
     save: (value) => {
@@ -147,9 +129,9 @@ void test("RT003.2 counts source tokens at empty, markup and limit boundaries", 
 void test("RT003.2 saved limits affect the next invocation; refusal clears without rendering", async () => {
   const h = settings({ maxWords: 3 });
   await h.preference.load();
-  let visible: string | null = null;
-  const rendered: string[] = [];
-  const notices: Array<[string, number | undefined]> = [];
+  let visible = null;
+  const rendered = [];
+  const notices = [];
   const reader = new ReaderSession({
     notice: (reason, max) => notices.push([reason, max]),
     create: () => {

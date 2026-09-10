@@ -19,4 +19,5 @@ standards:
     technologies:
         - JAVASCRIPT
         - WEB
+        - SHELL
 version: 3

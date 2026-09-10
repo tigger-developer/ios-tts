@@ -1,6 +1,6 @@
 # Full Document Reader: product vision
 
-Last updated: 2026-09-08
+Last updated: 2026-09-10
 
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
@@ -99,3 +99,11 @@ word limit, this vision document and investigation of marketplace listing.
 These replace the earlier draft's README-only help, absence of saved settings
 and absence of a plugin word limit. Complete-document presentation remains
 the governing requirement.
+
+## Implementation simplification
+
+On 2026-09-10 the operator authorized removing Node, npm and TypeScript under
+`BYPASS-GATE-7`. The three installation files are now maintained directly;
+installation uses Bash without a build or package manager. Native reading,
+settings, saved preferences, platform support and listing scope are unchanged.
+The existing logic tests use the JavaScript engine already included with macOS.

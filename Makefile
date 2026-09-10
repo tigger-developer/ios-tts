@@ -1,23 +1,20 @@
-# ABOUTME: Provides build, validation and explicit installation commands.
+# ABOUTME: Installs maintained JavaScript and runs checks without Node or npm.
 # ABOUTME: Installation and synchronization use argument-safe local scripts.
-.PHONY: build lint test vulncheck install sync
+.PHONY: lint test install sync
 export PLUGIN_DIR
 export COMMIT_MESSAGE
 
-build:
-	npm run build
-
 lint:
-	npm run lint
+	oxlint --deny-warnings main.js tests
+	biome format main.js tests styles.css manifest.json --indent-style=space
+	shellcheck scripts/install.sh scripts/sync.sh scripts/test.sh
+	shfmt -d -i 2 scripts/install.sh scripts/sync.sh scripts/test.sh
 
 test:
-	npm test
+	bash scripts/test.sh
 
-vulncheck:
-	npm audit --package-lock-only --include=dev
-
-install: build
-	node scripts/install.mjs
+install:
+	bash scripts/install.sh
 
 sync:
-	node scripts/sync.mjs
+	bash scripts/sync.sh

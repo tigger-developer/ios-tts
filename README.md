@@ -32,56 +32,47 @@ shortened. Reopen the reader after editing; an open snapshot does not update.
 
 ## Develop outside the vault
 
-Use **Node 24 LTS (24.12 or later)** and npm. This candidate was built with
-Node 24.20.0 and npm 11.19.0; direct development dependencies are pinned in
-`package.json`, with transitive versions in `package-lock.json`.
-
-```sh
-npm ci --ignore-scripts
-```
-
-```sh
-make build
-```
-
-The build writes `main.js` beside the tracked manifest and stylesheet. You can
-symlink this checkout as the vault's `ios-tts` plugin directory yourself.
-`data.json`, build output and development dependencies are ignored by Git.
-
-For a separate installation, run:
+The plugin is maintained directly as **main.js**, **manifest.json** and
+**styles.css**. No Node, npm, TypeScript, compilation or dependency installation
+is required. The three files in the checkout are the installation package.
 
 ```sh
 make install
 ```
 
-The installer asks for the **Obsidian vault root**, such
-as `/Users/yourname/notes`, then install to `.obsidian/plugins/ios-tts/` within
-it. The vault must already contain `.obsidian/`; missing plugin directories
-are created. Enter the absolute path (spaces need no escaping), or use
-`~/notes`. Blank input or Ctrl-C cancels. Keep the plugin disabled while installing.
+The Bash installer asks for the **Obsidian vault root**, then copies the three
+files into `.obsidian/plugins/ios-tts/`. The vault must contain `.obsidian/`;
+missing plugin directories are created. Paths may include spaces, matching
+quotes or a leading `~/`. Blank input, EOF or Ctrl-C cancels. Keep the plugin
+disabled while installing.
 
-The existing non-interactive route remains available for an **existing,
-absolute plugin directory**:
+Settings and unrelated files are preserved. Identical files keep their
+modification times. The prompt refuses symlinked configuration/plugin directories;
+existing links are never replaced. After a copy failure, keep the plugin disabled
+and retry. See the [installer help](docs/install-help.md).
+
+The existing non-interactive route accepts an absolute existing plugin directory:
 
 ```sh
 make install PLUGIN_DIR=/absolute/path/to/vault/.obsidian/plugins/ios-tts
 ```
 
-Installation builds first, validates all three targets, preserves unrelated
-files (including settings), and leaves identical destination files untouched.
-The explicit `PLUGIN_DIR` route allows a destination directory symlink; a
-symlink back to this checkout needs no copy. The vault-root prompt refuses
-symlinked configuration/plugin directories so the synced installation contains
-real files. Existing links are never replaced automatically. Symlinks or
-directories at individual artefact paths are refused.
-Copies are not transactional: after an I/O failure, keep the plugin disabled
-and retry before enabling it. The command never changes the enabled-plugin list.
+That route permits an explicitly selected directory symlink. A symlink to this
+checkout requires no copying. For iOS, transfer the actual three files through
+the existing vault synchronization process, then enable the plugin on the phone.
+No clone, compiler or development dependencies are needed on iOS.
 
-- `make lint`: TypeScript, ESLint, CSS and formatting checks.
-- `make test`: the two focused regression files using Node's test runner.
-- `make vulncheck`: one non-mutating npm dependency audit; requires network.
+- `make test`: the 12 session and word-limit checks, using macOS's built-in
+  JavaScript for Automation. See [test help](docs/test-help.md).
+- `make lint`: native `oxlint`, `biome`, `shellcheck` and `shfmt` executables.
+  These are developer checks, not installation prerequisites.
 - `make sync`: stage all changes, commit if needed, pull, then push. Supply
-  `COMMIT_MESSAGE` to replace its default message.
+  `COMMIT_MESSAGE` to replace its default message. See [sync help](docs/sync-help.md).
+
+The former `make build` and npm-based `make vulncheck` targets were removed:
+there is no compilation step or package-managed dependency graph. This replaces
+the previous TypeScript/esbuild development arrangement under the operator's
+2026-09-10 `BYPASS-GATE-7` instruction.
 
 The [validation record](specs/003-full-document-reader/validation.org) separates
 automated evidence from the pending native-platform checks. Remove the testing
@@ -104,7 +95,7 @@ The approved lean definition is
 [W003 - Full document reader for macOS and iOS](specs/003-full-document-reader/spec.org).
 Taḋg approved implementation on 2026-09-08. The
 [audit record](specs/003-full-document-reader/audits.yaml) owns current audit
-evidence; [earlier reviews](specs/003-full-document-reader/audits.org) retain
+evidence; [earlier reviews](specs/003-full-document-reader/audits.yaml) retain
 historical evidence. The [validation record](specs/003-full-document-reader/validation.org)
 records executed checks and the remaining [native tests](docs/native-testing.md).
 

@@ -4,8 +4,8 @@
 Apple's **Accessibility Reader**, and check that its text reaches the ending
 without scrolling the plugin view. If it stops early, record where it stops.
 
-Test the build containing implementation **792508b** in a **disposable vault**,
-with the default theme and only core plugins. The current build is
+Test the current maintained JavaScript package in a **disposable vault**,
+with the default theme and only core plugins. The package is
 `main.js`, `manifest.json` and `styles.css` in the checkout. Record the tested
 commit, device, OS and Obsidian versions, and the tester's name.
 
