@@ -26,6 +26,8 @@ Requires **Obsidian 1.13+**, **macOS 26+** or **iOS 26+**.
 The [settings help](docs/reader-help.md) includes Apple's setup links, the
 Home-button alternative and the menu shown when several shortcuts are selected.
 Help is bundled, so it remains readable offline.
+Use **Back** at the top of the plugin settings to return to the note.
+Back does not save changes; use **Save** to retain a new word limit.
 
 **Maximum words** defaults to **100,000**. Save a positive whole number to use
 on the next invocation. Notes over the limit are refused with a notice, never

@@ -276,6 +276,18 @@ class ReaderSettingsTab extends PluginSettingTab {
     this.helpOwner = owner;
     owner.load();
     const container = this.containerEl;
+    const backButton = container.createEl("button", {
+      text: "Back",
+      attr: { type: "button", "aria-label": "Back to note" },
+    });
+    owner.registerDomEvent(backButton, "click", () => {
+      // Closing settings is an internal host API; check before invoking it.
+      if (typeof this.app.setting?.close !== "function") {
+        new Notice("Use Obsidian's close control to return to the note.");
+        return;
+      }
+      this.app.setting.close();
+    });
     let input = String(this.preference.maxWords);
     const status = container.ownerDocument.createElement("p");
     status.setAttribute("role", "status");

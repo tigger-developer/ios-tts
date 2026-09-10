@@ -2,6 +2,19 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Settings Back button amendment, 2026-09-10
+
+- Requirement :: [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
+- UT003.1 - macOS reading workflow :: PENDING for Back: in a disposable vault,
+  activate the button with the keyboard and confirm settings closes. Reopen
+  after editing Maximum words without Save; the stored value remains active.
+- UT003.2 - iOS reading workflow :: PENDING for the same check by touch on a
+  physical iPhone. Reopening must show one Back button and usable help; also
+  close during help rendering. Record device, versions, revision and tester.
+- Verification choice :: Native user tests cover dismissal and accessibility.
+  No host simulator or source-matching regression is added for a native button.
+  Existing session and preference tests remain applicable.
+
 * Current amendment - maintained JavaScript, 2026-09-10
 
 - Authority :: The operator's =BYPASS-GATE-7= request to remove Node/npm and

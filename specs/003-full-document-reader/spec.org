@@ -39,6 +39,7 @@
 - Decisions :: Target *Obsidian 1.13+*, *macOS 26+* and *iOS 26+*. Development
   stays outside the vault; the operator manages the testing symlink and iOS copy.
 - Settings :: Save *only the word-limit preference* in Obsidian plugin data.
+  A *Back button closes settings* without saving unsubmitted input.
   Help covers *triple-clicking the side/lock button*, *double-tap Back Tap*,
   native speech without usage fees, and macOS setup. No system settings change.
 - Distribution :: Prepare *Community directory copy and readiness guidance*;
@@ -96,6 +97,10 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Operator amendment :: On 2026-09-08, add *settings-panel guidance*, a
   *configurable word limit defaulting to 100,000*, =docs/VISION.md= and
   investigation of marketplace listing with the same benefits and limitations.
+- Settings navigation amendment :: On 2026-09-10, Taḋg requested: "settngs
+  panel needs a back button". Add a native button at the top to close settings
+  and return to the workspace. This refines the existing accessible controls;
+  Save remains explicit and no other reader behaviour changes.
 - Historical evidence :: [[file:../../docs/archive/sdlc-v2/.specify/memory/constitution.md][Archived complete-document principle]]
   and [[file:../../workflow-report-2026-09-05.md][Prior scope and test expansion]].
   The deleted =spec.md=, =plan.md= and =validation.md= are recoverable under
@@ -241,6 +246,8 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   documents at startup. The reader is *scrollable and dismissible* using the
   platform's normal pointer, touch or keyboard controls. Disabling and enabling
   again leaves *one set of controls* and Obsidian usable.
+  The settings panel exposes a *Back button* operable by pointer, touch or
+  keyboard that *closes settings without saving unsubmitted input*.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]],
   [[#ut-003-2][UT003.2 - iOS reading workflow]] and
   [[#ot-003-1][OT003.1 - Source and security review]].
@@ -385,6 +392,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   persistence and that an existing snapshot is unaffected by a limit change.
   Restore 100,000 before the long-note test. Confirm offline help and usable
   labelled input, Save button and links with keyboard or touch as appropriate.
+  Activate Back by touch on iOS and keyboard on macOS; confirm settings closes.
+  Reopen after changing an input without Save: the saved limit remains active,
+  with one Back button and usable help. Also close while help is rendering.
 - Cleanup :: Remove only disposable test data and restore any changed native
   accessibility settings. Record results in [[file:validation.org][Validation evidence]].
 
@@ -611,6 +621,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   defaults normally; malformed data or a rejected read defaults with a notice
   and no write until an explicit valid Save. Use host-managed storage only.
   Ignore its =data.json= in Git during symlink testing; installation preserves it.
+- Settings navigation :: A semantic button labelled *Back* precedes the field.
+  Its click listener belongs to the settings render owner. Use the host's
+  internal =app.setting.close()= method, capability-checked because the public
+  =SettingTab= API exposes no close operation. If unavailable, show a notice
+  directing the user to Obsidian's close control. Native platform tests verify
+  actual dismissal; a simulated host would not establish that contract. No new
+  automated test or framework is justified for this native UI action.
 - Admission :: Count non-empty whitespace-delimited tokens in captured Markdown
   source, including properties and markup. A linear scan may stop as soon as
   it exceeds the captured limit. Do not allocate a second whole-document token

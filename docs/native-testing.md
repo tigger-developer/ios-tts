@@ -22,6 +22,10 @@ commit, device, OS and Obsidian versions, and the tester's name.
    limit with notes below, at and above it; test invalid input, Save, reload and
    raising the limit. An open snapshot stays unchanged. Restore 100,000 before
    the long-note check. Check offline help, links and labelled controls.
+   Use **Back** with the keyboard on Mac and touch on iPhone; settings should
+   close. Reopen after editing without Save and confirm the saved limit remains.
+   Check one Back button appears on each reopening, including after closing
+   while help is still rendering.
 4. **Apple shortcuts:** follow the settings help. Test Mac Command-Escape. On
    the physical iPhone, test triple-click and double-tap Back Tap, including
    the menu with multiple selected accessibility features. Record which phone
