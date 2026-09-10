@@ -13,11 +13,16 @@ commit, device, OS and Obsidian versions, and the tester's name.
    Confirm the full rendered body in order, including the long ending in the
    native reader. Listen through the short note; navigate native playback to
    hear the long ending. Three markers alone do not prove completeness.
-2. **Controls and safety:** try ribbon and command, editing and reading modes,
+2. **Controls and safety:** try the note's top toolbar book icon, ribbon and
+   command, editing and reading modes,
    an unsaved edit, note switching, reopen, no note and a non-Markdown tab.
    Check the task checkbox cannot edit its source. Check scrolling, dismissal,
    disable/enable and one Obsidian restart. Compare source hashes taken after
    deliberate edits and before reader use; reader actions must not change them.
+   On Mac, use two notes in split panes: each toolbar icon must open its own
+   pane's note even when the other pane has focus. On iPhone, verify the top
+   icon's placement and touch action. Change files, close and reopen tabs, and
+   disable/re-enable: expect one icon per Markdown pane and none after disabling.
 3. **Settings:** read the bundled setup and benefits/limitations. Try a small
    limit with notes below, at and above it; test invalid input, Save, reload and
    raising the limit. An open snapshot stays unchanged. Restore 100,000 before

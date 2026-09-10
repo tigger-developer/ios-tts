@@ -2,6 +2,24 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Note toolbar button amendment, 2026-09-10
+
+- Authority :: The operator authorized a book icon in each note's top toolbar
+  with =BYPASS-GATE-7=. It opens the note belonging to that pane.
+- UT003.1 - macOS reading workflow :: PENDING. In a disposable vault, use two
+  different notes in split panes. Activate each toolbar icon, including the
+  inactive pane's icon, and verify the reader shows that pane's current text.
+  Check editing and reading modes, unsaved edits and changing files in one pane.
+- UT003.2 - iOS reading workflow :: PENDING. On a physical iPhone, confirm the
+  top toolbar icon is visible and operable by touch and opens the current note.
+- Shared lifecycle checks :: Close and reopen notes, switch tabs, and disable
+  and re-enable the plugin. Expect one icon per Markdown pane, none added to
+  other view types, and removal on disable. Record revision, device, versions
+  and tester. Keyboard operation on Mac uses the host's action control.
+- Test choice :: Native user tests verify the host toolbar and pane lifecycle.
+  Existing regression tests cover snapshot rendering and replacement. No mock
+  workspace or new browser harness is introduced for host-owned controls.
+
 * Settings Back button amendment, 2026-09-10
 
 - Requirement :: [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].

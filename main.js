@@ -347,6 +347,7 @@ class ReaderSettingsTab extends PluginSettingTab {
 class FullDocumentReaderPlugin extends Plugin {
   reader = null;
   settingsTab = null;
+  headerButtons = new Map();
   stopped = false;
   async onload() {
     this.stopped = false;
@@ -377,8 +378,9 @@ class FullDocumentReaderPlugin extends Plugin {
       },
     });
     this.reader = reader;
-    const openReader = () => {
-      const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    const openReader = (
+      view = this.app.workspace.getActiveViewOfType(MarkdownView),
+    ) => {
       const file = view?.file;
       const snapshot =
         view && file?.extension === "md"
@@ -386,17 +388,49 @@ class FullDocumentReaderPlugin extends Plugin {
           : null;
       void reader.open(snapshot, preference.maxWords);
     };
-    this.addRibbonIcon("book-open", "Open full document reader", openReader);
+    this.addRibbonIcon("book-open", "Open full document reader", () =>
+      openReader(),
+    );
     this.addCommand({
       id: "open-full-document-reader",
       name: "Open full document reader",
-      callback: openReader,
+      callback: () => openReader(),
     });
+    const updateHeaders = () => this.updateHeaderButtons(openReader);
+    this.registerEvent(this.app.workspace.on("layout-change", updateHeaders));
+    this.registerEvent(this.app.workspace.on("file-open", updateHeaders));
+    this.app.workspace.onLayoutReady(updateHeaders);
     this.settingsTab = new ReaderSettingsTab(this.app, this, preference);
     this.addSettingTab(this.settingsTab);
   }
+  updateHeaderButtons(openReader) {
+    if (this.stopped) return;
+    const views = new Set(
+      this.app.workspace
+        .getLeavesOfType("markdown")
+        .map((leaf) => leaf.view)
+        .filter((view) => view instanceof MarkdownView),
+    );
+    for (const [view, button] of this.headerButtons) {
+      if (!views.has(view)) {
+        button.remove();
+        this.headerButtons.delete(view);
+      }
+    }
+    for (const view of views) {
+      if (this.headerButtons.has(view)) continue;
+      const button = view.addAction(
+        "book-open",
+        "Open full document reader",
+        () => openReader(view),
+      );
+      this.headerButtons.set(view, button);
+    }
+  }
   onunload() {
     this.stopped = true;
+    for (const button of this.headerButtons.values()) button.remove();
+    this.headerButtons.clear();
     this.reader?.close();
     this.reader = null;
     this.settingsTab?.hide();

@@ -20,8 +20,9 @@ Requires **Obsidian 1.13+**, **macOS 26+** or **iOS 26+**.
 2. In the plugin settings panel, follow the bundled Apple shortcut instructions.
    iPhone supports triple-clicking the side/lock button, or double-tap Back Tap
    assigned to Accessibility Shortcut. On Mac, use Command-Escape after setup.
-3. Open a note, choose **Open full document reader** from the ribbon or command
-   palette, invoke **Accessibility Reader**, then press **Play**.
+3. Open a note and use the **book icon in its top toolbar**, or choose
+   **Open full document reader** from the ribbon or command palette. Invoke
+   **Accessibility Reader**, then press **Play**.
 
 The [settings help](docs/reader-help.md) includes Apple's setup links, the
 Home-button alternative and the menu shown when several shortcuts are selected.

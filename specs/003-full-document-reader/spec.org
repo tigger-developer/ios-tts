@@ -23,6 +23,7 @@
 - Changes :: Add the reader, *settings-panel shortcut help* and a saved
   *100,000-word default limit*. Use normal Markdown rendering. README and
   *docs/VISION.md* explain the same benefits, limitations and listing intent.
+  Each Markdown pane has a *top toolbar book icon* that opens its own note.
 - Toolchain amendment :: *Maintained JavaScript, no Node/npm or TypeScript*,
   authorized with =BYPASS-GATE-7= on 2026-09-10.
 - Installation amendment :: *make install asks for the vault root*, then puts
@@ -72,7 +73,8 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 ** Scope
 
 - Included :: One *Open full document reader* ribbon button and equivalent
-  command; one scrollable reader; one settings panel containing *shortcut help
+  command, plus a *book icon in each Markdown pane's top toolbar*;
+  one scrollable reader; one settings panel containing *shortcut help
   and a maximum-word setting*; README, vision and listing preparation.
 - Content :: Pass the *entire current Markdown source* to Obsidian's public
   renderer. Preserve its normal body rendering, including links and embeds.
@@ -167,10 +169,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 :END:
 
 - Criterion :: For an active Markdown note *within the configured word limit*
-  in editing or reading mode, the reader button and command present its
+  in editing or reading mode, the reader buttons and command present its
   *complete current rendered body in
   document order*, including current editor changes. Empty content is valid.
   Opening again captures the *current note*, not the previous snapshot.
+  A pane's *toolbar icon opens that pane's note*, including unsaved text,
+  regardless of which pane previously had focus. Ribbon and command continue
+  to use the active note.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
   [[#ut-003-2][UT003.2 - iOS reading workflow]].
 
@@ -248,6 +253,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   again leaves *one set of controls* and Obsidian usable.
   The settings panel exposes a *Back button* operable by pointer, touch or
   keyboard that *closes settings without saving unsubmitted input*.
+  Each Markdown pane has *one named toolbar book icon*, added to existing and
+  newly opened panes and removed on plugin disable. Non-Markdown panes receive
+  no icon. Reopening panes and re-enabling the plugin create no duplicates.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]],
   [[#ut-003-2][UT003.2 - iOS reading workflow]] and
   [[#ot-003-1][OT003.1 - Source and security review]].
@@ -395,6 +403,11 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   Activate Back by touch on iOS and keyboard on macOS; confirm settings closes.
   Reopen after changing an input without Save: the saved limit remains active,
   with one Back button and usable help. Also close while help is rendering.
+  Exercise the toolbar icon in editing and reading modes. On Mac, use two
+  different notes in split panes and activate each icon, including the inactive
+  pane's; expect that pane's full current text. On iPhone, check top-toolbar
+  placement and touch activation. Change files, close/reopen tabs and disable/
+  re-enable: expect one icon per Markdown pane and no leftover icon on disable.
 - Cleanup :: Remove only disposable test data and restore any changed native
   accessibility settings. Record results in [[file:validation.org][Validation evidence]].
 
@@ -546,6 +559,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 1. Load and validate the word-limit preference, then register the *ribbon
    button, command and settings tab* through Obsidian's =Plugin= API.
+   Add a *toolbar book icon to each Markdown pane* once the layout is ready.
    Perform no document work during plugin startup.
 2. Capture the active =MarkdownView=, its file path and =getViewData()= *once
    before asynchronous work*. Validate a present Markdown file; do not read
@@ -577,6 +591,14 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   or native reader is instantiated or simulated. =make lint= uses native
   oxlint/Biome and ShellCheck/shfmt, which are not installation prerequisites.
   Scripts support stock macOS Bash 3.2 to avoid an extra installation dependency.
+- Toolbar :: Use the public =MarkdownView.addAction()= API with =book-open=
+  and the name *Open full document reader*. Keep a map of views to their button
+  elements. Reconcile against loaded Markdown views on layout readiness,
+  =layout-change= and =file-open=; remove controls for closed views and all
+  controls on unload. Register events through the plugin lifecycle, and ignore
+  a late layout-ready callback after unload. Capture the owning view in each
+  callback but read its current text only on activation. No note contents are
+  read just to add a toolbar control.
 - Removed targets :: =make build= and the npm-based =make vulncheck= are removed:
   the project has neither compilation nor a package-managed dependency graph.
   A future dependency requires explicit approval and an applicable security check.
@@ -736,3 +758,18 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Remaining human evidence :: The earlier macOS report remains historical.
   The rewritten package needs a native smoke test; physical-iPhone validation
   and operator closure remain separate from automated checks.
+
+* Emergency amendment - note toolbar button, 2026-09-10
+
+- Authority :: Taḋg asked for a button at the top of the document view and
+  authorized the proposed book icon with "let's do that BYPASS-GATE-7".
+  The proposal and request were the temporary specification; this section
+  reconciles the delivered scope into the existing reader specification.
+- Behaviour :: A top toolbar book icon opens the *note belonging to its pane*.
+  Existing ribbon, command, settings, rendering and speech ownership remain.
+- Evidence selection :: Extend [[#ut-003-1][UT003.1 - macOS reading workflow]]
+  and [[#ut-003-2][UT003.2 - iOS reading workflow]] for placement, activation,
+  split-pane ownership and lifecycle. A mock workspace would not establish
+  host layout or accessibility, so no new retained automation is added.
+  Existing session and preference regressions remain applicable; the bounded
+  source review checks control cleanup and the absence of new content access.
