@@ -12,7 +12,8 @@ authoritative representation:
 - *Classification* :: One or more tags on that headline.
 - *Stable metadata* :: The work item's property drawer.
 - *Current definition* :: The linked =spec.org= file.
-- *Evidence* :: The linked =audits.org= and =validation.org= files.
+- *Evidence* :: The linked =audits.yaml= and =validation.org= files;
+  earlier =audits.org= reviews remain historical evidence.
 - *History* :: Git history and explicitly linked archived sources.
 
 Do not repeat lifecycle state in a property, section, specification, or evidence
@@ -84,11 +85,12 @@ classification; it is provenance, not current state.
 :PRIORITY: P1
 :SOURCE: operator
 :CREATED: 2026-09-07
-:BRANCH: 003-full-document-reader
+:BRANCH: master
 :END:
 
 - Specification :: [[file:../specs/003-full-document-reader/spec.org][W003 - Full document reader for macOS and iOS]].
-- Evidence :: [[file:../specs/003-full-document-reader/audits.org][Definition audits]] and
+- Evidence :: [[file:../specs/003-full-document-reader/audits.yaml][Current audit record]],
+  [[file:../specs/003-full-document-reader/audits.org][Historical reviews]] and
   [[file:../specs/003-full-document-reader/validation.org][Validation record]].
 - Lineage :: Replaces the retired feature 001 draft and reserved feature 002
   restart. Neither identifier is reused. The original draft remains recoverable
@@ -99,13 +101,14 @@ classification; it is provenance, not current state.
 - Scope amendment :: On 2026-09-08 the operator requested settings-panel shortcut
   help and benefits/limitations, a configurable 100,000-word default limit,
   [[file:VISION.md][Product vision]] and investigation of Community directory listing.
-- Validation handoff :: The local and independent implementation audits passed;
-  12 regression tests and both bounded checks passed for the development build.
-  [[file:native-testing.md][Native macOS/iOS test checklist]] awaits human evidence.
+- Validation handoff :: Executed checks and the operator's macOS test report
+  are recorded in the validation record. The
+  [[file:native-testing.md][Native macOS/iOS test checklist]] identifies remaining evidence.
   No operator closure or release publication is recorded.
 - Installer amendment :: On 2026-09-08, Taḋg directly requested implementation
-  of the =make install= vault-root prompt. Its scoped definition audit passed;
-  delivery continues on the existing feature branch.
+  of the =make install= vault-root prompt. On 2026-09-10 the operator requested
+  merging into =master= and continuing there under the global =current= branch
+  strategy; this supersedes the former feature-branch delivery choice.
 
 * Migration record
 :PROPERTIES:

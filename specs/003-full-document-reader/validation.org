@@ -47,10 +47,11 @@
   preservation, cleanup and named human authority.
 - Amendment evidence :: Settings help, agreement with README/vision, Mac setup,
   limit boundaries, validation feedback, Save/reload persistence and offline help.
-- Execution :: Not executed by the agent. The built candidate and synthetic
-  fixtures are available for Taḋg's native test; an early macOS reading result
-  was requested. No hardware/version, extraction, playback or source-safety
-  observation has yet been supplied by a human tester.
+- Operator report :: Taḋg stated, "OK, MacOS test passes." Recorded on
+  2026-09-10. This supersedes the earlier absence of a human macOS result.
+  The report did not identify a revision, hardware/software versions, fixture
+  size or individual checklist observations; the complete evidence entry stays
+  PENDING without inferring those details. No native test was executed by the agent.
 
 ** UT003.2 - iOS reading workflow
 :PROPERTIES:

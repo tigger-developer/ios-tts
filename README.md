@@ -4,8 +4,9 @@ Open the whole current Markdown note for Apple's Accessibility Reader on
 **macOS and iOS**. Apple supplies speech; the plugin supplies a complete,
 read-only snapshot.
 
-**Development build:** native reading through the end of a long note is still
-awaiting the macOS and physical-iPhone tests. No release has been published.
+**Development build:** the operator has reported a passing macOS test. Detailed
+long-note evidence and the physical-iPhone test remain pending. No release has
+been published.
 
 ## Install and use
 
@@ -53,10 +54,10 @@ For a separate installation, run:
 make install
 ```
 
-The requested installer amendment will ask for the **Obsidian vault root**, such
+The installer asks for the **Obsidian vault root**, such
 as `/Users/yourname/notes`, then install to `.obsidian/plugins/ios-tts/` within
 it. The vault must already contain `.obsidian/`; missing plugin directories
-will be created. Enter the absolute path (spaces need no escaping), or use
+are created. Enter the absolute path (spaces need no escaping), or use
 `~/notes`. Blank input or Ctrl-C cancels. Keep the plugin disabled while installing.
 
 The existing non-interactive route remains available for an **existing,
@@ -101,10 +102,11 @@ reading; the operating system owns speech.
 
 The approved lean definition is
 [W003 - Full document reader for macOS and iOS](specs/003-full-document-reader/spec.org).
-The settings-help and word-limit amendment passed its definition audit;
-Taḋg approved implementation on 2026-09-08. The implementation audit, 12
-regression tests and bounded build/install/security checks passed. The
-[native test checklist](docs/native-testing.md) awaits human evidence.
+Taḋg approved implementation on 2026-09-08. The
+[audit record](specs/003-full-document-reader/audits.yaml) owns current audit
+evidence; [earlier reviews](specs/003-full-document-reader/audits.org) retain
+historical evidence. The [validation record](specs/003-full-document-reader/validation.org)
+records executed checks and the remaining [native tests](docs/native-testing.md).
 
 The [product vision](docs/VISION.md) describes the purpose, limits and proposed
 Community directory listing. The [settings-panel help](docs/reader-help.md)

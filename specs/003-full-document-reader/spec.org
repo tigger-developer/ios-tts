@@ -2,7 +2,7 @@
 #+SUBTITLE: Unified change specification
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
-#+DEFINITION_GATE: PASS
+#+AUDIT_RECORD: audits.yaml
 #+OPERATOR_SIGNOFF: APPROVED
 #+OPERATOR_AUTHORITY: Taḋg
 #+OPERATOR_SIGNOFF_DATE: 2026-09-08
@@ -44,11 +44,10 @@
 - Evidence :: Focused session and word-limit tests, *native user tests on both
   platforms*, and bounded package and security checks. Complete native reading of a
   *100,000-word text note remains unverified* until those user tests pass.
-- Next step :: The *definition audit passed and Taḋg approved implementation*
-  on 2026-09-08. The development implementation and its audit now have recorded
-  evidence. Perform the *native macOS and physical-iPhone tests* before closure.
-  The interactive-install amendment passed its scoped definition review and
-  is authorized by the operator's direct implementation instruction.
+- Next step :: *Taḋg approved implementation* on 2026-09-08, including the
+  interactive installer through a direct implementation instruction. Consult
+  [[file:audits.yaml][Current audit evidence]] and
+  [[file:validation.org][Executed checks and remaining native evidence]] before closure.
 
 -----
 
@@ -684,7 +683,10 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Final verification :: After the implementation gate, record current results
   for both regression definitions, both platform user tests and both bounded checks.
   Early feasibility trials do not silently count as final acceptance evidence.
-- Definition evidence :: [[file:audits.org][Definition audit evidence]].
+- Audit evidence :: [[file:audits.yaml][Current audit record]].
+- Historical reviews :: [[file:audits.org][Earlier definition and implementation reviews]]
+  preserve the admission evidence. Under the 2026-09-10 SDLC rules, duplicated
+  audit status is removed from this document; the historical record retains it.
 - Validation evidence :: [[file:validation.org][Planned and executed validation]].
 - Documentation impact :: Keep README, bundled settings help and vision aligned
   on shortcut setup, free native speech, cloud costs, platform support, the
@@ -696,4 +698,4 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Authorization :: Taḋg approved this definition and instructed implementation
   on 2026-09-08: "approved, let's implement". The later direct instruction to
   provide an interactive vault-root installer authorizes that bounded amendment;
-  its definition gate passed review. Release publication remains outside this change.
+  Release publication remains outside this change.
