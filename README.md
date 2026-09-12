@@ -28,6 +28,10 @@ Once rendering finishes, a hint beneath the reader title shows **⌘Esc** on Mac
 (or the customized shortcut), or reminds iOS users to use their accessibility
 shortcut. Setup instructions remain in the plugin settings panel.
 
+The reader moves keyboard focus into the rendered document and temporarily
+isolates the background workspace. Closing it restores background interaction.
+Native Accessibility Reader extraction still needs macOS and iPhone validation.
+
 The [settings help](docs/reader-help.md) includes Apple's setup links, the
 Home-button alternative and the menu shown when several shortcuts are selected.
 Help is bundled, so it remains readable offline.

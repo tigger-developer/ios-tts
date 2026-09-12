@@ -2,6 +2,35 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Paired focus and background isolation, 2026-09-12
+
+- Authority :: Taḋg accepted the review recommendations and explicitly selected
+  paired development for their implementation.
+- Requirements :: [[file:spec.org::#ac-003-2][AC003.2 - Complete native reading]]
+  and [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
+- UT003.1 - macOS reading workflow :: PENDING for this amendment. Open a short
+  note, invoke Accessibility Reader after rendering and check that sidebar and
+  other-tab text are absent. Check initial document focus, Tab containment and
+  ordinary dismissal. The workspace must work again after closing, closing
+  during preparation, replacement and plugin disable. A newer foreground
+  dialog must keep focus if an older render finishes.
+- UT003.2 - iOS reading workflow :: PENDING for the same reading and cleanup
+  checks by touch on a physical iPhone. Record revision, versions and tester.
+- Provisional paired validation :: No operator result for this candidate yet.
+- Test choice :: Existing regression tests protect session cancellation and
+  preference handling. Native DOM focus, host modal behaviour and Apple's
+  extraction need platform validation; no new test architecture is introduced.
+- Local evidence :: On 2026-09-12 the focus/isolation working candidate passed
+  =make lint= and all 12 =make test= cases on macOS. No new automated assertion
+  was added and no RED/GREEN claim is made for DOM behaviour. Source review
+  covered publication, normal close, failed render, replacement and unload:
+  background restoration occurs in the shared disposal path, before host close;
+  stale publication is guarded and another foreground focus target is retained.
+- Documentation outcome :: Specification, README and native checklist describe
+  the bounded amendment and pending native evidence. Vision and settings help
+  are unaffected: purpose, shortcut setup, limits and speech ownership remain
+  unchanged. No installer or runtime dependency changes.
+
 * Platform shortcut hint, 2026-09-12
 
 - Authority :: The operator approved a hint beneath the reader title after

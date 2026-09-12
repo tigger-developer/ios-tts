@@ -45,6 +45,9 @@
   native speech without usage fees, and macOS setup. No system settings change.
 - Reader hint :: Once rendering finishes, show a *platform-specific shortcut
   hint beneath the title*, outside the document article.
+- Accessibility amendment :: *Focus the document after rendering* and make the
+  surrounding workspace *inert while the reader is open*. Restore prior state
+  on dismissal; native extraction still requires a reading check.
 - Distribution :: Prepare *Community directory copy and readiness guidance*;
   actual release and listing submission follow operator review.
 - Evidence :: Focused session and word-limit tests, *native user tests on both
@@ -131,6 +134,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   complete native reading of this plugin's output.
 
 ** Constraints, decisions and blockers
+
+- Paired authority, 2026-09-12 :: Taḋg accepted the focus and modal-isolation
+  recommendations: "accept your recs, pls implement it in paired dev mode".
+  Reuse this work item for the bounded amendment. The source review found no
+  explicit focus transfer after asynchronous publication; the reported unwanted
+  background text in Apple's reader remains an observed integration symptom,
+  not a proven diagnosis of Obsidian's modal implementation.
 
 - Installation direction :: On 2026-09-08, Taḋg instructed: "give me an install
   script that `make install` triggers, it should interactively ask for the path
@@ -258,6 +268,12 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   Each Markdown pane has *one named toolbar book icon*, added to existing and
   newly opened panes and removed on plugin disable. Non-Markdown panes receive
   no icon. Reopening panes and re-enabling the plugin create no duplicates.
+  Opening the reader *isolates the surrounding workspace from interaction and
+  accessibility navigation*. Successful rendering *focuses the document start*,
+  unless another foreground control has taken focus. Closing, failed rendering,
+  replacement and unload *restore the previous background state* and return
+  focus when the previous target still exists, without stealing focus from a
+  newer foreground view.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]],
   [[#ut-003-2][UT003.2 - iOS reading workflow]] and
   [[#ot-003-1][OT003.1 - Source and security review]].
@@ -418,6 +434,14 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   Check the shortcut hint is absent during preparation and appears beneath the
   title after publication: Mac Command-Escape or iOS accessibility shortcut.
   It stays outside the article, wraps legibly and leaves the note scrollable.
+- Paired accessibility check :: Open a short note and invoke Apple's reader
+  immediately after rendering. Expect the note without sidebar or other-tab
+  text prefixed to it. Keyboard focus begins in the document; Tab remains in
+  the modal. Close and confirm the note and sidebar work again. Repeat opening
+  and closing, close during preparation, and disable while open. A newer dialog
+  opened during preparation must retain focus when rendering settles. Native
+  macOS/iPhone behaviour remains user-test evidence; the existing pure-logic
+  suite does not simulate DOM focus or Apple's extraction.
 - Cleanup :: Remove only disposable test data and restore any changed native
   accessibility settings. Record results in [[file:validation.org][Validation evidence]].
 
@@ -721,9 +745,22 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 
 ** Other relevant qualities
 
-- Accessibility :: Inherit Obsidian's theme and modal focus/dismissal behaviour.
-  Use semantic document markup and accessible names; verify native reading on
-  both platforms instead of inferring it from the DOM.
+- Accessibility :: Retain Obsidian's theme and modal dismissal. Set an explicit
+  labelled modal role, focus the modal during preparation, then the article
+  after publication. Walk from the host's public =containerEl= towards its
+  document body and set =inert= on sibling branches only, never the modal's
+  ancestors or its backdrop. Leave pre-existing =inert= attributes untouched;
+  remove only the empty attributes added by this reader before host dismissal.
+  Preserve any later replacement value. Leave later foreground overlays alone;
+  do not add a global observer or focus trap alongside the host's own handling.
+  Restore the previous focus target only when connected and eligible, and only
+  if focus has not moved to another foreground view. This supersedes reliance
+  solely on host defaults. Native extraction and dismissal require the paired
+  platform checks; DOM semantics alone do not prove Apple's reading behaviour.
+- Verification choice :: Retain the existing session/limit regression tests.
+  Focus and background isolation use native DOM/host behaviour, so this bounded
+  amendment uses the platform user tests and source/lifecycle review rather
+  than a new mock host, browser harness or source-matching assertions.
 - Performance :: Render only on invocation, once per snapshot. Avoid deliberate
   truncation and background work. Record observed long-note responsiveness;
   do not resurrect the old five-second or exact-action-count targets.

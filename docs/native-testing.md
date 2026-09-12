@@ -28,6 +28,12 @@ commit, device, OS and Obsidian versions, and the tester's name.
    After rendering, check the hint beneath the title: Command-Escape on Mac,
    accessibility shortcut on iPhone. It must be absent while preparing, remain
    outside the document article, and leave the document scrollable.
+   For the focus/isolation amendment, invoke Accessibility Reader immediately
+   after rendering: sidebar and other-tab text must not precede the note.
+   Check that keyboard focus begins in the document and Tab stays in the modal.
+   Close, reopen, close during preparation and disable while open; the workspace
+   must remain usable afterwards. A newer dialog opened during preparation must
+   keep focus when rendering finishes. Repeat reading and dismissal on iPhone.
 3. **Settings:** read the bundled setup and benefits/limitations. Try a small
    limit with notes below, at and above it; test invalid input, Save, reload and
    raising the limit. An open snapshot stays unchanged. Restore 100,000 before

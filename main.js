@@ -214,11 +214,17 @@ class ReaderModal extends Modal {
   article;
   closed;
   disposed = false;
+  background = [];
+  previousFocus = null;
   constructor(app, closed) {
     super(app);
     this.closed = closed;
     this.setTitle("Full document reader");
     this.modalEl.addClass("full-document-reader");
+    this.modalEl.setAttribute("role", "dialog");
+    this.modalEl.setAttribute("aria-modal", "true");
+    this.modalEl.setAttribute("aria-label", "Full document reader");
+    this.modalEl.tabIndex = -1;
     this.article = this.contentEl.ownerDocument.createElement("article");
     this.article.classList.add(
       "markdown-rendered",
@@ -243,11 +249,14 @@ class ReaderModal extends Modal {
     }
   }
   async render(source, path) {
+    this.previousFocus = this.contentEl.ownerDocument.activeElement;
     this.contentEl.createEl("p", {
       text: "Preparing the full document\u2026",
       attr: { role: "status" },
     });
     this.open();
+    this.modalEl.focus({ preventScroll: true });
+    this.isolateBackground();
     await MarkdownRenderer.render(
       this.app,
       source,
@@ -276,18 +285,57 @@ class ReaderModal extends Modal {
       });
     }
     this.contentEl.append(this.article);
+    // Do not take focus back from a newer dialog opened during rendering.
+    if (this.containerEl.contains(this.article.ownerDocument.activeElement)) {
+      this.article.focus({ preventScroll: true });
+    }
+  }
+  isolateBackground() {
+    // Keep the host's backdrop and close controls usable. Only sibling branches
+    // outside the modal container become inert; its ancestors must stay active.
+    const body = this.containerEl.ownerDocument.body;
+    let branch = this.containerEl;
+    while (branch.parentElement && branch !== body) {
+      for (const sibling of branch.parentElement.children) {
+        if (sibling !== branch && !sibling.hasAttribute("inert")) {
+          this.background.push(sibling);
+          sibling.setAttribute("inert", "");
+        }
+      }
+      branch = branch.parentElement;
+    }
   }
   onClose() {
     this.dispose();
     this.closed();
   }
   dispose() {
+    const doc = this.contentEl.ownerDocument;
+    const restoreFocus =
+      doc.activeElement === doc.body ||
+      this.containerEl.contains(doc.activeElement);
     this.article.replaceChildren();
     this.contentEl.replaceChildren();
     if (this.disposed) return;
     this.disposed = true;
+    for (const element of this.background) {
+      // Preserve pre-existing inert attributes and any later replacement value.
+      if (element.getAttribute("inert") === "")
+        element.removeAttribute("inert");
+    }
+    this.background = [];
     this.owner.dispose();
     this.close();
+    const previous = this.previousFocus;
+    this.previousFocus = null;
+    if (
+      restoreFocus &&
+      doc.activeElement === doc.body &&
+      previous?.isConnected &&
+      !previous.closest('[inert], [aria-hidden="true"]')
+    ) {
+      previous.focus({ preventScroll: true });
+    }
   }
 }
 class ReaderSettingsTab extends PluginSettingTab {
