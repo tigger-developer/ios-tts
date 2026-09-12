@@ -20,8 +20,8 @@ Requires **Obsidian 1.13+**, **macOS 26+** or **iOS 26+**.
 2. In the plugin settings panel, follow the bundled Apple shortcut instructions.
    iPhone supports triple-clicking the side/lock button, or double-tap Back Tap
    assigned to Accessibility Shortcut. On Mac, use Command-Escape after setup.
-3. Open a note and use the **book icon in its top toolbar**, or choose
-   **Open full document reader** from the ribbon or command palette. Invoke
+3. Open a note and use the **book and sound waves icon in its top toolbar**, or
+   choose **Open full document reader** from the ribbon or command palette. Invoke
    **Accessibility Reader**, then press **Play**.
 
 The [settings help](docs/reader-help.md) includes Apple's setup links, the
@@ -39,6 +39,8 @@ shortened. Reopen the reader after editing; an open snapshot does not update.
 The plugin is maintained directly as **main.js**, **manifest.json** and
 **styles.css**. No Node, npm, TypeScript, compilation or dependency installation
 is required. The three files in the checkout are the installation package.
+The source artwork is retained in `accessibility-reader.svg` and embedded in
+`main.js`; the SVG does not need a separate installation step.
 
 ```sh
 make install

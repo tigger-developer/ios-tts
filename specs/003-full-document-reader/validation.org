@@ -2,6 +2,22 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Supplied accessibility glyph, 2026-09-12
+
+- Authority :: The operator instructed: "copy accessibility-reader.svg from
+  ~/dl/ and use this one" after reporting confusion with Obsidian's preview icon.
+- Scope :: [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
+  Use the supplied artwork for toolbar and ribbon, retaining the action names.
+- One-off artwork check :: PENDING. Compare the copied SVG with the supplied
+  file byte-for-byte; render the registered geometry and source at the same size
+  and compare pixels. Confirm the three-file package remains self-contained.
+- Native user checks :: PENDING under UT003.1 - macOS reading workflow and
+  UT003.2 - iOS reading workflow: confirm both controls display the selected
+  glyph, remain distinguishable from preview, and retain their existing action.
+- Test choice :: No persistent source-matching or visual simulation test is
+  justified for operator-selected static artwork. Use the bounded artwork
+  comparison and native visual checks; retain existing behavioural tests.
+
 * Note toolbar button amendment, 2026-09-10
 
 - Authority :: The operator authorized a book icon in each note's top toolbar

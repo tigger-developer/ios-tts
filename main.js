@@ -1,6 +1,7 @@
 // ABOUTME: Presents whole read-only notes for native Accessibility Reader.
 // ABOUTME: Maintained JavaScript; Obsidian owns rendering and Apple owns speech.
 const {
+  addIcon,
   Component,
   MarkdownRenderer,
   MarkdownView,
@@ -8,8 +9,22 @@ const {
   Notice,
   Plugin,
   PluginSettingTab,
+  removeIcon,
   Setting,
 } = require("obsidian");
+
+const READER_ICON = "ios-tts-accessibility-reader";
+// Artwork from accessibility-reader.svg, scaled from 24 to Obsidian's 100 units.
+const READER_ICON_SVG = `<g transform="scale(4.166666666666667)" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(0,0.16929912)">
+    <g transform="translate(0.052269,0.17328146)">
+      <path d="m 3.19917,8.5363071 c 3.4994243,0 6.6011868,0.5221162 8.748561,1.7562089 V 21.589212 C 9.8003568,20.544979 6.6985943,20.117793 3.19917,20.117793 Z" style="stroke-width:1.75" />
+      <path d="M 11.947731,10.292516 C 14.095105,9.0584233 17.196867,8.5363071 20.696292,8.5363071 V 20.117793 c -3.499425,0 -6.601187,0.427186 -8.748561,1.471419" style="stroke-width:1.75" />
+    </g>
+    <path d="m 9.25,6.5489083 c 0.7,-0.8 1.62,-1.2 2.75,-1.2 1.13,0 2.05,0.4 2.75,1.2" />
+    <path d="m 7.1999999,3.9489083 c 1.25,-1.35 2.8500001,-2.05 4.8000001,-2.05 1.95,0 3.55,0.7 4.8,2.05" />
+  </g>
+</g>`;
 
 const DEFAULT_MAX_WORDS = 100000;
 class ReaderSettings {
@@ -360,6 +375,8 @@ class FullDocumentReaderPlugin extends Plugin {
     });
     const loadError = await preference.load();
     if (this.stopped) return;
+    addIcon(READER_ICON, READER_ICON_SVG);
+    this.register(() => removeIcon(READER_ICON));
     if (loadError)
       new Notice(
         "Could not load Maximum words. Using 100,000; check the value in Full document reader settings and Save to replace it.",
@@ -388,7 +405,7 @@ class FullDocumentReaderPlugin extends Plugin {
           : null;
       void reader.open(snapshot, preference.maxWords);
     };
-    this.addRibbonIcon("book-open", "Open full document reader", () =>
+    this.addRibbonIcon(READER_ICON, "Open full document reader", () =>
       openReader(),
     );
     this.addCommand({
@@ -420,7 +437,7 @@ class FullDocumentReaderPlugin extends Plugin {
     for (const view of views) {
       if (this.headerButtons.has(view)) continue;
       const button = view.addAction(
-        "book-open",
+        READER_ICON,
         "Open full document reader",
         () => openReader(view),
       );

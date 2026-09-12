@@ -591,7 +591,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   or native reader is instantiated or simulated. =make lint= uses native
   oxlint/Biome and ShellCheck/shfmt, which are not installation prerequisites.
   Scripts support stock macOS Bash 3.2 to avoid an extra installation dependency.
-- Toolbar :: Use the public =MarkdownView.addAction()= API with =book-open=
+- Toolbar :: Use the public =MarkdownView.addAction()= API with =ios-tts-accessibility-reader=
   and the name *Open full document reader*. Keep a map of views to their button
   elements. Reconcile against loaded Markdown views on layout readiness,
   =layout-change= and =file-open=; remove controls for closed views and all
@@ -599,6 +599,16 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   a late layout-ready callback after unload. Capture the owning view in each
   callback but read its current text only on activation. No note contents are
   read just to add a toolbar control.
+- Glyph amendment, 2026-09-12 :: The operator selected =accessibility-reader.svg=
+  to distinguish this action from Obsidian's preview glyph. Preserve the supplied
+  SVG as a source asset; use its book-and-sound-waves artwork in both toolbar and
+  ribbon controls. Register a static copy with =addIcon()= before creating the
+  controls, scaling its 24-unit canvas to the host's 100-unit canvas. Remove the
+  registration on unload. Preserve the artwork, stroke weight and button names.
+  This supersedes =book-open= without changing behaviour. The SVG is embedded
+  in =main.js=, so installation still uses three files with no build or runtime
+  asset read. Compare copied source bytes and rendered artwork once; native
+  macOS/iOS glyph recognition is part of the existing platform user tests.
 - Removed targets :: =make build= and the npm-based =make vulncheck= are removed:
   the project has neither compilation nor a package-managed dependency graph.
   A future dependency requires explicit approval and an applicable security check.

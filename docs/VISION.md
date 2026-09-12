@@ -32,8 +32,8 @@ text aloud without a speech API key or usage bill.
 
 - **Whole-note reading:** one button or command opens the complete current
   Markdown note as a read-only snapshot using normal Obsidian rendering.
-  A book icon in each note's top toolbar opens that pane's note; the ribbon
-  button and command remain available.
+  A book with sound waves in each note's top toolbar opens that pane's note;
+  the ribbon button and command remain available.
 - **Native speech:** the user invokes Accessibility Reader and presses Play.
   Apple owns the voice, playback and accessibility controls.
 - **Useful settings:** the plugin's settings panel explains its benefits,
