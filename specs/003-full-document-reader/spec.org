@@ -141,6 +141,12 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   explicit focus transfer after asynchronous publication; the reported unwanted
   background text in Apple's reader remains an observed integration symptom,
   not a proven diagnosis of Obsidian's modal implementation.
+- Paired audit authority, 2026-09-12 :: Taḋg authorized additional code-review
+  rounds with "for code changes yes pls don't ask", then clarified that
+  "audit code should be an automatic loop :)". Run the required code audit,
+  remediation and re-audit without repeated permission questions. Use a bounded
+  allowance of five additional attempts for this increment, preserving the
+  existing audit record and its history. Product decisions remain with Taḋg.
 
 - Installation direction :: On 2026-09-08, Taḋg instructed: "give me an install
   script that `make install` triggers, it should interactively ask for the path
