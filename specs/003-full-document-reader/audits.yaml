@@ -2,17 +2,40 @@ version: 1
 audits:
     - work_item: W003-full-document-reader
       gate: implementation
-      session_id: 01a08bc7-660d-7ae1-9abe-5eb663732302
-      harness: codex
-      external_round: 5
+      session_id: 20260912_191059_3132c9
+      harness: hermes
+      provider: nous
+      model: z-ai/glm-5.3
+      configured:
+        harness: hermes
+        provider: nous
+        model: z-ai/glm-5.3
+      previous_sessions:
+        - session_id: 01a08bc7-660d-7ae1-9abe-5eb663732302
+          harness: codex
+          model: ""
+          reason: configuration-changed
+          updated: "2026-09-12T18:10:59Z"
+      external_round: 6
       status: passed
-      updated: "2026-09-12T17:02:47Z"
-      revision: 916769db546bf6ef55239dd4c5f91465b27ee1ff
+      updated: "2026-09-12T18:11:53Z"
+      revision: f6db754
       verdict: PASS
       response: |-
         GATE: implementation
-        REVISION: 916769db546bf6ef55239dd4c5f91465b27ee1ff
+        REVISION: f6db754
         VERDICT: PASS
+
+        Findings: none blocking.
+
+        Notes supporting the verdict:
+
+        - Scope and delta: the audited delta is the focus/isolation amendment (ReaderModal focus transfer, sibling-branch inert isolation, prior-state and focus restoration) plus the preceding platform-hint increment, matching the operator-authorized paired scope recorded in spec.org. No unrequested behaviour, dependency, framework or host-rendering change is present; the package remains three plain-JavaScript files with `require("obsidian")` as the sole import.
+        - Implemented tests: the two regression files (RT003.1 session lifetime, RT003.2 word limit/preference) are unchanged from the previously passed revision and still assert observable behaviour at the owned boundaries (publication, supersession, cancellation, failure categories, limit admission, persistence failure retention) rather than implementation details. The runner propagates failures and unresolved promises. The absence of automated DOM/focus tests is an explicitly recorded, justified verification choice for this paired amendment, with native user tests PENDING in validation.org; no artificial test was demanded.
+        - Production code: the RenderOwner guards late registrations after disposal; publish() is guarded against stale sessions; focus is taken on open, transferred to the article only when focus has not moved to a newer foreground view; inert is applied to sibling branches only (never modal ancestors), pre-existing inert attributes are skipped, and only empty-string attributes added by the reader are removed, preserving later replacement values; previous focus is restored only when connected, eligible and unclaimed. Disposal paths (close, failed render, replacement, unload) share one cleanup path before host close, and re-entrant disposal is idempotent. Checkbox interaction is blocked via capture listeners plus disabling on publish.
+        - Security/regressions: no raw-HTML insertion of untrusted content (the SVG icon is a static literal), no network, logging, note persistence or widened access; session and preference logic is unchanged and covered by the existing suite. styles.css changes are confined to modal layout and the hint.
+        - Evidence hygiene: spec.org and validation.org contain only links to audits.yaml and validation results (including tested revisions required by the validation-record format); no duplicated audit verdicts, status, round numbers or session IDs were found.
+        - Local checks (make lint, 12/12 make test) are reported as passing; native macOS/iPhone validation remains PENDING and correctly not simulated.
       history:
         - evidence:
             - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
@@ -311,6 +334,97 @@ audits:
             REVISION: 916769db546bf6ef55239dd4c5f91465b27ee1ff
             VERDICT: PASS
           updated: "2026-09-12T17:02:01Z"
+        - cache_key: sha256:7b6912504cc864a06ea428b3282fabb3fe943154499579c48248d410898c6acf
+          session_id: 20260912_191059_3132c9
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: eed4324da011035f285cb316958dd374f642068c6ee56faf8b1fbbeaeb88cc2a
+              bytes: 10313
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: f2a2511d89cbf407f0d96dc3845ee66264eb40eb18d638716475936f1fa9b723
+              bytes: 13368
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: dedd438f189d1d04c15b532f419927e6d94960ed26cf47a12a237e370e8be4d7
+              bytes: 11209
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: f37b1226779c5ad8ec5300c1ad6251de4f2bf25eb62be30731e0077c6e69ce6d
+              bytes: 5648
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 5ed902d49dbb8321ea093fd60db68d5195e59c95c763c02e4ca0c09f6fa1e932
+              bytes: 13561
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: 5a50054bf7701b4c90d9a133863eb39e0a7fd38432b9e8ca9f570734448f77cf
+              bytes: 7133
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 5c018a282b3b247f447eec041f3c513d66b721637474c97f239f02855bf76fdf
+              bytes: 6300
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/native-testing.md
+              sha256: 39fac8fc8d5fa04a8d8ac38abbd1be10fdc2e0ac411acf840604c6dd6e249c78
+              bytes: 3898
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: cc010d1e58f512f2b210b975055e93aca90bb5761f60a071a3deb2c2ee4115d6
+              bytes: 5824
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: d75e1e7771f4845b961d11290995e01a18ac0dc40beba2d00d523617cc64464b
+              bytes: 18263
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7
+              bytes: 264
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: bd025595f3a2cd4db2ec0a5f150ea9e58dbe5dd9ab45fa29ad09ee6b7a9192ca
+              bytes: 50971
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/validation.org
+              sha256: b5dbd45cec72ba3675e8154db5fbef9ee1611db1738dbb7999421e312ec41d45
+              bytes: 24996
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367
+              bytes: 723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 6
+          revision: f6db754
+          verdict: PASS
+          response: |-
+            GATE: implementation
+            REVISION: f6db754
+            VERDICT: PASS
+
+            Findings: none blocking.
+
+            Notes supporting the verdict:
+
+            - Scope and delta: the audited delta is the focus/isolation amendment (ReaderModal focus transfer, sibling-branch inert isolation, prior-state and focus restoration) plus the preceding platform-hint increment, matching the operator-authorized paired scope recorded in spec.org. No unrequested behaviour, dependency, framework or host-rendering change is present; the package remains three plain-JavaScript files with `require("obsidian")` as the sole import.
+            - Implemented tests: the two regression files (RT003.1 session lifetime, RT003.2 word limit/preference) are unchanged from the previously passed revision and still assert observable behaviour at the owned boundaries (publication, supersession, cancellation, failure categories, limit admission, persistence failure retention) rather than implementation details. The runner propagates failures and unresolved promises. The absence of automated DOM/focus tests is an explicitly recorded, justified verification choice for this paired amendment, with native user tests PENDING in validation.org; no artificial test was demanded.
+            - Production code: the RenderOwner guards late registrations after disposal; publish() is guarded against stale sessions; focus is taken on open, transferred to the article only when focus has not moved to a newer foreground view; inert is applied to sibling branches only (never modal ancestors), pre-existing inert attributes are skipped, and only empty-string attributes added by the reader are removed, preserving later replacement values; previous focus is restored only when connected, eligible and unclaimed. Disposal paths (close, failed render, replacement, unload) share one cleanup path before host close, and re-entrant disposal is idempotent. Checkbox interaction is blocked via capture listeners plus disabling on publish.
+            - Security/regressions: no raw-HTML insertion of untrusted content (the SVG icon is a static literal), no network, logging, note persistence or widened access; session and preference logic is unchanged and covered by the existing suite. styles.css changes are confined to modal layout and the hint.
+            - Evidence hygiene: spec.org and validation.org contain only links to audits.yaml and validation results (including tested revisions required by the validation-record format); no duplicated audit verdicts, status, round numbers or session IDs were found.
+            - Local checks (make lint, 12/12 make test) are reported as passing; native macOS/iPhone validation remains PENDING and correctly not simulated.
+          updated: "2026-09-12T18:10:59Z"
 legacy:
     - path: audits.org
       content: |
