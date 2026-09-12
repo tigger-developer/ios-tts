@@ -8,9 +8,16 @@
   ~/dl/ and use this one" after reporting confusion with Obsidian's preview icon.
 - Scope :: [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
   Use the supplied artwork for toolbar and ribbon, retaining the action names.
-- One-off artwork check :: PENDING. Compare the copied SVG with the supplied
-  file byte-for-byte; render the registered geometry and source at the same size
-  and compare pixels. Confirm the three-file package remains self-contained.
+- One-off artwork check :: PASS on 2026-09-12 for =916769d= (supplied reader
+  glyph). After implementation review, the source copy matched byte-for-byte.
+  Rendering source and registered geometry at 144 pixels with =rsvg-convert=
+  and comparing with ImageMagick reported zero differing pixels. Scratch data
+  used an OS temporary directory with teardown. The icon is a static literal;
+  there is no runtime asset read and the installer remains unchanged.
+- Automated evidence :: =make lint= and all 12 =make test= cases passed on
+  macOS for the same candidate after review. Native interaction is not inferred.
+- Documentation outcome :: README, Vision, native checklist and specification
+  identify the selected glyph; the supplied SVG remains unmodified in source.
 - Native user checks :: PENDING under UT003.1 - macOS reading workflow and
   UT003.2 - iOS reading workflow: confirm both controls display the selected
   glyph, remain distinguishable from preview, and retain their existing action.
