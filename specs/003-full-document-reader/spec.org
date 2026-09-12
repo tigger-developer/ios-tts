@@ -43,6 +43,8 @@
   A *Back button closes settings* without saving unsubmitted input.
   Help covers *triple-clicking the side/lock button*, *double-tap Back Tap*,
   native speech without usage fees, and macOS setup. No system settings change.
+- Reader hint :: Once rendering finishes, show a *platform-specific shortcut
+  hint beneath the title*, outside the document article.
 - Distribution :: Prepare *Community directory copy and readiness guidance*;
   actual release and listing submission follow operator review.
 - Evidence :: Focused session and word-limit tests, *native user tests on both
@@ -274,6 +276,11 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   ownership*, cloud-TTS costs, the word limit and normal-rendering boundary.
   README and =docs/VISION.md= present consistent claims and listing intent.
   Help remains readable offline; following an external link is optional.
+  The rendered reader shows *Mac Command-Escape guidance* on the Mac desktop
+  app, or *accessibility shortcut guidance on iOS*. The hint appears only after
+  successful rendering, stays outside the document article and does not start
+  speech. Mac wording allows for a customized shortcut; other platforms receive
+  no platform-specific hint.
 - Proven by :: [[#ut-003-1][UT003.1 - macOS reading workflow]] and
   [[#ut-003-2][UT003.2 - iOS reading workflow]].
 
@@ -408,6 +415,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   pane's; expect that pane's full current text. On iPhone, check top-toolbar
   placement and touch activation. Change files, close/reopen tabs and disable/
   re-enable: expect one icon per Markdown pane and no leftover icon on disable.
+  Check the shortcut hint is absent during preparation and appears beneath the
+  title after publication: Mac Command-Escape or iOS accessibility shortcut.
+  It stays outside the article, wraps legibly and leaves the note scrollable.
 - Cleanup :: Remove only disposable test data and restore any changed native
   accessibility settings. Record results in [[file:validation.org][Validation evidence]].
 
@@ -670,6 +680,15 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   documentation counterpart; review both together and compare their text when
   either changes. This replaces the build-time import to keep the three-file
   offline package without a runtime read or download.
+- Shortcut hint amendment, 2026-09-12 :: The operator approved the proposed
+  Mac/iOS hint with "ok , let's include it". In =ReaderModal.publish()=, use
+  =Platform.isIosApp= first, then =Platform.isDesktopApp && Platform.isMacOS=:
+  the Mac flag alone may also be true on iPhones/iPads. Add a short paragraph
+  above the article, under the title, only when the snapshot is published.
+  Keep the article scrollable beneath it; disposal removes both. No shortcut
+  interception, system configuration, speech or settings persistence changes.
+  The existing native user tests cover wording, platform selection, timing and
+  layout; no mock host or permanent prose-matching test is introduced.
 
 - State :: Retain captured source, render component and modal only for their
   session lifetime. The sole durable state is the word-limit preference;

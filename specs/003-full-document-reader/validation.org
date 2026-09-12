@@ -2,6 +2,30 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Platform shortcut hint, 2026-09-12
+
+- Authority :: The operator approved a hint beneath the reader title after
+  rendering, with Mac Command-Escape and iOS accessibility-shortcut wording.
+- Requirement :: [[file:spec.org::#ac-003-8][AC003.8 - Brief usable instructions]].
+- UT003.1 - macOS reading workflow :: PENDING. In a disposable vault, open a
+  long note. Expect no shortcut hint while preparing, then one Mac hint beneath
+  the title, outside the article, allowing for customized shortcuts. Verify
+  scrolling and full-document native reading remain usable. Close and reopen;
+  no old hint or content may remain.
+- UT003.2 - iOS reading workflow :: PENDING. Repeat on a physical iPhone;
+  expect accessibility-shortcut guidance and no Command-Escape wording. Check
+  wrapping and scrolling at the device's normal text size. Record revision,
+  device, versions and tester for both user checks.
+- Test choice :: A small host UI hint needs native visual and timing checks.
+  Existing session tests cover publication and cancellation; no browser harness
+  or simulated Obsidian is added solely for this paragraph.
+- Local checks :: =make lint= and all 12 =make test= cases passed on macOS for
+  the shortcut-hint working candidate before external review. The tests cover
+  existing session and preference logic; they do not establish native layout.
+- Documentation outcome :: The specification, README and native checklist
+  describe the hint. Settings help and Vision already cover both platforms'
+  setup and speech ownership; neither requires a change for this reminder.
+
 * Supplied accessibility glyph, 2026-09-12
 
 - Authority :: The operator instructed: "copy accessibility-reader.svg from

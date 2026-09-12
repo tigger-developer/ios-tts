@@ -7,6 +7,7 @@ const {
   MarkdownView,
   Modal,
   Notice,
+  Platform,
   Plugin,
   PluginSettingTab,
   removeIcon,
@@ -262,7 +263,19 @@ class ReaderModal extends Modal {
     )) {
       checkbox.disabled = true;
     }
-    this.contentEl.replaceChildren(this.article);
+    const shortcut = Platform.isIosApp
+      ? "Use your accessibility shortcut to open Accessibility Reader."
+      : Platform.isDesktopApp && Platform.isMacOS
+        ? "Press \u2318Esc to open Accessibility Reader, or use your customized shortcut."
+        : "";
+    this.contentEl.replaceChildren();
+    if (shortcut) {
+      this.contentEl.createEl("p", {
+        text: shortcut,
+        cls: "full-document-reader-hint",
+      });
+    }
+    this.contentEl.append(this.article);
   }
   onClose() {
     this.dispose();

@@ -25,6 +25,9 @@ commit, device, OS and Obsidian versions, and the tester's name.
    disable/re-enable: expect one icon per Markdown pane and none after disabling.
    Confirm toolbar and ribbon use the supplied accessibility-reader artwork
    and are visually distinguishable from Obsidian's preview control.
+   After rendering, check the hint beneath the title: Command-Escape on Mac,
+   accessibility shortcut on iPhone. It must be absent while preparing, remain
+   outside the document article, and leave the document scrollable.
 3. **Settings:** read the bundled setup and benefits/limitations. Try a small
    limit with notes below, at and above it; test invalid input, Save, reload and
    raising the limit. An open snapshot stays unchanged. Restore 100,000 before
