@@ -11,7 +11,12 @@
 - Commands :: make lint; make test; one-off package comparison; git diff --check.
 - Documentation :: README, Vision and release notes describe licensing, platforms, manual installation and limitations. W003 records both user tests as operator-reported PASS and the work ledger records Taḋg's acceptance, preserving previous evidence. No agent-executed native test is claimed.
 
-* AMBER OT004.2 - Draft release verification :testdef:
+* GREEN OT004.2 - Draft release verification :testdef:
 :PROPERTIES:
-:REASON: Draft creation and asset download comparison follow the first candidate checkpoint.
+:REVISION: ed5f752469a13b95c8d823e9b2a05d37699ab4c5
+:EVIDENCE: GitHub draft true, tagName 0.1.0, target matches candidate; downloaded main.js, manifest.json, styles.css and LICENSE all match local SHA-256 hashes.
 :END:
+
+- Execution :: 2026-09-16. The draft was created with the maintained release notes and all four files. gh release view confirmed the draft, version and exact target; gh release download retrieved the four assets into an OS temporary directory.
+- SHA-256 :: main.js =7f3cd0d97a99c6bf9fd510777b08aa65162815d5eb7139a8ca7668f5252dbc93=; manifest.json =486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7=; styles.css =b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367=; LICENSE =cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30=.
+- Initial attempt :: An initial push failed for missing HTTPS Git credentials, so the first draft creation returned invalid target. After a successful push, one creation retry succeeded. No earlier release was overwritten. Git operations now retain the configured SSH remote as directed by Taḋg.

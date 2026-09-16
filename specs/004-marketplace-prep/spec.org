@@ -26,13 +26,13 @@
 ** Decisions
 - Taḋg selected *Apache 2.0 and version 0.1.0* and explicitly reported iPhone tests passed.
 ** Next step
-- Verify the package, obtain paired reviews, and retain the release as a draft.
+- Verify the draft and obtain paired reviews, then carry out the separately authorized publication and directory submission below.
 
 * Context
 - Authority :: On 2026-09-16 Taḋg requested paired development: "add an apache 2.0 license, release is 0.1.0 update manifest and main.js accordigly and prepare release - mark user tests as pss and ticket accepted". Follow-ups: "pls update readme as well" and "iphone tests passed also".
 - Baseline :: Read [[file:../../README.md][README]], [[file:../../docs/VISION.md][Vision]], [[file:../../docs/work.org][work ledger]], [[file:../003-full-document-reader/spec.org][W003 - Full document reader]], its validation and audit records, and the maintained package and regression suite. No separate Architecture authority exists; W003 owns the reader design.
 - Mode :: *Paired development*. Taḋg directed: "keep it all under a ticket called marketplace prep and paired development mode". This ticket owns the entire licensing, README, acceptance-record and draft-release batch.
-- Scope :: This is *release preparation*, previously excluded from W003. Record W003 acceptance without changing its runtime requirements. No new reader feature, vault installation or marketplace submission.
+- Scope :: This is *release preparation*, previously excluded from W003. Record W003 acceptance without changing its runtime requirements. No new reader feature or vault installation. Publication and submission follow the preparation reviews under the later authority below.
 - External contracts :: [[https://www.apache.org/licenses/LICENSE-2.0.txt][Apache 2.0 text]] and [[https://docs.obsidian.md/plugins/releasing/submit-plugin][Obsidian submission guide]].
 - Human evidence :: Record *Taḋg's pass declaration*, not agent-executed native tests or invented device versions and fixture observations.
 
@@ -90,4 +90,11 @@
 - Read this specification, project profile and linked baseline authorities. Paired operator instructions are the working specification; no new product approval is inferred.
 - Evidence :: [[file:validation.org][Release verification]] and [[file:audits.yaml][paired reviews]].
 - Reconcile README, Vision, W003 validation and work ledger. The native checklist remains reusable; platform versions and detailed observations absent from the operator report remain unspecified.
-- Publication and Community-directory submission remain *separate operator actions*. The requested W003 acceptance is already authorized; do not ask for it again.
+- Publication and Community-directory submission were initially reserved as *separate operator actions*. The requested W003 acceptance is already authorized; do not ask for it again.
+
+* Publication authority, 2026-09-16
+
+- Authority :: After the outstanding steps were listed, including publishing the draft and submitting to Obsidian Community, Taḋg instructed: "pk proced with those steps pls". This authorizes those operations after the preparation reviews, within this same paired Marketplace prep ticket.
+- Sequence :: Preserve the verified draft and its assets; after reviews create and push an annotated 0.1.0 tag for the candidate, publish that draft, verify published metadata, and submit the same repository through the Community directory. Update README/Vision draft wording when publishing.
+- Boundaries :: No new GitHub workflow, runtime feature or replacement authentication setup. Use the configured SSH Git remote and gh for release operations. Account sign-in or consent that requires the human is a submission blocker; do not fabricate a submission or review result.
+- Evidence :: Record publication and directory outcomes in validation.org as operational evidence following the bounded pre-publication tests. The draft criterion describes the required reviewable preparation state, not a requirement to leave the release unpublished after this later authorization.
