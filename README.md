@@ -89,10 +89,7 @@ Accessibility Reader's controls manage the voice and playback.
 [Apple's Mac instructions](https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac) ·
 [Choosing a Mac voice](https://support.apple.com/en-au/guide/mac-help/mchlp2290/mac)
 
-The reader is a snapshot: reopen it after editing the note. Notes are never
-changed. The default limit is **100,000 words**, adjustable in plugin settings.
-Notes over the limit show a notice instead of opening a shortened copy. Larger
-notes, images and embeds can use substantial memory.
+The default limit is **100,000 words**, adjustable in plugin settings.
 
 [Shortcut setup and further help](docs/reader-help.md) ·
 [Manual installation](docs/readme-history.md#install-and-use) ·
