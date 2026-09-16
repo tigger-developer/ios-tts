@@ -9,15 +9,15 @@ The macOS and iPhone user tests were reported passed and the reader accepted
 by Taḋg on 2026-09-16. See the [validation record](specs/003-full-document-reader/validation.org)
 for the scope and limits of that operator report.
 
-Release 0.1.0 is being prepared as a GitHub draft. It is not yet published or
-listed in Obsidian's Community directory.
+[Release 0.1.0](https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0)
+provides the installation files. Community-directory submission is pending.
 
 ## Install and use
 
 Requires **Obsidian 1.13+**, **macOS 26+** or **iOS 26+**.
 
-When 0.1.0 is published, download its three installation files from the
-[GitHub releases page](https://github.com/tigger-developer/ios-tts/releases).
+Download the three installation files from
+[release 0.1.0](https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0).
 The same maintained files are available in this checkout.
 
 1. Disable this plugin before replacing its files. Put **main.js**,
@@ -144,7 +144,7 @@ The release retains normal Obsidian rendering: remote images or embeds may
 access their original services. The plugin adds no network service or telemetry.
 
 Version 0.1.0 release notes are [maintained here](docs/releases/0.1.0.md).
-Publication and Community-directory submission remain separate from the draft.
+Community-directory submission remains separate from the GitHub release.
 
 ### Validation history
 

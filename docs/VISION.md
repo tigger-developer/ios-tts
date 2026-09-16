@@ -88,14 +88,15 @@ and accurate mobile compatibility.
 
 **Release preparation:** Full Document Reader 0.1.0 uses Apache 2.0 and retains
 the identifier `ios-tts`. The operator reported platform user tests passed and
-accepted the reader. The package and release notes are prepared for a GitHub
-draft; publication, account linking and directory submission remain separate.
+accepted the reader. The verified package and release notes are available in
+[GitHub release 0.1.0](https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0).
+Account linking and directory submission remain separate.
 The published plugin list had no matching identifier or display name when
 checked on 2026-09-16; submission performs the authoritative availability check.
 
 **Previous readiness:** before 2026-09-16, licence selection, native-test
 acceptance and release preparation were outstanding. That historical position
-is superseded by the licensing and acceptance above; no publication is claimed.
+is superseded by the licensing, acceptance and release above.
 
 At definition time there was no implementation, manifest or release package;
 the maintained JavaScript package is the delivery update to that starting position.

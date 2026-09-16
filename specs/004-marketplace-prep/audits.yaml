@@ -1,0 +1,288 @@
+version: 1
+audits:
+    - readiness_check: delivery-code
+      work_item: W004-marketplace-prep
+      gate: implementation
+      session_id: 20260916_123925_ec44c0
+      harness: hermes
+      provider: nous
+      model: z-ai/glm-5.3
+      configured:
+        harness: hermes
+        provider: nous
+        model: z-ai/glm-5.3
+      external_round: 1
+      status: passed
+      updated: "2026-09-16T11:39:56Z"
+      revision: ed5f752469a13b95c8d823e9b2a05d37699ab4c5 (6dfcfe2 + release-preparation delta)
+      verdict: PASS
+      response: |-
+        GATE: delivery-code
+        REVISION: ed5f752469a13b95c8d823e9b2a05d37699ab4c5 (6dfcfe2 + release-preparation delta)
+        VERDICT: PASS
+
+        Reviewed evidence: W004 recorded operator-authorized scope (paired), the implementation delta, affected documentation, and current validation records.
+
+        Verified:
+
+        - Scope conformance: the production delta to main.js is exactly the version/copyright/SPDX header and embedded Apache 2.0 text; no executable code change. Root LICENSE (canonical Apache 2.0, hash matches the official text), manifest.json unchanged at 0.1.0 with existing id/compatibility fields, docs/releases/0.1.0.md added. README, Vision and W003 acceptance records updated within the recorded operator request ("add an apache 2.0 license, release is 0.1.0... update readme... mark user tests as pss and ticket accepted", plus the iPhone confirmation). No unauthorized scope or gratuitous complexity.
+        - Licence correctness: LICENSE byte-matches the official Apache 2.0 text; the embedded copy in main.js is the same text in comments; the SPDX header and copyright year/name are consistent. Embedding the licence in main.js follows the recorded design decision (directory installs download only three files), which is a justified, approved mechanism.
+        - Test evidence: no functional code changed, so no new tests are warranted for comments/prose (TESTING.md: documentation changes receive one-off review, not regression tests). The existing 12 RT cases and lint are recorded GREEN for the release-metadata candidate (OT004.1), with a bounded one-off comparison showing executable source unchanged after removing only the added comments. OT004.2 records the draft release verified: draft true, tag 0.1.0, correct target, four downloaded assets hash-matching the local package. Both OTs are GREEN with current revision/evidence; validation.org follows ORG-SCHEMA (TODO states, :testdef: tags, required properties).
+        - W003 acceptance records: operator-reported passes are honestly attributed, device/fixture details explicitly not invented, prior pending history preserved rather than rewritten — consistent with the operator instruction and PAIRING.md's user-validation contract. Not retroactively reformatted, as the context directs.
+        - Documentation: README, Vision and release notes agree on version, licence, platforms, installation flow and limitations; the draft (unpublished) status is accurately stated. No materially stale required documentation found.
+        - Audit-state hygiene: no supplied artefact duplicates audit findings, verdicts, revisions, round numbers or session IDs; validation.org carries only test execution evidence. No annotation records in spec.org.
+        - Security: no new dependency, network client, secret or access; the draft-release operations are bounded and recorded, with the failed-credential first attempt honestly reported and no pre-existing release overwritten.
+
+        No blocking findings. The later publication/submission instruction is recorded operator authority for subsequent steps and does not affect this delta's verdict.
+      history:
+        - readiness_check: delivery-code
+          cache_key: sha256:d894d406a10ad90e84725539be2db6c1c744aa286889965fc2f0f90179ff6ea5
+          session_id: 20260916_123925_ec44c0
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: f09dc141ec5694be21b9e0e550bcc81b8b3311d104b22270c5a2137970fbbca4
+              bytes: 14566
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: 3d63d81a8054974b21e04018ce583c47938bdb5dd38ba5f1af9ce5f8c0ba1c66
+              bytes: 4547
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 74191750df80fe804c8a0b7ea938ea7184425d4762ce6c870e1b22b46eba788d
+              bytes: 4804
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 198a6c665a2a253802d02686721e43f528b6bbaff7a9a7cc3cbdb9a8ffdf7f09
+              bytes: 16107
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/LICENSE
+              sha256: cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30
+              bytes: 11358
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: ea53b68c47d0e416d92ed0c2e8e1b1c9f237d7820449e5c804da0176240c2421
+              bytes: 8148
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: e9bc13badce3136966b00050eb361be664cd7112769cd2011c0d911790edec1c
+              bytes: 6703
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/releases/0.1.0.md
+              sha256: ccd182680b96193257406a1524756f0202757506cc7a9cd8dccf0c66022e3939
+              bytes: 1473
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 3b21345683cf26e552ae54a84791bb48ebf2eb52ec19deb69ac905f0e550c283
+              bytes: 6614
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 7f3cd0d97a99c6bf9fd510777b08aa65162815d5eb7139a8ca7668f5252dbc93
+              bytes: 29723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7
+              bytes: 264
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: af00ddb575b3c410b463c1306ecc7d11dc4eced09e56bef929d304fe69d99da2
+              bytes: 51481
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/validation.org
+              sha256: e1c8bd8126ae352a854f7907c8721b39b5a69b197e177059c79e66129a044960
+              bytes: 26211
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: 5a77ed372ad9f6a7da4399876d072760a194c9032f99f3db755cef1ad9665883
+              bytes: 8521
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: b208c1354e76bba13ba3b28a479d1e6e7f43762c81bad5a0b9761eeae51e6273
+              bytes: 2257
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367
+              bytes: 723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 1
+          revision: ed5f752469a13b95c8d823e9b2a05d37699ab4c5 (6dfcfe2 + release-preparation delta)
+          verdict: PASS
+          response: |-
+            GATE: delivery-code
+            REVISION: ed5f752469a13b95c8d823e9b2a05d37699ab4c5 (6dfcfe2 + release-preparation delta)
+            VERDICT: PASS
+
+            Reviewed evidence: W004 recorded operator-authorized scope (paired), the implementation delta, affected documentation, and current validation records.
+
+            Verified:
+
+            - Scope conformance: the production delta to main.js is exactly the version/copyright/SPDX header and embedded Apache 2.0 text; no executable code change. Root LICENSE (canonical Apache 2.0, hash matches the official text), manifest.json unchanged at 0.1.0 with existing id/compatibility fields, docs/releases/0.1.0.md added. README, Vision and W003 acceptance records updated within the recorded operator request ("add an apache 2.0 license, release is 0.1.0... update readme... mark user tests as pss and ticket accepted", plus the iPhone confirmation). No unauthorized scope or gratuitous complexity.
+            - Licence correctness: LICENSE byte-matches the official Apache 2.0 text; the embedded copy in main.js is the same text in comments; the SPDX header and copyright year/name are consistent. Embedding the licence in main.js follows the recorded design decision (directory installs download only three files), which is a justified, approved mechanism.
+            - Test evidence: no functional code changed, so no new tests are warranted for comments/prose (TESTING.md: documentation changes receive one-off review, not regression tests). The existing 12 RT cases and lint are recorded GREEN for the release-metadata candidate (OT004.1), with a bounded one-off comparison showing executable source unchanged after removing only the added comments. OT004.2 records the draft release verified: draft true, tag 0.1.0, correct target, four downloaded assets hash-matching the local package. Both OTs are GREEN with current revision/evidence; validation.org follows ORG-SCHEMA (TODO states, :testdef: tags, required properties).
+            - W003 acceptance records: operator-reported passes are honestly attributed, device/fixture details explicitly not invented, prior pending history preserved rather than rewritten — consistent with the operator instruction and PAIRING.md's user-validation contract. Not retroactively reformatted, as the context directs.
+            - Documentation: README, Vision and release notes agree on version, licence, platforms, installation flow and limitations; the draft (unpublished) status is accurately stated. No materially stale required documentation found.
+            - Audit-state hygiene: no supplied artefact duplicates audit findings, verdicts, revisions, round numbers or session IDs; validation.org carries only test execution evidence. No annotation records in spec.org.
+            - Security: no new dependency, network client, secret or access; the draft-release operations are bounded and recorded, with the failed-credential first attempt honestly reported and no pre-existing release overwritten.
+
+            No blocking findings. The later publication/submission instruction is recorded operator authority for subsequent steps and does not affect this delta's verdict.
+          updated: "2026-09-16T11:39:25Z"
+    - work_item: W004-marketplace-prep
+      gate: definition
+      session_id: 20260916_124026_c94d0b
+      harness: hermes
+      provider: nous
+      model: z-ai/glm-5.3
+      configured:
+        harness: hermes
+        provider: nous
+        model: z-ai/glm-5.3
+      external_round: 1
+      status: passed
+      updated: "2026-09-16T11:40:44Z"
+      revision: 5a77ed372ad9f6a7da4399876d072760a194c9032f99f3db755cef1ad9665883 (W004 spec.org)
+      verdict: PASS
+      response: |-
+        GATE: definition
+        REVISION: 5a77ed372ad9f6a7da4399876d072760a194c9032f99f3db755cef1ad9665883 (W004 spec.org)
+        VERDICT: PASS
+
+        Findings and assessment:
+
+        - Annotation check: W004 spec.org contains no semantically identified annotation records or blocks; ordinary Org structure and prose only. No feedback.yaml supplied, none required.
+        - Audit-state duplication: spec.org and validation.org record test evidence and operator instructions only; audit status, revisions and session identity are referenced via links to audits.yaml, not duplicated. No FAIL trigger.
+        - Scope and fidelity: the specification matches the operator-authorized paired scope exactly — Apache 2.0, version 0.1.0 (manifest already correct and deliberately retained), licensing comments in main.js, root LICENSE, README/Vision/release notes, W003 acceptance recording, and the GitHub draft. No runtime behaviour, dependency or interface changes are introduced; verification confirms main.js differs from baseline only by licence/version comments (OT004.1 GREEN) and the four downloaded assets are hash-identical to the maintained package (OT004.2 GREEN, hashes consistent with the supplied evidence manifest).
+        - Test strategy: no RTs is appropriate — the change is metadata, prose and release operations with no observable runtime behaviour delta. The two bounded one-off OTs cover the package/documentation review and the draft release, with explicit bounds (one licence retrieval, one retry per failed operation, no publication during the pre-publication checks). This satisfies the no-RT justification requirement; demanding automated tests for licence comments or prose would be artificial source-text testing.
+        - Publication boundary: the spec correctly distinguishes the draft-acceptance criterion (AC004.3 - reviewable unpublished draft) from the later 2026-09-16 "pk proced with those steps pls" authorization for publishing and submission after reviews, including the README/Vision wording update at publication time. No unrequested behaviour is smuggled in.
+        - Architecture fit and proportionality: no new components, mechanisms or moving parts; the three-file package is preserved and no runtime version constant was added. Not over-engineered; no template inflation. Security impact section is present and accurate (no new dependency, network client, secret or privilege).
+        - Edge cases: pre-existing tag/release preservation and partial-upload handling are bounded and reasonable.
+        - Documentation handoff: affected documents (README, Vision, release notes, W003 validation/work ledger) are identified and were reconciled; W003 acceptance records the operator-reported passes honestly, without invented device versions or fixture observations.
+
+        No blocking findings. No follow-up work required for this sign-off.
+      history:
+        - cache_key: sha256:3bef90c77fa7d3b994b66d8cd66fd31ed09cb0ef2114daaecc50eb1c9254c92b
+          session_id: 20260916_124026_c94d0b
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: f09dc141ec5694be21b9e0e550bcc81b8b3311d104b22270c5a2137970fbbca4
+              bytes: 14566
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: 3d63d81a8054974b21e04018ce583c47938bdb5dd38ba5f1af9ce5f8c0ba1c66
+              bytes: 4547
+            - path: /Users/tigger/.agents/sdlc/ISSUES.md
+              sha256: fc61372ed047900b5fcf0498f08af6303cd8bc91e91cf8cba70c64d7c1a03f74
+              bytes: 16549
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 74191750df80fe804c8a0b7ea938ea7184425d4762ce6c870e1b22b46eba788d
+              bytes: 4804
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 198a6c665a2a253802d02686721e43f528b6bbaff7a9a7cc3cbdb9a8ffdf7f09
+              bytes: 16107
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/LICENSE
+              sha256: cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30
+              bytes: 11358
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: ea53b68c47d0e416d92ed0c2e8e1b1c9f237d7820449e5c804da0176240c2421
+              bytes: 8148
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: e9bc13badce3136966b00050eb361be664cd7112769cd2011c0d911790edec1c
+              bytes: 6703
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/releases/0.1.0.md
+              sha256: ccd182680b96193257406a1524756f0202757506cc7a9cd8dccf0c66022e3939
+              bytes: 1473
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 3b21345683cf26e552ae54a84791bb48ebf2eb52ec19deb69ac905f0e550c283
+              bytes: 6614
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 7f3cd0d97a99c6bf9fd510777b08aa65162815d5eb7139a8ca7668f5252dbc93
+              bytes: 29723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7
+              bytes: 264
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: af00ddb575b3c410b463c1306ecc7d11dc4eced09e56bef929d304fe69d99da2
+              bytes: 51481
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/validation.org
+              sha256: e1c8bd8126ae352a854f7907c8721b39b5a69b197e177059c79e66129a044960
+              bytes: 26211
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: 5a77ed372ad9f6a7da4399876d072760a194c9032f99f3db755cef1ad9665883
+              bytes: 8521
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: b208c1354e76bba13ba3b28a479d1e6e7f43762c81bad5a0b9761eeae51e6273
+              bytes: 2257
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367
+              bytes: 723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 1
+          revision: 5a77ed372ad9f6a7da4399876d072760a194c9032f99f3db755cef1ad9665883 (W004 spec.org)
+          verdict: PASS
+          response: |-
+            GATE: definition
+            REVISION: 5a77ed372ad9f6a7da4399876d072760a194c9032f99f3db755cef1ad9665883 (W004 spec.org)
+            VERDICT: PASS
+
+            Findings and assessment:
+
+            - Annotation check: W004 spec.org contains no semantically identified annotation records or blocks; ordinary Org structure and prose only. No feedback.yaml supplied, none required.
+            - Audit-state duplication: spec.org and validation.org record test evidence and operator instructions only; audit status, revisions and session identity are referenced via links to audits.yaml, not duplicated. No FAIL trigger.
+            - Scope and fidelity: the specification matches the operator-authorized paired scope exactly — Apache 2.0, version 0.1.0 (manifest already correct and deliberately retained), licensing comments in main.js, root LICENSE, README/Vision/release notes, W003 acceptance recording, and the GitHub draft. No runtime behaviour, dependency or interface changes are introduced; verification confirms main.js differs from baseline only by licence/version comments (OT004.1 GREEN) and the four downloaded assets are hash-identical to the maintained package (OT004.2 GREEN, hashes consistent with the supplied evidence manifest).
+            - Test strategy: no RTs is appropriate — the change is metadata, prose and release operations with no observable runtime behaviour delta. The two bounded one-off OTs cover the package/documentation review and the draft release, with explicit bounds (one licence retrieval, one retry per failed operation, no publication during the pre-publication checks). This satisfies the no-RT justification requirement; demanding automated tests for licence comments or prose would be artificial source-text testing.
+            - Publication boundary: the spec correctly distinguishes the draft-acceptance criterion (AC004.3 - reviewable unpublished draft) from the later 2026-09-16 "pk proced with those steps pls" authorization for publishing and submission after reviews, including the README/Vision wording update at publication time. No unrequested behaviour is smuggled in.
+            - Architecture fit and proportionality: no new components, mechanisms or moving parts; the three-file package is preserved and no runtime version constant was added. Not over-engineered; no template inflation. Security impact section is present and accurate (no new dependency, network client, secret or privilege).
+            - Edge cases: pre-existing tag/release preservation and partial-upload handling are bounded and reasonable.
+            - Documentation handoff: affected documents (README, Vision, release notes, W003 validation/work ledger) are identified and were reconciled; W003 acceptance records the operator-reported passes honestly, without invented device versions or fixture observations.
+
+            No blocking findings. No follow-up work required for this sign-off.
+          updated: "2026-09-16T11:40:25Z"
