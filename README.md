@@ -1,9 +1,11 @@
 # Full Document Reader
 
-Read complete Obsidian notes aloud with Apple's Accessibility Reader on
-**iPhone and Mac**. Full Document Reader opens the whole Markdown note in a
-read-only view, ready for Apple's speech and playback controls. No speech
-service account or API key is needed.
+Obsidian's preview loads only part of a long note, leaving Apple's Accessibility
+Reader unable to read the whole document. **Full Document Reader** provides a
+preview of the entire note, so Accessibility Reader can read it aloud from
+beginning to end on **iPhone and Mac**.
+
+No speech service account or API key is needed.
 
 Requires **Obsidian 1.13+** and **iOS 26+ or macOS 26+**.
 
