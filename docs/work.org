@@ -118,7 +118,7 @@ classification; it is provenance, not current state.
   plugin. Installation and Git synchronization use Bash; macOS supplies the
   regression-test engine. Reader behaviour and stored settings remain unchanged.
 
-** ACTIVE W004 - Marketplace prep :maintenance:
+** REVIEW W004 - Marketplace prep :maintenance:
 :PROPERTIES:
 :CUSTOM_ID: w-004
 :PRIORITY: P1
@@ -133,6 +133,7 @@ classification; it is provenance, not current state.
 - Earlier submission blocker :: Computer-use permissions prevented agent submission. Taḋg subsequently supplied Community automated-review feedback; the old blocker describes that earlier attempt.
 - Earlier handoff :: The extra release attachment is removed and the three unchanged runtime assets have verified attestations. Await the Community review refresh and operator disposition; its acceptance is not inferred. See the validation record and paired review record.
 
+- Current handoff :: Release 1.0.0 was published by the master-push workflow; all three downloaded files matched their tag and passed cryptographic attestation verification. Later pushes increment the patch automatically. Operator disposition and the portal description refresh remain separate.
 - Automatic release amendment :: Taḋg selected 1.0.0, then patch increments and attestation on every master push. Product name is Full Document View for iOS TTS; author is Tadhg O'Brien. Preparation and verification remain under this paired ticket.
 
 * Migration record

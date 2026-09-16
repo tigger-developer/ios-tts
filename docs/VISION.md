@@ -5,7 +5,7 @@ Last updated: 2026-09-16
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
 The [current specification](../specs/003-full-document-reader/spec.org) defines
-the approved behaviour. Version 1.0.0 is being prepared under Apache 2.0, with subsequent patch releases automated on pushes to master. See [release automation](releases/automation.md). Taḋg reported the native user tests
+the approved behaviour. Version 1.0.0 is published under Apache 2.0, with subsequent patch releases automated on pushes to master. See [release automation](releases/automation.md). Taḋg reported the native user tests
 passed and accepted the reader on 2026-09-16; the linked validation record
 distinguishes this human declaration from automated evidence.
 
