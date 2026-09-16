@@ -1,7 +1,7 @@
 {
   "id": "ios-tts",
   "name": "Full Document View for iOS TTS",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "minAppVersion": "1.13.0",
   "description": "For native iOS/macOS TTS, this plugin presents the full document so that the Accessibility Reader can access it.",
   "author": "Tadhg O'Brien",
