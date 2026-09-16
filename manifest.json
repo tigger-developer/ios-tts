@@ -1,9 +1,9 @@
 {
   "id": "ios-tts",
-  "name": "Full Document Reader",
+  "name": "Full Document View for iOS TTS",
   "version": "0.1.0",
   "minAppVersion": "1.13.0",
   "description": "Present the whole current note for Apple's native Accessibility Reader on macOS and iOS.",
-  "author": "Taḋg",
+  "author": "Tadhg O'Brien",
   "isDesktopOnly": false
 }
