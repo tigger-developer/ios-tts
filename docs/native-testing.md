@@ -1,6 +1,6 @@
 # Native reader test
 
-**First check:** open a long note with **Open full document reader**, invoke
+**First check:** open a long note with **Preview for Accessibility View (TTS on iOS/macOS)** in the command palette, invoke
 Apple's **Accessibility Reader**, and check that its text reaches the ending
 without scrolling the plugin view. If it stops early, record where it stops.
 
@@ -42,10 +42,10 @@ commit, device, OS and Obsidian versions, and the tester's name.
    close. Reopen after editing without Save and confirm the saved limit remains.
    Check one Back button appears on each reopening, including after closing
    while help is still rendering.
-4. **Apple shortcuts:** follow the settings help. Test Mac Command-Escape. On
-   the physical iPhone, test triple-click and double-tap Back Tap, including
-   the menu with multiple selected accessibility features. Record which phone
-   button was tested; the Home-button alternative may be documentation-reviewed.
+4. **Apple shortcuts:** follow the settings help. Check the Accessibility Reader
+   selection on iPhone and invoke it with triple-click lock button. On Mac, use
+   Command-Escape. Check that a hotkey assigned through Obsidian Settings > Hotkeys
+   opens the plugin preview using the renamed command.
 5. **Offline and cleanup:** with Autoplay off, local notes must present offline
    and opening the plugin must not start speech. Remove disposable test data
    and restore any native settings changed for testing.

@@ -811,3 +811,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   host layout or accessibility, so no new retained automation is added.
   Existing session and preference regressions remain applicable; the bounded
   source review checks control cleanup and the absence of new content access.
+
+* Setup and command wording, 2026-09-16
+
+Current setup copy and command naming are defined by [[file:../004-marketplace-prep/spec.org][W004 - Marketplace prep]]. The command display name is =Preview for Accessibility View (TTS on iOS/macOS)=; its ID and callback are unchanged. Existing Obsidian hotkey assignment is retained. Current setup instructions omit Home-button, Back Tap and system-shortcut customization alternatives; those earlier documentation requirements are superseded. Reader behaviour and earlier native test results are unchanged.

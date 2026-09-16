@@ -83,3 +83,9 @@
 - Language :: Revised project prose uses neutral statements without personal attribution. Raw audit output and archived SDLC templates retain their original text.
 - Preservation :: README introduction, bundled help, runtime package and licence are unchanged. The sync script change affects only its descriptive comment.
 - Checks :: sanitize; git diff --check; W004 sdlc-validate; bounded text, link, rendering and preservation checks. Runtime tests were not repeated for prose and comment changes.
+
+* README annotation verification, 2026-09-16
+
+- Scope :: Eleven annotation dispositions recorded in =feedback.yaml=. README images follow the source sequence, with the icon beside its instruction and the active-reading screenshot after playback. Offline help uses the same setup instructions.
+- Result :: PASS. Ten image paths and alt texts checked; added screenshot byte-identical to its source; README and help render with Pandoc; local link targets exist. Bundled help matches =docs/reader-help.md=. Source comparison permits only the help literal and exact command display-name change; command ID and callback are unchanged.
+- Existing checks :: =make lint= PASS; =make test= PASS, 12/12. No new persistent prose test or hotkey control. Native visual review remains separate.

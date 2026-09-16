@@ -142,55 +142,49 @@ a read-only view for Apple's Accessibility Reader.
 
 ## Set up an iPhone shortcut
 
-Requires iOS 26 or later.
+Open **Settings > Accessibility > Read & Speak**.
 
-1. Open **Settings > Accessibility > Read & Speak > Accessibility Reader**.
-2. Turn on **Accessibility Reader**. Turn on **Autoplay in Accessibility Reader**
-   if speech should start as soon as the reader opens. Leave Autoplay off to
-   start speech manually with **Play**.
-3. Return to **Settings > Accessibility > Accessibility Shortcut** and select
-   **Accessibility Reader**. A tick beside it confirms the selection.
-4. The shortcut is a **triple-click of the side button** (the lock button), or
-   the **Home button** on an iPhone that has one. If several accessibility
-   shortcuts are selected, choose **Accessibility Reader** from the menu.
+Open **Accessibility Reader** and turn it on.
 
-**Optional Back Tap shortcut:** after selecting Accessibility Reader above,
-open **Settings > Accessibility > Touch > Back Tap** and set **Double Tap** to
-**Accessibility Shortcut**. Double-tap the back of the phone to invoke it.
+Turn on **Autoplay in Accessibility Reader** if you want speech to start when
+Accessibility Reader opens.
 
-[Apple's iPhone reader guide](https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26),
-[Accessibility Shortcut guide](https://support.apple.com/en-euro/guide/iphone/iph3e2e31a5/26/ios/26)
-and [Back Tap guide](https://support.apple.com/en-us/111772).
+Return to **Settings > Accessibility** and check **Accessibility Shortcut**.
+
+Check that **Accessibility Reader** is selected. The default shortcut is a
+**triple-click of the lock button**.
 
 ## Set up a Mac shortcut
 
-Requires macOS 26 or later.
+Open **System Settings > Accessibility > Read & Speak**.
 
-1. Open **System Settings > Accessibility > Read & Speak**.
-2. Turn on **Accessibility Reader**.
-3. **Choose the voice:** click the **info button beside System voice** to browse
-   and preview voices. Try one of the **Siri** voices for a more natural reading
-   voice, where available. Download it if prompted, then select it in
-   **System voice**. Finish any download while connected to the internet before
-   using it offline.
-4. **Check the shortcut:** **Command-Escape** is the default. The separate
-   **info button beside Accessibility Reader** opens its options, including
-   the keyboard shortcut if a different key combination is preferred.
+Turn on **Accessibility Reader**.
 
-[Apple's Mac reader guide](https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac)
-and [voice selection guide](https://support.apple.com/en-au/guide/mac-help/mchlp2290/mac).
+**Important: for high-quality TTS, click the info button (i) beside System voice
+and select a Siri voice.** The default selector alone does not expose the Siri
+voices; the info button opens the voice selection options. The standard voice
+has much lower fidelity. Download the Siri voice if prompted before using it
+offline.
+
+The default Accessibility Reader shortcut is **Command-Escape**.
 
 ## Listen to a note
 
-1. Open the note in Obsidian.
-2. Tap or click the **book and sound waves icon** beside the note's normal
-   edit/preview controls. This opens the full-document preview. The ribbon
-   button and **Open full document reader** command do the same thing.
-3. Invoke Apple's Accessibility Reader: **triple-click the side/Home button**
-   on iPhone, use the configured **Back Tap**, or press **Command-Escape**
-   (or the customized shortcut) on Mac.
-4. Speech starts automatically if Autoplay is enabled. Otherwise, press
-   **Play** in Accessibility Reader. Its controls manage the voice and playback.
+Open a note in Obsidian. The plugin's icon appears beside the normal edit/preview
+buttons in the document pane.
+
+Click the plugin's preview icon beside the edit/preview buttons.
+
+This opens the full-document preview. You can also use
+**Preview for Accessibility View (TTS on iOS/macOS)** in Obsidian's **command palette**.
+On Mac, you can assign a hotkey to this command in **Obsidian Settings > Hotkeys**
+to open the preview from the keyboard.
+
+Invoke Apple's Accessibility Reader. The defaults are **triple-click the lock
+button** on iPhone and **Command-Escape** on Mac.
+
+Speech starts automatically if Autoplay is enabled. Otherwise, press **Play**.
+Accessibility Reader's controls manage the voice and playback.
 
 These instructions are bundled with the plugin and remain available offline.
 [Open the illustrated setup guide](https://github.com/tigger-developer/ios-tts#how-to-use)
@@ -496,7 +490,7 @@ class FullDocumentReaderPlugin extends Plugin {
     );
     this.addCommand({
       id: "open-full-document-reader",
-      name: "Open full document reader",
+      name: "Preview for Accessibility View (TTS on iOS/macOS)",
       callback: () => openReader(),
     });
     const updateHeaders = () => this.updateHeaderButtons(openReader);

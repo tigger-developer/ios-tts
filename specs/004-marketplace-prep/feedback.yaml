@@ -1,0 +1,42 @@
+---
+source: README.md footnotes
+date: '2026-09-16'
+annotations:
+- id: tigger-001
+  status: applied
+  resolution: State triple-click as the default without customization instructions.
+- id: tigger-002
+  status: applied
+  resolution: Use lock button throughout the setup and invocation instructions.
+- id: tigger-003
+  status: applied
+  resolution: Remove Home-button alternatives from current setup instructions.
+- id: tigger-004
+  status: applied
+  resolution: Check that Accessibility Reader is selected instead of instructing a
+    new selection.
+- id: tigger-005
+  status: applied
+  resolution: Remove Back Tap from setup scope.
+- id: tigger-006
+  status: applied
+  resolution: Require the System voice info button and a Siri voice for high-quality
+    Mac speech.
+- id: tigger-007
+  status: applied
+  resolution: State Command-Escape as the default without customization guidance.
+- id: tigger-008
+  status: applied
+  resolution: Place the icon immediately after Click this icon; document existing
+    Obsidian hotkeys.
+- id: tigger-009
+  status: applied
+  resolution: Use the exact command name Preview for Accessibility View (TTS on iOS/macOS)
+    in the command palette.
+- id: tigger-010
+  status: applied
+  resolution: Import the active-reading screenshot and place it after playback instructions.
+- id: tigger-011
+  status: applied
+  resolution: Place screenshots beside their corresponding steps in original source
+    order.
