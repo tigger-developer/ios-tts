@@ -1,10 +1,6 @@
 # Full Document Reader
 
-**Full Document Reader** brings Apple's native text-to-speech to complete
-Obsidian notes on **iPhone and Mac**. Obsidian's preview is optimized to load
-the visible portion of a note, so Accessibility Reader normally has access to
-only part of the document. This plugin provides a dedicated preview that makes
-the entire note available to Accessibility Reader, ready to read aloud.
+The purpose of this plugin is to unlock native Apple TTS on obsidian notes. Normally the Accessibility Reader in iOS only sees a portion of the note, as obsidian's preview is optimized to load only the visible portion of the note give or take some caching. This plugin presents a special preview mode that Accessibility Reader can use to read the entire document
 
 No speech service account or API key is needed.
 
