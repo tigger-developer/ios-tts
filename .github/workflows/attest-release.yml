@@ -1,0 +1,61 @@
+# ABOUTME: Attests unchanged release assets after comparing their tagged source.
+# ABOUTME: Runs only on explicit dispatch and never changes the release.
+name: Attest release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Published release version (x.y.z)
+        required: true
+        type: string
+        default: '0.1.0'
+
+permissions: {}
+
+jobs:
+  attest:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out the workflow source and release tags
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify release files before signing
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -eo pipefail
+          if [[ ! "$RELEASE_TAG" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo 'Release tag must be an x.y.z version.' >&2
+            exit 2
+          fi
+          git rev-parse --verify "refs/tags/$RELEASE_TAG^{commit}"
+          jq -e --arg version "$RELEASE_TAG" '.version == $version' manifest.json
+          gh release view "$RELEASE_TAG" --json isDraft --jq '.isDraft' | grep -qx false
+          release_assets=$(mktemp -d)
+          gh release download "$RELEASE_TAG" --dir "$release_assets" \
+            --pattern main.js --pattern manifest.json --pattern styles.css
+          for asset in main.js manifest.json styles.css; do
+            git show "refs/tags/$RELEASE_TAG:$asset" > "$release_assets/tagged-$asset"
+            cmp "$asset" "$release_assets/tagged-$asset"
+            cmp "$asset" "$release_assets/$asset"
+          done
+          # The disposable GitHub-hosted runner owns temporary-file cleanup.
+      - name: Attest the verified installation files
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+          create-storage-record: false

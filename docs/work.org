@@ -118,7 +118,7 @@ classification; it is provenance, not current state.
   plugin. Installation and Git synchronization use Bash; macOS supplies the
   regression-test engine. Reader behaviour and stored settings remain unchanged.
 
-** BLOCKED W004 - Marketplace prep :maintenance:
+** ACTIVE W004 - Marketplace prep :maintenance:
 :PROPERTIES:
 :CUSTOM_ID: w-004
 :PRIORITY: P1
@@ -150,3 +150,10 @@ classification; it is provenance, not current state.
 - *Archived v2 work:* [[file:archive/sdlc-v2/][Archived Spec Kit work]].
 - *Assumptions:* None recorded by project initialization.
 - *Unresolved items:* None recorded by project initialization.
+
+* Marketplace review amendment, 2026-09-16
+
+Taḋg provided automated-review recommendations and authorized W004 to remove
+only the LICENSE release attachment and add provenance attestations. The earlier
+computer-use submission blocker is historical; directory acceptance is not
+inferred from the supplied review. This remains paired development.

@@ -15,7 +15,8 @@
 ** Before
 - The public repository has *no licence or release*. The manifest already says 0.1.0.
 ** After
-- A *draft GitHub release* contains the installation files and licence.
+- The published release contains *only the three supported installation assets*, with Apache licensing retained in the repository and main.js.
+- A manually invoked GitHub workflow verifies the release files against their tag and workflow source before generating *provenance attestations*.
 - Documentation records *operator-reported native test passes and acceptance*.
 ** Changes
 - Add licensing, release notes and matching source metadata; update the README.
@@ -26,7 +27,7 @@
 ** Decisions
 - Taḋg selected *Apache 2.0 and version 0.1.0* and explicitly reported iPhone tests passed.
 ** Next step
-- Verify the draft and obtain paired reviews, then carry out the separately authorized publication and directory submission below.
+- Address the operator-provided Community review recommendations, verify attestations, and obtain paired reviews for this amendment.
 
 * Context
 - Authority :: On 2026-09-16 Taḋg requested paired development: "add an apache 2.0 license, release is 0.1.0 update manifest and main.js accordigly and prepare release - mark user tests as pss and ticket accepted". Follow-ups: "pls update readme as well" and "iphone tests passed also".
@@ -53,10 +54,19 @@
 :PROPERTIES:
 :CUSTOM_ID: ac-004-3
 :END:
-- Criterion :: GitHub contains an *unpublished 0.1.0 draft* with release notes and byte-identical =main.js=, =manifest.json=, =styles.css= and =LICENSE= attachments.
+- Historical preparation criterion :: GitHub contains an *unpublished 0.1.0 draft* with release notes and byte-identical =main.js=, =manifest.json=, =styles.css= and =LICENSE= attachments.
 - Proven by :: [[#ot-004-2][OT004.2 - Draft release verification]].
 
+** AC004.4 - Supported attested release assets :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-4
+:END:
+- Criterion :: Release 0.1.0 contains only *main.js, manifest.json and styles.css*. Its runtime files remain unchanged and have *verifiable GitHub provenance attestations*. Repository LICENSE and the complete licence embedded in main.js remain intact.
+- Safety :: Attestation fails before signing when the release tag/version is invalid or any release file differs from the tagged source or workflow source revision. The workflow does not execute released code or modify release assets.
+- Proven by :: [[#ot-004-3][OT004.3 - Attestation and asset verification]].
+
 * Test Definitions
+
 ** OT004.1 - Package and documentation review :testdef:
 :PROPERTIES:
 :CUSTOM_ID: ot-004-1
@@ -74,7 +84,18 @@
 - Expected :: *Draft true*, tag name 0.1.0, expected candidate commit, four matching files and maintained release notes.
 - Bounds :: One draft creation, four uploads and one inspection/download batch, plus at most one retry per failed operation. No publication, account linking, marketplace submission or paid service. Preserve any pre-existing release/tag and report a conflict.
 
+** OT004.3 - Attestation and asset verification :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-3
+:END:
+- Covers :: [[#ac-004-4][AC004.4 - Supported attested release assets]].
+- Local checks :: Parse workflow YAML, ShellCheck its shell body, execute its verification step with real release assets, and reject invalid-version and changed-file cases before any signing. These are bounded one-off packaging checks, not permanent source-text tests.
+- Live check :: Run the manually dispatched workflow for 0.1.0 once, with at most one remediation retry. Download the three runtime assets and use gh attestation verify scoped to this repository and signer workflow. Inspect the asset inventory and confirm only the unsupported LICENSE attachment was removed.
+- Expected :: Correct assets pass; invalid input and mismatches fail. Hosted run succeeds; cryptographic verification passes for all three unchanged files; root and embedded licence remain. No build or plugin runtime dependency is added.
+- Bounds :: Public-repository GitHub Actions, a ten-minute job timeout, no metered model or speech calls, no scheduled/CI regression suite, and no release/tag replacement. Local scratch uses OS temporary space; hosted scratch ends with the disposable runner.
+
 * Edge Cases
+
 - Existing matching tags/releases are *not replaced*. Failed upload leaves an explicitly incomplete draft; do not publish or claim readiness from partial assets.
 - Manifest already contains the selected version; *retain it*, without a cosmetic rewrite or unsupported licence field.
 
@@ -98,3 +119,12 @@
 - Sequence :: Preserve the verified draft and its assets; after reviews create and push an annotated 0.1.0 tag for the candidate, publish that draft, verify published metadata, and submit the same repository through the Community directory. Update README/Vision draft wording when publishing.
 - Boundaries :: No new GitHub workflow, runtime feature or replacement authentication setup. Use the configured SSH Git remote and gh for release operations. Account sign-in or consent that requires the human is a submission blocker; do not fabricate a submission or review result.
 - Evidence :: Record publication and directory outcomes in validation.org as operational evidence following the bounded pre-publication tests. The draft criterion describes the required reviewable preparation state, not a requirement to leave the release unpublished after this later authorization.
+
+* Automated-review remediation authority, 2026-09-16
+
+- Authority :: Taḋg supplied Obsidian's warnings about missing main.js/styles.css attestations and the unsupported LICENSE attachment. The recommendation was to remove only that attachment and add a small GitHub Actions workflow; Taḋg instructed: "let's do both then".
+- Supersedes :: The original four-attachment requirement was a historical preparation step. The final release inventory is the three supported files. The earlier prohibition on introducing a workflow is superseded only for this bounded attestation workflow.
+- Design :: Add .github/workflows/attest-release.yml with workflow_dispatch and a required x.y.z release_tag input. Check out the workflow's source commit with full tags, without persisted credentials. Check tag and manifest version, download exactly the three release files, compare each against the tag and current checkout, then attest the checkout files using GitHub's pinned official action. For this retrospective 0.1.0 attestation, the source revision includes the workflow and identical runtime files; the old tag is not rewritten.
+- Permissions :: contents: read, id-token: write and attestations: write in the hosted job only. No release-write permission, static credentials, remote plugin code execution or automatic publication. Pin checkout and attest actions to verified upstream commit hashes. GitHub supplies the action runtime; no Node/npm tooling is added to the plugin or local build.
+- Documentation :: Update release notes to link to the repository licence and explain that main.js carries its full text. Add concise workflow usage and provenance-verification instructions to README. Preserve prior validation results as history.
+- Security and proportionality :: The tag/file comparison is a production signing precondition, not a metered regression test. Manual invocation avoids automatic repeated runs. A single small workflow is sufficient; no build pipeline or signing service is introduced.

@@ -153,3 +153,23 @@ an earlier macOS report predated the JavaScript conversion, and the rewritten
 package's native smoke test, long-note evidence and physical-iPhone test were
 pending. The dated records remain in the validation history; the operator's
 current pass declaration supersedes their pending user-test status.
+
+## Release provenance
+
+The **Attest release** GitHub Actions workflow accepts a published `release_tag`.
+Run it from a source revision whose three installation files match that tag.
+It compares the uploaded files with both the tagged source and its own checkout,
+then generates GitHub provenance attestations. It neither compiles code nor
+changes the release. A mismatch stops signing; the plugin needs no Node/npm setup.
+
+The release carries only `main.js`, `manifest.json` and `styles.css`.
+The repository retains `LICENSE`, and its full text is included in `main.js`.
+For a downloaded file, verify provenance with the GitHub CLI:
+
+```sh
+gh attestation verify main.js --repo tigger-developer/ios-tts --signer-workflow tigger-developer/ios-tts/.github/workflows/attest-release.yml
+```
+
+Repeat for `styles.css` or `manifest.json`. For 0.1.0, attestation runs from the
+later workflow commit after confirming that the runtime files still match the
+original release tag; the original tag and assets are preserved.
