@@ -20,6 +20,7 @@
 - Documentation records *operator-reported native test passes and acceptance*.
 ** Changes
 - Add licensing, release notes and matching source metadata; update the README.
+- Provide *illustrated iPhone/Mac setup* and matching *offline help*, with a separate third-person wording inventory.
 ** Unchanged
 - Preserve *reader behaviour, settings, platform requirements and three-file installation*.
 ** Edge cases
@@ -27,7 +28,7 @@
 ** Decisions
 - Taḋg selected *Apache 2.0*, reported iPhone tests passed, then selected *1.0.0 followed by automatic patch increments*.
 ** Next step
-- Verify and review automatic publication, then push the initial *1.0.0* candidate and check hosted release evidence.
+- Review the *illustrated setup amendment*, publish it through automatic patch release, and present the wording inventory for editorial decisions.
 
 * Context
 - Authority :: On 2026-09-16 Taḋg requested paired development: "add an apache 2.0 license, release is 0.1.0 update manifest and main.js accordigly and prepare release - mark user tests as pss and ticket accepted". Follow-ups: "pls update readme as well" and "iphone tests passed also".
@@ -157,3 +158,27 @@
 - Covers :: [[#ac-004-5][AC004.5 - Automatic patch releases and attestations]].
 - Procedure :: Parse YAML and lint extracted shell. Exercise version preparation in a temporary Git repository with local bare upstream: initial 1.0.0, next 1.0.1, same-run retry, invalid version and conflicting push. Compare package bytes with the tag and verify unrelated files are untouched. Review event/permission wiring against GitHub's documented workflow-token and concurrency contracts. Run the existing reader suite and lint after metadata changes.
 - Expected :: Exact initial and incremented versions, idempotent retry, nonzero failure for invalid versions/conflicts, valid workflow configuration and unchanged reader behaviour. No persistent third-party simulation or source-text regression test is introduced; the one-off check exercises real Git and jq. Hosted publication evidence follows the pre-publication review under the bounded operation above.
+
+* Illustrated setup amendment, 2026-09-16
+
+- Authority :: Taḋg requested clear iOS and macOS setup instructions in README and help, importing the screenshots referenced by ~/notes/ios-tts-draft.md, with appropriate rewording. Third-person references to Taḋg must be highlighted for review, not silently rewritten in historical records.
+- Scope :: Preserve the requested README introduction. Explain iPhone enablement, optional Autoplay, the Accessibility Shortcut selection and side/Home-button invocation; preserve the optional Back Tap route. Explain Mac enablement, the separate System voice info button for choosing a Siri voice, downloads before offline use, and Command-Escape or a customized shortcut. Show the plugin's toolbar icon and the sequence from note to preview to Apple's reader.
+- Assets :: Copy the eight screenshots and icon from the draft without altering their pixels, into docs/images/setup with descriptive names and accessible alt text. README carries the illustrated sequence. docs/reader-help.md and the identical bundled READER_HELP carry full text instructions offline, with an explicit online link to the illustrated README. No screenshot is automatically fetched from plugin settings; no new network behaviour, installation asset or build tooling.
+- Editorial boundary :: Use direct instructions in the new setup copy. Inventory third-person author/operator references in existing public documents for Taḋg's review; preserve attribution, licensing and historical evidence. Leave unrelated g6.png untracked and untouched.
+- Verification :: One-off source-image hash comparison, Markdown link/anchor and rendered HTML image checks, exact bundled-help comparison, existing lint/tests, and paired review. Screenshots illustrate Taḋg's supplied UI; agent checks do not claim another physical-device test. No durable source-text regression test is justified for this documentation-only content change.
+
+** AC004.6 - Illustrated setup for iOS and macOS :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-6
+:END:
+- Criterion :: README and offline help explain both platforms' setup and how to invoke reading. iPhone Autoplay is an option, not an instruction to leave it off. Mac guidance identifies System voice and the keyboard shortcut distinctly. Imported images illustrate the README, and third-person references are supplied for editorial review without altering history.
+- Proven by :: [[#ot-004-5][OT004.5 - Setup documentation verification]].
+
+** OT004.5 - Setup documentation verification :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-5
+:END:
+- Covers :: [[#ac-004-6][AC004.6 - Illustrated setup for iOS and macOS]].
+- Procedure :: Review copy against all nine supplied images, the draft and Apple's platform instructions; compare imported image hashes; render README and help with the available Markdown renderer; verify local links, image paths, alt text and anchors; compare decoded READER_HELP with docs/reader-help.md; confirm only that literal changes in main.js; run make lint and make test. Present rendered documentation and the separate wording inventory for inspection.
+- Expected :: Nine faithful images, no missing local targets, complete platform/setup/use instructions, identical offline help and no executable change. Existing 12 reader tests and lint pass. Native visual/device validation is not inferred from these checks.
+- Bounds :: Local documentation tools and read-only Apple reference retrieval. Current every-push publication policy applies after the paired reviews; inspect the resulting workflow and verify the three release assets. No vault installation or notes-vault writes.

@@ -144,34 +144,57 @@ a read-only view for Apple's Accessibility Reader.
 
 Requires iOS 26 or later.
 
-1. In the iPhone Settings app, open **Accessibility**, then **Read & Speak**.
-   Open **Accessibility Reader** and enable it. Leave Autoplay off to start
-   playback manually.
-2. Return to **Accessibility** and open **Accessibility Shortcut**. Select
-   **Accessibility Reader**.
-3. In Obsidian, open a note and use **Open full document reader**. Triple-click
-   the **side button**, also called the lock button. On an iPhone with a Home
-   button, triple-click that instead. If a shortcut menu appears, choose
-   Accessibility Reader, then press **Play**.
+1. Open **Settings > Accessibility > Read & Speak > Accessibility Reader**.
+2. Turn on **Accessibility Reader**. Turn on **Autoplay in Accessibility Reader**
+   if speech should start as soon as the reader opens. Leave Autoplay off to
+   start speech manually with **Play**.
+3. Return to **Settings > Accessibility > Accessibility Shortcut** and select
+   **Accessibility Reader**. A tick beside it confirms the selection.
+4. The shortcut is a **triple-click of the side button** (the lock button), or
+   the **Home button** on an iPhone that has one. If several accessibility
+   shortcuts are selected, choose **Accessibility Reader** from the menu.
 
-[Apple's reader guide](https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26)
-and [shortcut guide](https://support.apple.com/en-euro/guide/iphone/iph3e2e31a5/26/ios/26)
-provide the platform instructions.
+**Optional Back Tap shortcut:** after selecting Accessibility Reader above,
+open **Settings > Accessibility > Touch > Back Tap** and set **Double Tap** to
+**Accessibility Shortcut**. Double-tap the back of the phone to invoke it.
 
-**Alternative: double-tap the back of the phone.** After selecting Accessibility
-Reader above, open **Settings > Accessibility > Touch > Back Tap**. Set
-**Double Tap** to **Accessibility Shortcut**. With the full document reader open,
-tap the back of the phone twice; choose Accessibility Reader if a menu appears,
-then press Play. This uses the same configured accessibility shortcut.
-[Apple's Back Tap guide](https://support.apple.com/en-us/111772).
+[Apple's iPhone reader guide](https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26),
+[Accessibility Shortcut guide](https://support.apple.com/en-euro/guide/iphone/iph3e2e31a5/26/ios/26)
+and [Back Tap guide](https://support.apple.com/en-us/111772).
 
 ## Set up a Mac shortcut
 
-Requires macOS 26 or later. In **System Settings > Accessibility > Read & Speak**,
-enable **Accessibility Reader**. Open the note with **Open full document reader**,
-then press **Command-Escape**, or the customized shortcut, and press Play.
-Voice and playback options belong to macOS.
-[Apple's Mac reader guide](https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac).
+Requires macOS 26 or later.
+
+1. Open **System Settings > Accessibility > Read & Speak**.
+2. Turn on **Accessibility Reader**.
+3. **Choose the voice:** click the **info button beside System voice** to browse
+   and preview voices. Try one of the **Siri** voices for a more natural reading
+   voice, where available. Download it if prompted, then select it in
+   **System voice**. Finish any download while connected to the internet before
+   using it offline.
+4. **Check the shortcut:** **Command-Escape** is the default. The separate
+   **info button beside Accessibility Reader** opens its options, including
+   the keyboard shortcut if a different key combination is preferred.
+
+[Apple's Mac reader guide](https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac)
+and [voice selection guide](https://support.apple.com/en-au/guide/mac-help/mchlp2290/mac).
+
+## Listen to a note
+
+1. Open the note in Obsidian.
+2. Tap or click the **book and sound waves icon** beside the note's normal
+   edit/preview controls. This opens the full-document preview. The ribbon
+   button and **Open full document reader** command do the same thing.
+3. Invoke Apple's Accessibility Reader: **triple-click the side/Home button**
+   on iPhone, use the configured **Back Tap**, or press **Command-Escape**
+   (or the customized shortcut) on Mac.
+4. Speech starts automatically if Autoplay is enabled. Otherwise, press
+   **Play** in Accessibility Reader. Its controls manage the voice and playback.
+
+These instructions are bundled with the plugin and remain available offline.
+[Open the illustrated setup guide](https://github.com/tigger-developer/ios-tts#how-to-use)
+for screenshots; that link needs an internet connection.
 
 ## Word limit and limitations
 
@@ -189,8 +212,7 @@ Voice and playback options belong to macOS.
   stores only the word-limit preference, never the note or generated audio.
 - **Normal rendering:** links and embeds follow Obsidian's usual behaviour.
   There is no EPUB/PDF conversion or image-text extraction. Reading local text
-  needs no plugin network service; remote embeds may still need a connection.
-`;
+  needs no plugin network service; remote embeds may still need a connection.`;
 
 // Do not retain registrations arriving after an asynchronous render closes.
 class RenderOwner extends Component {
