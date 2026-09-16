@@ -1,6 +1,6 @@
 # Full Document View for iOS TTS
 
-The purpose of this plugin is to unlock native Apple Text-to-Speech (TTS) on obsidian notes. Normally the Accessibility Reader in iOS only sees a portion of the note, as obsidian's preview is optimized to load only the visible portion of the note give or take some caching. This plugin presents a special preview mode that Accessibility Reader can use to read the entire document
+The purpose of this plugin is to unlock native Apple Text-to-Speech (TTS) on Obsidian notes. Normally the Accessibility Reader in iOS only sees a portion of the note, as Obsidian's preview is optimized to load only the visible portion of the note give or take some caching. This plugin presents a special preview mode that Accessibility Reader can use to read the entire document
 
 If you are using an iOS device and are using a TTS plugin with an API key, you are spending money for something your device is already capable of doing for free. Modern iOS/macOS TTS has improved substantially and is on a quality par with the best TTS API services. However, accessing it is not straightforward.
 
