@@ -1,0 +1,96 @@
+# ABOUTME: Publishes one patch release for each push to master.
+# ABOUTME: Reuses the release on retry and attests its three installation assets.
+name: Release and attest
+
+on:
+  push:
+    branches: [master]
+
+permissions: {}
+
+concurrency:
+  group: plugin-release
+  queue: max
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    outputs:
+      release_tag: ${{ steps.prepare.outputs.release_tag }}
+    steps:
+      - name: Check out the latest primary branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Prepare and push the version
+        id: prepare
+        shell: bash
+        run: |
+          set -eo pipefail
+          if [[ ! "$GITHUB_RUN_ID" =~ ^[0-9]+$ ]]; then
+            echo 'Missing numeric workflow run ID.' >&2
+            exit 2
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          previous=$(git log --format=%H -1 --grep="^Release-Run: $GITHUB_RUN_ID$")
+          if [[ -n "$previous" ]]; then
+            git checkout --detach "$previous"
+            version=$(jq -er '.version' manifest.json)
+            test "$(git rev-parse "refs/tags/$version^{commit}")" = "$previous"
+          else
+            version=$(jq -er '.version' manifest.json)
+            if [[ ! "$version" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+              echo 'Manifest version must be an x.y.z version.' >&2
+              exit 2
+            fi
+            if [[ "$version" == '1.0.0' && -z "$(git tag --list 1.0.0)" ]]; then
+              next_version=$version
+            else
+              next_version=$(jq -nr --arg version "$version" \
+                '$version | split(".") | .[2] = ((.[2] | tonumber) + 1 | tostring) | join(".")')
+            fi
+            scratch=$(mktemp -d)
+            jq --arg version "$next_version" '.version = $version' manifest.json > "$scratch/manifest.json"
+            jq -R -s -j --arg name "$(jq -r '.name' manifest.json)" --arg version "$next_version" \
+              'split("\n") | .[2] = ("// " + $name + " " + $version) | join("\n")' \
+              main.js > "$scratch/main.js"
+            mv "$scratch/manifest.json" manifest.json
+            mv "$scratch/main.js" main.js
+            git add manifest.json main.js
+            git commit --allow-empty -m "chore: release $next_version" -m "Release-Run: $GITHUB_RUN_ID"
+            git tag -a "$next_version" -m "Release $next_version"
+            git push --atomic origin HEAD:refs/heads/master "refs/tags/$next_version"
+            version=$next_version
+            # Disposable hosted-runner teardown removes this run's scratch directory.
+          fi
+          printf 'release_tag=%s\n' "$version" >> "$GITHUB_OUTPUT"
+      - name: Publish the three installation files
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ steps.prepare.outputs.release_tag }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -eo pipefail
+          releases=$(gh release list --limit 1000 --json tagName,isDraft)
+          exists=$(jq -r --arg tag "$RELEASE_TAG" 'any(.[]; .tagName == $tag)' <<< "$releases")
+          if [[ "$exists" == false ]]; then
+            gh release create "$RELEASE_TAG" main.js manifest.json styles.css \
+              --verify-tag --title "$(jq -r '.name' manifest.json) $RELEASE_TAG" --generate-notes
+          fi
+          # Existing releases are verified by the attestation job, never overwritten.
+
+  attest:
+    needs: release
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    uses: ./.github/workflows/attest-release.yml
+    with:
+      release_tag: ${{ needs.release.outputs.release_tag }}

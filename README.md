@@ -31,6 +31,7 @@ notes, images and embeds can use substantial memory.
 
 [Shortcut setup and further help](docs/reader-help.md) ·
 [Manual installation](docs/readme-history.md#install-and-use) ·
-[Development and provenance](docs/readme-history.md#develop-outside-the-vault)
+[Development](docs/readme-history.md#develop-outside-the-vault) ·
+[Release provenance](docs/releases/automation.md)
 
 Licensed under [Apache License 2.0](LICENSE).

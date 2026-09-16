@@ -11,23 +11,23 @@
 :CUSTOM_ID: summary
 :END:
 ** Outcome
-- Prepare *Full Document Reader 0.1.0* for publication under *Apache 2.0*.
+- Publish *Full Document View for iOS TTS 1.0.0* and automate *patch releases with attestations*, under *Apache 2.0*.
 ** Before
-- The public repository has *no licence or release*. The manifest already says 0.1.0.
+- Original baseline: the public repository had *no licence or release*. Release 0.1.0 is now published; its attestation workflow was manual-only.
 ** After
 - The published release contains *only the three supported installation assets*, with Apache licensing retained in the repository and main.js.
-- A manually invoked GitHub workflow verifies the release files against their tag and workflow source before generating *provenance attestations*.
+- Each *master push* publishes one patch release and invokes *provenance attestation* after checking the three assets against their tag; manual attestation remains available for recovery.
 - Documentation records *operator-reported native test passes and acceptance*.
 ** Changes
 - Add licensing, release notes and matching source metadata; update the README.
 ** Unchanged
 - Preserve *reader behaviour, settings, platform requirements and three-file installation*.
 ** Edge cases
-- An existing release or tag must not be overwritten; *publication remains separate*.
+- Existing tags and release assets are *never overwritten*. Reruns reuse the same version; conflicting pushes fail without force.
 ** Decisions
-- Taḋg selected *Apache 2.0 and version 0.1.0* and explicitly reported iPhone tests passed.
+- Taḋg selected *Apache 2.0*, reported iPhone tests passed, then selected *1.0.0 followed by automatic patch increments*.
 ** Next step
-- Address the operator-provided Community review recommendations, verify attestations, and obtain paired reviews for this amendment.
+- Verify and review automatic publication, then push the initial *1.0.0* candidate and check hosted release evidence.
 
 * Context
 - Authority :: On 2026-09-16 Taḋg requested paired development: "add an apache 2.0 license, release is 0.1.0 update manifest and main.js accordigly and prepare release - mark user tests as pss and ticket accepted". Follow-ups: "pls update readme as well" and "iphone tests passed also".
@@ -128,3 +128,32 @@
 - Permissions :: contents: read, id-token: write and attestations: write in the hosted job only. No release-write permission, static credentials, remote plugin code execution or automatic publication. Pin checkout and attest actions to verified upstream commit hashes. GitHub supplies the action runtime; no Node/npm tooling is added to the plugin or local build.
 - Documentation :: Update release notes to link to the repository licence and explain that main.js carries its full text. Add concise workflow usage and provenance-verification instructions to README. Preserve prior validation results as history.
 - Security and proportionality :: The tag/file comparison is a production signing precondition, not a metered regression test. Manual invocation avoids automatic repeated runs. A single small workflow is sufficient; no build pipeline or signing service is introduced.
+
+* Automatic patch-release amendment, 2026-09-16
+
+- Authority :: Taḋg requested: "we should increment by 0.0.1 when we push a new commit and automatically trigger attestation", then "let's start with 1.0.0". This supersedes the manual-only release boundary for pushes to the existing primary branch, master.
+- Supersedes :: Earlier 0.1.0 metadata and manual-only criteria remain historical evidence. The amendment changes the current release version, display name, author attribution and workflow, preserving runtime semantics.
+- Scope :: *One release per push to master*, beginning at *1.0.0*, then incrementing the patch component. Multiple commits in one push form one release. GitHub's workflow-token commits do not recursively trigger another run. No feature-branch or pull-request publication.
+- Product metadata :: Use *Full Document View for iOS TTS* and author *Tadhg O'Brien*. Preserve the operator's committed description. Keep plugin ID ios-tts, platform compatibility, reader commands and runtime behaviour unchanged. README uses the operator's requested text and linked setup instructions; history stays separate.
+- Design :: A serialized release workflow checks out current master, advances the manifest and source version comment, commits those metadata changes, pushes an annotated version tag, and publishes exactly main.js, manifest.json and styles.css. The initial untagged 1.0.0 manifest is released as-is. Subsequent runs increment its patch. A run-ID commit trailer identifies reruns so they reuse the same release instead of incrementing twice.
+- Concurrency :: Queue up to GitHub's 100-run limit without cancelling an active publication. Each run uses master as it exists when the job starts. A concurrent human push that prevents a fast-forward fails visibly; no force push or automatic conflict resolution. A rerun uses its existing tagged release revision where one was already created.
+- Recovery :: Existing release assets must match the tagged files before signing. Existing published releases are verified, never overwritten. An incomplete draft requires operator repair before rerun if files are absent or differ. Failed attestations can be rerun without allocating another version.
+- Security :: The publishing job needs contents: write through the ephemeral GITHUB_TOKEN. The separate attestation job retains contents: read, id-token: write and attestations: write. Only trusted master pushes publish; actions remain SHA-pinned. No new credentials or authentication setup; local Git retains SSH.
+- Provenance :: Reuse the existing attestation workflow through workflow_call and retain manual recovery. Checkout the requested release tag and compare downloaded assets against it. The caller workflow revision remains the provenance build entry point; the tag records the generated version metadata. Signing runs in the same caller workflow because workflow-token publication does not trigger release events.
+- Proportionality :: GitHub orchestration and short shell steps suffice; no packaging framework, dependency installation or plugin build is introduced. The existing offline reader tests remain unchanged. Hosted publication/attestation is the requested production operation, not a metered regression suite.
+- Publication bounds :: After local verification and paired review, one initial push may publish 1.0.0; permit one remediation rerun, at most 20 status inspections over ten minutes, one asset download and one cryptographic verification per file. No old tag or release replacement.
+
+** AC004.5 - Automatic patch releases and attestations :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-5
+:END:
+- Criterion :: A trusted master push automatically publishes the next version with *three matching installation files* and invokes *provenance attestation*. First version is 1.0.0; subsequent pushes increment the patch once. Rerunning the same workflow reuses its version. Old releases and unrelated source content remain intact.
+- Proven by :: [[#ot-004-4][OT004.4 - Release orchestration verification]].
+
+** OT004.4 - Release orchestration verification :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-4
+:END:
+- Covers :: [[#ac-004-5][AC004.5 - Automatic patch releases and attestations]].
+- Procedure :: Parse YAML and lint extracted shell. Exercise version preparation in a temporary Git repository with local bare upstream: initial 1.0.0, next 1.0.1, same-run retry, invalid version and conflicting push. Compare package bytes with the tag and verify unrelated files are untouched. Review event/permission wiring against GitHub's documented workflow-token and concurrency contracts. Run the existing reader suite and lint after metadata changes.
+- Expected :: Exact initial and incremented versions, idempotent retry, nonzero failure for invalid versions/conflicts, valid workflow configuration and unchanged reader behaviour. No persistent third-party simulation or source-text regression test is introduced; the one-off check exercises real Git and jq. Hosted publication evidence follows the pre-publication review under the bounded operation above.

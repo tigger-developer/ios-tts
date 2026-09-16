@@ -43,3 +43,14 @@
 - Documentation :: Release notes now link to the repository licence; the published notes were updated through gh. README documents manual workflow invocation, source/tag equality and cryptographic verification. All changed documentation passed sanitize unchanged; git diff --check passed.
 - Scope :: These are bounded one-off checks. The retained workflow is the explicitly requested production attestation operation, not an automated metered regression test. No plugin behaviour or existing test changed; runtime tests were not rerun for this workflow-only increment.
 - Earlier evidence :: OT004.2 retains the original draft's four-file preparation result as history. This amendment supersedes that attachment inventory, while preserving the same runtime files. The operator supplied the Community automated-review feedback; no claim is made that its warnings have been refreshed or that the directory accepted the plugin.
+
+* GREEN OT004.4 - Release orchestration verification :testdef:
+:PROPERTIES:
+:REVISION: 3b0f1d2 plus the automatic-release workflow and 1.0.0 metadata amendment
+:EVIDENCE: Real temporary Git repositories passed initial release, patch increment, same-run retry, invalid-version rejection, unrelated-byte preservation and atomic conflicting-push rejection; YAML parsed and extracted shell passed ShellCheck.
+:END:
+- Execution :: 2026-09-16, macOS with Homebrew Bash, Git, jq and yq. A local bare remote and four disposable checkouts exercised the workflow's extracted preparation step without simulating GitHub APIs.
+- Results :: Initial tag 1.0.0 matched source; next run generated 1.0.1; retry retained the same commit and tag. Invalid version exited 2. A competing push caused exit 1 without changing remote master or publishing the proposed tag. Unrelated fixture bytes and executable source were preserved.
+- Tool checks :: Both workflow files parsed with yq; all three shell bodies passed ShellCheck. Existing make lint and make test passed, with 12/12 reader cases. Documentation and source metadata received a one-off review; no UI or runtime logic was changed.
+- External contract review :: GitHub documents workflow-token recursion suppression and queue:max with a 100-run limit. gh attestation verify help identifies the reusable workflow as the signer. Hosted GitHub execution and cryptographic verification follow the pre-publication review; local evidence does not establish those remote outcomes.
+- Prior tests :: Earlier 0.1.0 preparation and verification results above remain historical evidence for that package. This amendment supersedes its version and manual-only orchestration without changing reader logic or the operator's native validation.

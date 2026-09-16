@@ -1,11 +1,11 @@
-# Full Document Reader: product vision
+# Full Document View for iOS TTS: product vision
 
 Last updated: 2026-09-16
 
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
 The [current specification](../specs/003-full-document-reader/spec.org) defines
-the approved behaviour. Version 0.1.0 is prepared under Apache 2.0. Taḋg reported the native user tests
+the approved behaviour. Version 1.0.0 is being prepared under Apache 2.0, with subsequent patch releases automated on pushes to master. See [release automation](releases/automation.md). Taḋg reported the native user tests
 passed and accepted the reader on 2026-09-16; the linked validation record
 distinguishes this human declaration from automated evidence.
 
@@ -86,11 +86,11 @@ The [submission requirements](https://docs.obsidian.md/community-directory/submi
 require a short description of at most 250 characters, ending with a full stop,
 and accurate mobile compatibility.
 
-**Release preparation:** Full Document Reader 0.1.0 uses Apache 2.0 and retains
+**Historical release preparation:** Full Document Reader 0.1.0 uses Apache 2.0 and retains
 the identifier `ios-tts`. The operator reported platform user tests passed and
 accepted the reader. The verified package and release notes are available in
 [GitHub release 0.1.0](https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0).
-Account linking and directory submission remain separate.
+Account linking and directory submission were separate steps at that preparation stage.
 The published plugin list had no matching identifier or display name when
 checked on 2026-09-16; submission performs the authoritative availability check.
 

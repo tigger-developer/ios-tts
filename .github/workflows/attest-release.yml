@@ -1,15 +1,20 @@
 # ABOUTME: Attests unchanged release assets after comparing their tagged source.
-# ABOUTME: Runs only on explicit dispatch and never changes the release.
+# ABOUTME: Runs after automatic publication or manual dispatch; never changes assets.
 name: Attest release
 
 on:
+  workflow_call:
+    inputs:
+      release_tag:
+        required: true
+        type: string
   workflow_dispatch:
     inputs:
       release_tag:
         description: Published release version (x.y.z)
         required: true
         type: string
-        default: '0.1.0'
+        default: '1.0.0'
 
 permissions: {}
 
@@ -22,9 +27,10 @@ jobs:
       id-token: write
       attestations: write
     steps:
-      - name: Check out the workflow source and release tags
+      - name: Check out the release source and tags
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ inputs.release_tag }}
           fetch-depth: 0
           persist-credentials: false
       - name: Verify release files before signing

@@ -118,7 +118,7 @@ classification; it is provenance, not current state.
   plugin. Installation and Git synchronization use Bash; macOS supplies the
   regression-test engine. Reader behaviour and stored settings remain unchanged.
 
-** REVIEW W004 - Marketplace prep :maintenance:
+** ACTIVE W004 - Marketplace prep :maintenance:
 :PROPERTIES:
 :CUSTOM_ID: w-004
 :PRIORITY: P1
@@ -131,7 +131,9 @@ classification; it is provenance, not current state.
 - Scope :: Apache 2.0, version 0.1.0, README and acceptance records, release preparation and the subsequently authorized publication/submission steps, all in paired development.
 - Publication :: [[https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0][Release 0.1.0]] is published with its annotated tag and verified assets.
 - Earlier submission blocker :: Computer-use permissions prevented agent submission. Taḋg subsequently supplied Community automated-review feedback; the old blocker describes that earlier attempt.
-- Current handoff :: The extra release attachment is removed and the three unchanged runtime assets have verified attestations. Await the Community review refresh and operator disposition; its acceptance is not inferred. See the validation record and paired review record.
+- Earlier handoff :: The extra release attachment is removed and the three unchanged runtime assets have verified attestations. Await the Community review refresh and operator disposition; its acceptance is not inferred. See the validation record and paired review record.
+
+- Automatic release amendment :: Taḋg selected 1.0.0, then patch increments and attestation on every master push. Product name is Full Document View for iOS TTS; author is Tadhg O'Brien. Preparation and verification remain under this paired ticket.
 
 * Migration record
 :PROPERTIES:

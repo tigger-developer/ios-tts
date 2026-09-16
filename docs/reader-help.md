@@ -6,7 +6,7 @@ Mac already include native text-to-speech without a speech API key or usage bill
 
 Obsidian's preview loads only part of a long document, leaving Accessibility
 Reader without access to the whole note. This can make listening beyond a page
-or two awkward or unusable. Full Document Reader presents the complete note in
+or two awkward or unusable. Full Document View for iOS TTS presents the complete note in
 a read-only view for Apple's Accessibility Reader.
 
 ## Set up an iPhone shortcut
