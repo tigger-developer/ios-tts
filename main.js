@@ -1,6 +1,6 @@
 // ABOUTME: Presents whole read-only notes for native Accessibility Reader.
 // ABOUTME: Maintained JavaScript; Obsidian owns rendering and Apple owns speech.
-// Full Document View for iOS TTS 1.0.2
+// Full Document View for iOS TTS 1.0.3
 // Copyright 2026 Tadhg O'Brien
 // SPDX-License-Identifier: Apache-2.0
 const {
