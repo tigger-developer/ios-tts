@@ -2,6 +2,13 @@
 
 The purpose of this plugin is to unlock native Apple TTS on obsidian notes. Normally the Accessibility Reader in iOS only sees a portion of the note, as obsidian's preview is optimized to load only the visible portion of the note give or take some caching. This plugin presents a special preview mode that Accessibility Reader can use to read the entire document
 
+If you are using an iOS device and are using a TTS plugin with an API key, you are spending money for something your device is already capable of doing for free. Modern iOS/macOS TTS has improved substantially and is on a quality par with the best TTS API services. However, accessing it is not straightforward.
+
+By enabling a shortcut to the Accessibility Reader ([instructions](docs/reader-help.md#set-up-an-iphone-shortcut)), you can activate TTS on your notes on-device, even if you have no wifi or data connection.
+The one remaining limitation is that Accessibility Reader only sees a portion of the document - per Obsidian's preview optimization. This plugin enables a full-document preview for use with the Accessibility Reader.
+
+Instructions for how to use it and how to invoke it are in the help text and [the setup and usage guide](docs/reader-help.md).
+
 No speech service account or API key is needed.
 
 Requires **Obsidian 1.13+** and **iOS 26+ or macOS 26+**.
