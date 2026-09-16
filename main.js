@@ -1,7 +1,7 @@
 // ABOUTME: Presents whole read-only notes for native Accessibility Reader.
 // ABOUTME: Maintained JavaScript; Obsidian owns rendering and Apple owns speech.
 // Full Document Reader 0.1.0
-// Copyright 2026 Taḋg
+// Copyright 2026 Tadhg O'Brien
 // SPDX-License-Identifier: Apache-2.0
 const {
   addIcon,
@@ -522,6 +522,7 @@ class FullDocumentReaderPlugin extends Plugin {
 module.exports = FullDocumentReaderPlugin;
 
 /*
+Copyright 2026 Tadhg O'Brien
 
                                  Apache License
                            Version 2.0, January 2004
