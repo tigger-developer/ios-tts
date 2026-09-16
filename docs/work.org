@@ -118,7 +118,7 @@ classification; it is provenance, not current state.
   plugin. Installation and Git synchronization use Bash; macOS supplies the
   regression-test engine. Reader behaviour and stored settings remain unchanged.
 
-** ACTIVE W004 - Marketplace prep :maintenance:
+** REVIEW W004 - Marketplace prep :maintenance:
 :PROPERTIES:
 :CUSTOM_ID: w-004
 :PRIORITY: P1
@@ -130,7 +130,8 @@ classification; it is provenance, not current state.
 - Evidence :: [[file:../specs/004-marketplace-prep/validation.org][Release verification]] and [[file:../specs/004-marketplace-prep/audits.yaml][paired reviews]].
 - Scope :: Apache 2.0, version 0.1.0, README and acceptance records, release preparation and the subsequently authorized publication/submission steps, all in paired development.
 - Publication :: [[https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0][Release 0.1.0]] is published with its annotated tag and verified assets.
-- Blocker :: Computer-use permissions are not granted, preventing the Community-directory account/form flow. No submission has been made; see the validation record for the exact handoff.
+- Earlier submission blocker :: Computer-use permissions prevented agent submission. Taḋg subsequently supplied Community automated-review feedback; the old blocker describes that earlier attempt.
+- Current handoff :: The extra release attachment is removed and the three unchanged runtime assets have verified attestations. Await the Community review refresh and operator disposition; its acceptance is not inferred. See the validation record and paired review record.
 
 * Migration record
 :PROPERTIES:
