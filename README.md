@@ -4,14 +4,21 @@ Open the whole current Markdown note for Apple's Accessibility Reader on
 **macOS and iOS**. Apple supplies speech; the plugin supplies a complete,
 read-only snapshot.
 
-**Development package:** the operator reported a passing macOS test before the
-JavaScript conversion; the rewritten package needs a native smoke test. Detailed
-long-note evidence and the physical-iPhone test remain pending. No release has
-been published.
+**Version 0.1.0**, licensed under [Apache License 2.0](LICENSE).
+The macOS and iPhone user tests were reported passed and the reader accepted
+by Taḋg on 2026-09-16. See the [validation record](specs/003-full-document-reader/validation.org)
+for the scope and limits of that operator report.
+
+Release 0.1.0 is being prepared as a GitHub draft. It is not yet published or
+listed in Obsidian's Community directory.
 
 ## Install and use
 
 Requires **Obsidian 1.13+**, **macOS 26+** or **iOS 26+**.
+
+When 0.1.0 is published, download its three installation files from the
+[GitHub releases page](https://github.com/tigger-developer/ios-tts/releases).
+The same maintained files are available in this checkout.
 
 1. Disable this plugin before replacing its files. Put **main.js**,
    **manifest.json** and **styles.css** in your vault's
@@ -30,7 +37,7 @@ shortcut. Setup instructions remain in the plugin settings panel.
 
 The reader moves keyboard focus into the rendered document and temporarily
 isolates the background workspace. Closing it restores background interaction.
-Native Accessibility Reader extraction still needs macOS and iPhone validation.
+Native macOS and iPhone workflow passes are recorded on the operator's authority.
 
 The [settings help](docs/reader-help.md) includes Apple's setup links, the
 Home-button alternative and the menu shown when several shortcuts are selected.
@@ -89,7 +96,7 @@ the previous TypeScript/esbuild development arrangement under the operator's
 2026-09-10 `BYPASS-GATE-7` instruction.
 
 The [validation record](specs/003-full-document-reader/validation.org) separates
-automated evidence from the pending native-platform checks. Remove the testing
+automated evidence from operator-reported native-platform passes. Remove the testing
 symlink or installed artefacts after disabling the plugin to uninstall it.
 The saved limit may remain; no note migration or restoration is needed.
 
@@ -111,7 +118,7 @@ Taḋg approved implementation on 2026-09-08. The
 [audit record](specs/003-full-document-reader/audits.yaml) owns current audit
 evidence; [earlier reviews](specs/003-full-document-reader/audits.yaml) retain
 historical evidence. The [validation record](specs/003-full-document-reader/validation.org)
-records executed checks and the remaining [native tests](docs/native-testing.md).
+records executed checks and operator-reported results for the [native tests](docs/native-testing.md).
 
 The [product vision](docs/VISION.md) describes the purpose, limits and proposed
 Community directory listing. The [settings-panel help](docs/reader-help.md)
@@ -124,13 +131,25 @@ contains the user instructions bundled with the plugin.
   generation; native alternatives also exist.
 - **Long notes:** a configurable **100,000-word default limit**, with an explicit
   notice for notes over the limit and no silent truncation.
-- **Supported platforms:** Obsidian 1.13+, iOS 26+ and macOS 26+. Full-document
-  native reading remains unverified until the platform tests pass.
+- **Supported platforms:** Obsidian 1.13+, iOS 26+ and macOS 26+. Native workflow passes
+  were reported by the operator; device versions and detailed fixture observations
+  are not supplied in that report.
 - **Setup and resources:** configure an Apple accessibility shortcut first.
   Increasing the limit may make rendering slow or exhaust memory; images and
   embeds are not bounded by the word count.
 - **Focused purpose:** read-only snapshots using normal Markdown rendering;
   no speech engine, audio export or EPUB/PDF conversion. Apple owns playback.
 
-These are proposed release claims. The development package is available locally;
-publication requires native-platform evidence and a separate release review.
+The release retains normal Obsidian rendering: remote images or embeds may
+access their original services. The plugin adds no network service or telemetry.
+
+Version 0.1.0 release notes are [maintained here](docs/releases/0.1.0.md).
+Publication and Community-directory submission remain separate from the draft.
+
+### Validation history
+
+Before the 2026-09-16 acceptance, the package was labelled a development package:
+an earlier macOS report predated the JavaScript conversion, and the rewritten
+package's native smoke test, long-note evidence and physical-iPhone test were
+pending. The dated records remain in the validation history; the operator's
+current pass declaration supersedes their pending user-test status.

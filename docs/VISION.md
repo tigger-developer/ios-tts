@@ -1,12 +1,13 @@
 # Full Document Reader: product vision
 
-Last updated: 2026-09-10
+Last updated: 2026-09-16
 
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
 The [current specification](../specs/003-full-document-reader/spec.org) defines
-the approved behaviour. The development implementation is available; native-device
-validation remains pending in the linked validation record.
+the approved behaviour. Version 0.1.0 is prepared under Apache 2.0. Taḋg reported the native user tests
+passed and accepted the reader on 2026-09-16; the linked validation record
+distinguishes this human declaration from automated evidence.
 
 ## Why this plugin exists
 
@@ -53,7 +54,8 @@ of an iPhone. It is bundled with the plugin so reading the help needs no network
 - **Long-document access:** complete rendering addresses the reported preview
   limitation; it does not alter the source note.
 - **Platform dependency:** the proposed support is Obsidian 1.13+, iOS 26+ and
-  macOS 26+. Native reading and shortcut behaviour require device verification.
+  macOS 26+. Native workflow passes are operator-reported; the report does not supply
+  device versions or individual fixture observations.
 - **Setup required:** accessibility shortcuts are configured in Apple settings.
   The plugin does not change system settings or start speech itself.
 - **Finite device resources:** increasing the word limit can slow rendering or
@@ -84,12 +86,16 @@ The [submission requirements](https://docs.obsidian.md/community-directory/submi
 require a short description of at most 250 characters, ending with a full stop,
 and accurate mobile compatibility.
 
-**Readiness:** the maintained package supplies the implementation, manifest
-and three local installation artefacts. No licence or published release has
-been selected. Before submission, record successful platform tests, choose the
-licence and final name, check identifier availability, and prepare the release.
-Account linking and submission are operator actions following review of that
-concrete release; this change prepares the copy and records the route.
+**Release preparation:** Full Document Reader 0.1.0 uses Apache 2.0 and retains
+the identifier `ios-tts`. The operator reported platform user tests passed and
+accepted the reader. The package and release notes are prepared for a GitHub
+draft; publication, account linking and directory submission remain separate.
+The published plugin list had no matching identifier or display name when
+checked on 2026-09-16; submission performs the authoritative availability check.
+
+**Previous readiness:** before 2026-09-16, licence selection, native-test
+acceptance and release preparation were outstanding. That historical position
+is superseded by the licensing and acceptance above; no publication is claimed.
 
 At definition time there was no implementation, manifest or release package;
 the maintained JavaScript package is the delivery update to that starting position.

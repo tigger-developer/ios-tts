@@ -1,0 +1,93 @@
+#+TITLE: W004 - Marketplace prep
+#+SCHEMA: 6
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:nil
+#+OPERATOR_SIGNOFF: APPROVED
+#+OPERATOR_AUTHORITY: Taḋg
+#+OPERATOR_SIGNOFF_DATE: 2026-09-16
+
+* Synopsis
+:PROPERTIES:
+:CUSTOM_ID: summary
+:END:
+** Outcome
+- Prepare *Full Document Reader 0.1.0* for publication under *Apache 2.0*.
+** Before
+- The public repository has *no licence or release*. The manifest already says 0.1.0.
+** After
+- A *draft GitHub release* contains the installation files and licence.
+- Documentation records *operator-reported native test passes and acceptance*.
+** Changes
+- Add licensing, release notes and matching source metadata; update the README.
+** Unchanged
+- Preserve *reader behaviour, settings, platform requirements and three-file installation*.
+** Edge cases
+- An existing release or tag must not be overwritten; *publication remains separate*.
+** Decisions
+- Taḋg selected *Apache 2.0 and version 0.1.0* and explicitly reported iPhone tests passed.
+** Next step
+- Verify the package, obtain paired reviews, and retain the release as a draft.
+
+* Context
+- Authority :: On 2026-09-16 Taḋg requested paired development: "add an apache 2.0 license, release is 0.1.0 update manifest and main.js accordigly and prepare release - mark user tests as pss and ticket accepted". Follow-ups: "pls update readme as well" and "iphone tests passed also".
+- Baseline :: Read [[file:../../README.md][README]], [[file:../../docs/VISION.md][Vision]], [[file:../../docs/work.org][work ledger]], [[file:../003-full-document-reader/spec.org][W003 - Full document reader]], its validation and audit records, and the maintained package and regression suite. No separate Architecture authority exists; W003 owns the reader design.
+- Mode :: *Paired development*. Taḋg directed: "keep it all under a ticket called marketplace prep and paired development mode". This ticket owns the entire licensing, README, acceptance-record and draft-release batch.
+- Scope :: This is *release preparation*, previously excluded from W003. Record W003 acceptance without changing its runtime requirements. No new reader feature, vault installation or marketplace submission.
+- External contracts :: [[https://www.apache.org/licenses/LICENSE-2.0.txt][Apache 2.0 text]] and [[https://docs.obsidian.md/plugins/releasing/submit-plugin][Obsidian submission guide]].
+- Human evidence :: Record *Taḋg's pass declaration*, not agent-executed native tests or invented device versions and fixture observations.
+
+* Acceptance Criteria
+** AC004.1 - Licensed versioned package :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-1
+:END:
+- Criterion :: The package identifies *0.1.0* and grants *Apache 2.0* licensing with a complete licence copy available to recipients, while preserving runtime behaviour.
+- Proven by :: [[#ot-004-1][OT004.1 - Package and documentation review]].
+** AC004.2 - Accurate release documentation and acceptance :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-2
+:END:
+- Criterion :: README and Vision explain *version, licence, installation and limitations*; W003 records *operator-reported native passes and acceptance*, retaining earlier history and evidential limits.
+- Proven by :: [[#ot-004-1][OT004.1 - Package and documentation review]].
+** AC004.3 - Reviewable draft release :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-3
+:END:
+- Criterion :: GitHub contains an *unpublished 0.1.0 draft* with release notes and byte-identical =main.js=, =manifest.json=, =styles.css= and =LICENSE= attachments.
+- Proven by :: [[#ot-004-2][OT004.2 - Draft release verification]].
+
+* Test Definitions
+** OT004.1 - Package and documentation review :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-1
+:END:
+- Covers :: [[#ac-004-1][AC004.1 - Licensed versioned package]] and [[#ac-004-2][AC004.2 - Accurate release documentation and acceptance]].
+- Procedure :: Compare LICENSE with the official downloaded text and its bundled copy; parse the manifest; compare executable source with baseline after removing only the added licence comments; run =make lint= and =make test=. Review documentation against operator scope and retained history.
+- Expected :: Version *0.1.0*, unchanged executable source and 12 passing existing cases; correct licence, draft wording, setup, limitations and honest human attribution. No new persistent test is justified for metadata or prose.
+- Bounds :: Local one-off checks and one official licence retrieval; scratch files only in OS temporary space.
+** OT004.2 - Draft release verification :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-2
+:END:
+- Covers :: [[#ac-004-3][AC004.3 - Reviewable draft release]].
+- Procedure :: Create one draft in =tigger-developer/ios-tts=, inspect draft flag, version, target and assets; download its four assets into OS temporary space and compare hashes with the package.
+- Expected :: *Draft true*, tag name 0.1.0, expected candidate commit, four matching files and maintained release notes.
+- Bounds :: One draft creation, four uploads and one inspection/download batch, plus at most one retry per failed operation. No publication, account linking, marketplace submission or paid service. Preserve any pre-existing release/tag and report a conflict.
+
+* Edge Cases
+- Existing matching tags/releases are *not replaced*. Failed upload leaves an explicitly incomplete draft; do not publish or claim readiness from partial assets.
+- Manifest already contains the selected version; *retain it*, without a cosmetic rewrite or unsupported licence field.
+
+* Solution Design
+- Keep the *three-file runtime package*. Add a version/copyright/SPDX header and the complete official licence as comments in =main.js=, so directory installation carries the licence even though Obsidian downloads only the three runtime files. Root =LICENSE= retains the official text unchanged.
+- Keep =manifest.json= at *0.1.0*, =ios-tts= and its existing compatibility fields. No new metadata interface or runtime version constant is needed.
+- Maintain =docs/releases/0.1.0.md= as the draft's release notes. Update README and Vision in place; preserve superseded pending evidence in W003's validation history.
+- Use the existing public repository and an exact candidate target for the GitHub draft. Create an annotated *0.1.0* tag after successful reviews, then attach the draft to it without publishing.
+** Security impact
+- No new dependency, network client, note write, secret, access privilege or speech service enters the plugin. Release operations disclose only the already-public project and authorized licence/documentation changes.
+
+* Delivery Handoff
+- Read this specification, project profile and linked baseline authorities. Paired operator instructions are the working specification; no new product approval is inferred.
+- Evidence :: [[file:validation.org][Release verification]] and [[file:audits.yaml][paired reviews]].
+- Reconcile README, Vision, W003 validation and work ledger. The native checklist remains reusable; platform versions and detailed observations absent from the operator report remain unspecified.
+- Publication and Community-directory submission remain *separate operator actions*. The requested W003 acceptance is already authorized; do not ask for it again.

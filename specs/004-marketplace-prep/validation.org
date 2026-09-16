@@ -1,0 +1,17 @@
+#+TITLE: W004 - Marketplace prep verification
+#+TODO: AMBER RED | GREEN
+#+STARTUP: content
+
+* GREEN OT004.1 - Package and documentation review :testdef:
+:PROPERTIES:
+:REVISION: 609846a plus W004 release metadata and documentation changes
+:EVIDENCE: Official licence matches LICENSE and embedded copy; executable source unchanged; lint and 12/12 regression cases pass; documentation reviewed against the operator request.
+:END:
+- Execution :: 2026-09-16, macOS checkout. A bounded Ruby comparison removed only the added version/copyright/SPDX comments and complete licence comment; the remaining main.js matched the baseline byte-for-byte. Parsed manifest version is 0.1.0. No persistent test or runtime feature was added.
+- Commands :: make lint; make test; one-off package comparison; git diff --check.
+- Documentation :: README, Vision and release notes describe licensing, platforms, manual installation and limitations. W003 records both user tests as operator-reported PASS and the work ledger records Taḋg's acceptance, preserving previous evidence. No agent-executed native test is claimed.
+
+* AMBER OT004.2 - Draft release verification :testdef:
+:PROPERTIES:
+:REASON: Draft creation and asset download comparison follow the first candidate checkpoint.
+:END:

@@ -7,6 +7,15 @@
 #+OPERATOR_AUTHORITY: Taḋg
 #+OPERATOR_SIGNOFF_DATE: 2026-09-08
 
+* Acceptance update, 2026-09-16
+
+Taḋg instructed that the user tests be recorded as passed and this ticket accepted,
+then explicitly confirmed the iPhone tests passed. See [[file:validation.org][current human evidence]]
+and [[file:../../docs/work.org][work ledger]]. Earlier pending-test and handoff wording
+below describes the historical delivery sequence and is superseded by this
+acceptance. Release preparation is separately scoped in
+[[file:../004-marketplace-prep/spec.org][W004 - Marketplace prep]].
+
 * Full document reader for macOS and iOS
 :PROPERTIES:
 :CUSTOM_ID: summary

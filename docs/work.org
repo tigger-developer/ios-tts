@@ -79,7 +79,7 @@ classification; it is provenance, not current state.
 
 * Work items
 
-** REVIEW W003 - Full document reader for macOS and iOS :feature:
+** DONE W003 - Full document reader for macOS and iOS :feature:
 :PROPERTIES:
 :CUSTOM_ID: w-003
 :PRIORITY: P1
@@ -103,8 +103,11 @@ classification; it is provenance, not current state.
   [[file:VISION.md][Product vision]] and investigation of Community directory listing.
 - Validation handoff :: Executed checks and the operator's macOS test report
   are recorded in the validation record. The
-  [[file:native-testing.md][Native macOS/iOS test checklist]] identifies remaining evidence.
-  No operator closure or release publication is recorded.
+  [[file:native-testing.md][Native macOS/iOS test checklist]] retains the reusable test procedure.
+  Historical handoff: operator closure and publication were not then recorded.
+- Acceptance, 2026-09-16 :: Taḋg instructed that user tests be marked passed and
+  the ticket accepted, then explicitly confirmed the iPhone tests passed.
+  Native passes are operator-reported; release publication is separate.
 - Installer amendment :: On 2026-09-08, Taḋg directly requested implementation
   of the =make install= vault-root prompt. On 2026-09-10 the operator requested
   merging into =master= and continuing there under the global =current= branch
@@ -114,6 +117,18 @@ classification; it is provenance, not current state.
   =BYPASS-GATE-7= to remove Node/npm artefacts and maintain a plain JavaScript
   plugin. Installation and Git synchronization use Bash; macOS supplies the
   regression-test engine. Reader behaviour and stored settings remain unchanged.
+
+** ACTIVE W004 - Marketplace prep :maintenance:
+:PROPERTIES:
+:CUSTOM_ID: w-004
+:PRIORITY: P1
+:SOURCE: operator
+:CREATED: 2026-09-16
+:END:
+
+- Specification :: [[file:../specs/004-marketplace-prep/spec.org][W004 - Marketplace prep]].
+- Evidence :: [[file:../specs/004-marketplace-prep/validation.org][Release verification]] and [[file:../specs/004-marketplace-prep/audits.yaml][paired reviews]].
+- Scope :: Apache 2.0, version 0.1.0, README and acceptance records, and a GitHub draft with installation assets. Publication is separate.
 
 * Migration record
 :PROPERTIES:

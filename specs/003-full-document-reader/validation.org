@@ -2,6 +2,14 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
+* Operator acceptance, 2026-09-16
+
+- Authority :: Taḋg instructed: "mark user tests as pss and ticket accepted" and explicitly confirmed "iphone tests passed also".
+- Current result :: UT003.1 - macOS reading workflow and UT003.2 - iOS reading workflow are PASS on the operator's authority for the reader at =609846a= (pre-release preparation baseline).
+- Scope :: This supersedes the pending native checks recorded in the dated amendments below, including the focus/isolation, shortcut hint, toolbar, glyph and settings checks. W003 acceptance is recorded in the work ledger.
+- Evidence limit :: These are human-reported passes, not native tests executed by the agent. The operator supplied no device/OS/Obsidian versions, fixture hashes or itemized observations in this report; none are inferred.
+- Release boundary :: The subsequent W004 licensing and release preparation changes only comments and documentation, preserving executable reader code. Earlier dated results remain history.
+
 * Paired focus and background isolation, 2026-09-12
 
 - Authority :: Taḋg accepted the review recommendations and explicitly selected
@@ -214,7 +222,7 @@
 :END:
 
 - Category :: User test.
-- Status :: PENDING.
+- Status :: PASS, operator-reported on 2026-09-16; see the current acceptance above. Previous status: PENDING.
 - Criteria, procedure and expected result ::
   [[file:spec.org::#ut-003-1][UT003.1 - macOS reading workflow]], including its
   shared conditions and criterion links.
@@ -235,7 +243,7 @@
 :END:
 
 - Category :: User test.
-- Status :: PENDING.
+- Status :: PASS, operator-reported on 2026-09-16; see the current acceptance above. Previous status: PENDING.
 - Criteria, procedure and expected result ::
   [[file:spec.org::#ut-003-2][UT003.2 - iOS reading workflow]], including its
   shared conditions and criterion links.
@@ -245,7 +253,7 @@
 - Amendment evidence :: Settings help, triple-click and double-tap Back Tap
   invocation, multi-feature shortcut menu, tested button type, limit boundaries,
   Save/reload persistence and offline help.
-- Execution :: Not executed. A physical iPhone and named human observations
+- Historical execution record :: Not executed when originally recorded. A physical iPhone and named human observations
   are required. No emulation or desktop result substitutes for this test.
 
 * One-off tests
