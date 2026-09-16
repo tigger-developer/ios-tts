@@ -3,7 +3,7 @@
   "name": "Full Document View for iOS TTS",
   "version": "1.0.0",
   "minAppVersion": "1.13.0",
-  "description": "For native iOS/macOS TTS, this plugin presents the full document so that the Accessibiltiy Reader can access it.",
+  "description": "For native iOS/macOS TTS, this plugin presents the full document so that the Accessibility Reader can access it.",
   "author": "Tadhg O'Brien",
   "isDesktopOnly": false
 }

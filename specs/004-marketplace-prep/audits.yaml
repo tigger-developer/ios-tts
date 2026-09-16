@@ -11,28 +11,33 @@ audits:
         harness: hermes
         provider: nous
         model: z-ai/glm-5.3
-      external_round: 2
+      external_round: 3
       status: passed
-      updated: "2026-09-16T11:55:47Z"
-      revision: 155870441ce61b34503a3d1b544b1fdfa0e8bb4e (W004 attestation amendment; runtime files unchanged from ed5f752)
+      updated: "2026-09-16T13:03:37Z"
+      revision: ddfc067 (automatic-release amendment; W004)
       verdict: PASS
       response: |-
         GATE: delivery-code
-        REVISION: 155870441ce61b34503a3d1b544b1fdfa0e8bb4e (W004 attestation amendment; runtime files unchanged from ed5f752)
+        REVISION: ddfc067 (automatic-release amendment; W004)
         VERDICT: PASS
 
-        Reviewed the W004 automated-review remediation delta against the recorded operator authorization ("let's do both then": remove the LICENSE attachment, add attestation workflow) and the amended W004 scope.
+        Reviewed the automatic-release amendment against the recorded operator authorization ("increment by 0.0.1 when we push a new commit and automatically trigger attestation", "let's start with 1.0.0", name/author/description/README-prose instructions).
 
         Verified:
 
-        - Scope and proportionality: the delta is exactly one manually dispatched workflow (.github/workflows/attest-release.yml), removal of the unsupported LICENSE release attachment, and documentation updates (README provenance section, release notes licence link, spec amendment, work-ledger note). No plugin runtime change (main.js/manifest/styles hashes unchanged), no Node/npm tooling, no build pipeline, no release/tag rewrite. The earlier "no new GitHub workflow" boundary is explicitly superseded by the recorded amendment for this bounded workflow only.
-        - Workflow quality and security: workflow_dispatch only; top-level permissions: {} with job-scoped contents: read, id-token: write, attestations: write; both actions SHA-pinned to upstream commit hashes; persist-credentials: false; fetch-depth 0 only to read tags; 10-minute timeout; verification (regex semver check, manifest version match via jq, published-not-draft check, per-file cmp of release assets against both tagged source and current checkout) all precede the attestation step, so a mismatch stops signing; the release is never written. The shell step uses set -eo pipefail, quoted variables, mktemp scratch on the disposable runner, and no prohibited patterns.
-        - Attestation-source honesty: the workflow runs from the later commit whose runtime files are byte-identical to the 0.1.0 tag; it verifies the old tag without moving it. This is recorded explicitly in the spec, README and validation rather than hidden.
-        - Test evidence: OT004.3 GREEN with current revision, covering YAML parse, ShellCheck, local positive case, invalid-tag rejection (exit 2 pre-signing), modified-source rejection (cmp exit 1 pre-signing), one successful hosted run with no retry, and per-file gh attestation verify with --repo/--signer-workflow/--source-digest/--deny-self-hosted-runner constraints. SHA-256 values match the previously recorded release assets. One-off only, with the recorded justification that a manual production attestation operation must not become CI regression — consistent with TESTING.md's metered-check prohibition. Existing RTs unchanged; no rerun warranted for a workflow-only increment with identical runtime files.
-        - Documentation: README and release notes accurately describe the three-file inventory, repository/embedded licence, manual invocation and verification commands; AC004.2 remains satisfied. AC004.3's four-attachment wording is explicitly marked historical and superseded, preserving history rather than silently rewriting it.
-        - Audit-state hygiene: no duplicated audit findings, verdicts or session state in any supplied artefact; validation.org carries only test evidence. No annotation records in spec.org.
+        - Scope and fidelity: the delta is release.yml (push-triggered patch releases), conversion of attest-release.yml to a dual workflow_call/workflow_dispatch reusable signer, runtime version/name/author metadata only (main.js diff is confined to the version-comment and copyright lines and the embedded help name; reader logic byte-identical — confirmed by the local check comparing all lines after the header), the operator's exact README prose and committed manifest description preserved verbatim, licence attribution added to LICENSE and main.js, and the automation/history documentation. Earlier 0.1.0 evidence is retained as explicitly superseded history, not rewritten. No runtime behaviour, dependency, or build tooling change.
 
-        No blocking findings. The Community-directory submission blocker remains honestly recorded and out of scope for this delta.
+        - Workflow material correctness: the prepare step validates the manifest version as semver, special-cases the initial untagged 1.0.0, increments only the patch component via jq, rewrites only the version comment line, commits with a Release-Run trailer so a rerun detaches to and reuses the same tagged revision (idempotent retry), and pushes branch+tag with git push --atomic so a competing push fails visibly without publishing an orphan tag or force. The release step creates the release only if absent (--verify-tag) and never overwrites existing assets. Recursion is prevented by GitHub's documented workflow-token behaviour; concurrency uses queue:max as documented; the attest job reuses the signer workflow via workflow_call, matching the caller-context verification that gh treats the reusable workflow as signer.
+
+        - Security: top-level permissions: {} with job-scoped grants (release: contents:write via ephemeral GITHUB_TOKEN; attest: contents:read, id-token:write, attestations:write), both actions SHA-pinned, no secrets or new credentials, no release-asset mutation, and tag/asset equality enforced before signing.
+
+        - Test evidence: OT004.4 GREEN with real-Git local cases (initial 1.0.0, 1.0.1 increment, same-run retry, invalid-version exit 2, conflicting-push atomic failure, unrelated-byte and executable-source preservation), YAML parse and ShellCheck of all shell bodies, plus make lint and 12/12 make test. One-off with recorded justification — bounded GitHub orchestration, no source-text regression suite — consistent with TESTING.md. The existing RTs are unchanged and were rerun for this candidate. Hosted initial publication and cryptographic verification are explicitly recorded as following this pre-publication review under the operator's recorded bounds; that sequencing is the authorized production operation, not missing evidence.
+
+        - Documentation: docs/releases/automation.md accurately describes push semantics (one release per master push using latest master at job start, multi-commit pushes forming one release), recovery, and verification; README uses the operator's prose with historical material clearly relocated to the explicitly labelled docs/readme-history.md; Vision reflects 1.0.0 and automation.
+
+        - Audit-state hygiene: no duplicated audit findings, verdicts, or session state in any supplied artefact; validation.org carries only test evidence.
+
+        No blocking findings. The main.js line-index-based comment rewrite is slightly coupled to the current header layout, but it is guarded by the tag/asset equality checks and local non-metadata comparison, so it is not a defect. Hosted 1.0.0 publication and attestation verification remain the recorded post-review step.
       history:
         - readiness_check: delivery-code
           cache_key: sha256:d894d406a10ad90e84725539be2db6c1c744aa286889965fc2f0f90179ff6ea5
@@ -271,6 +276,141 @@ audits:
 
             No blocking findings. The Community-directory submission blocker remains honestly recorded and out of scope for this delta.
           updated: "2026-09-16T11:55:18Z"
+        - readiness_check: delivery-code
+          cache_key: sha256:111fee6a562cd34f5c3cc40228e93a4acdd793694b6108dec0868c1c84a33501
+          session_id: 20260916_123925_ec44c0
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: f09dc141ec5694be21b9e0e550bcc81b8b3311d104b22270c5a2137970fbbca4
+              bytes: 14566
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: 3d63d81a8054974b21e04018ce583c47938bdb5dd38ba5f1af9ce5f8c0ba1c66
+              bytes: 4547
+            - path: /Users/tigger/.agents/sdlc/GIT.md
+              sha256: 97bbf89af1c65d159688b452a0434e77d9775f7a98dd1c822ffd264b41012bbb
+              bytes: 7807
+            - path: /Users/tigger/.agents/sdlc/ISSUES.md
+              sha256: fc61372ed047900b5fcf0498f08af6303cd8bc91e91cf8cba70c64d7c1a03f74
+              bytes: 16549
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 74191750df80fe804c8a0b7ea938ea7184425d4762ce6c870e1b22b46eba788d
+              bytes: 4804
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/SECURITY.md
+              sha256: fbceb4dffd2ab69a3edcd1dd924873bdbe5298cffa4c2e65548e04541fb78f73
+              bytes: 5027
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 198a6c665a2a253802d02686721e43f528b6bbaff7a9a7cc3cbdb9a8ffdf7f09
+              bytes: 16107
+            - path: /Users/tigger/.agents/sdlc/technologies/SHELL.md
+              sha256: c1a56e020ef7b66c166ef80346bc2df67a039c6145bbca38961a127cefad1fed
+              bytes: 11225
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.github/workflows/attest-release.yml
+              sha256: 89eef17062706a33000ea698c77360d887a77de6b51b74517d0c1e1363c10b44
+              bytes: 2380
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.github/workflows/release.yml
+              sha256: 7067a968619ab3c9358240d447822acfcc501c97667d8c5a34ed521d52d597bf
+              bytes: 3910
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/LICENSE
+              sha256: 19cc00eae93f573e8f849726174eb1a31e574e7f03ee5cd100d803b8875d543e
+              bytes: 11387
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: e5234303fbd78c3ac9433b06a102ab942a5131c579f22b3aea6a30a8f7526c0b
+              bytes: 2607
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 7347c97267a5506f4b9e0554b6e7aa7cf2c738b0d4c59bfbfcfa226d086828be
+              bytes: 6922
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 4ae9c612852c769a962d4e3d405486c076f49546d3922169cf9cac473d264748
+              bytes: 3494
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/readme-history.md
+              sha256: 9631a3539e513e45d1b07897396a60ff622c50b23440e2b39c8ff9a32782bcc1
+              bytes: 9481
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/releases/automation.md
+              sha256: 2e9c10c9ff5905232f626c79d8647500322d15b1a3937f8d834b0bbe44d1131a
+              bytes: 2049
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 326533ce13d846c472ff71a97de2aafad9be047e68964e85151c8be6150a2d2a
+              bytes: 7881
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: ad9a7b8fa4262fb3ffb2cafe8980af0f92404bcf8a6c56b26fd58a1b0cca4354
+              bytes: 29779
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 5aa4fd903866a0fadf0ae909189d743207dab86a75d94ae73b9b4a3d67046eda
+              bytes: 305
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: 8191b138177bd87b760dceb7afbb9340c470d41dbe7a2bccdc23509c6a959dcf
+              bytes: 17959
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: 02576316b0e18f285c6c7d92e236dfaa32bf5f1d9a978e8febd06db2b1f37382
+              bytes: 8551
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367
+              bytes: 723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+            - path: /var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/ios-tts-auto-release.qB4R11KOUD/check.rb
+              sha256: f595c7b5a20b0dec48b59b94f835ce84532d293cd0a1ae7c6c6434d560bac9fd
+              bytes: 4199
+          round: 3
+          revision: ddfc067 (automatic-release amendment; W004)
+          verdict: PASS
+          response: |-
+            GATE: delivery-code
+            REVISION: ddfc067 (automatic-release amendment; W004)
+            VERDICT: PASS
+
+            Reviewed the automatic-release amendment against the recorded operator authorization ("increment by 0.0.1 when we push a new commit and automatically trigger attestation", "let's start with 1.0.0", name/author/description/README-prose instructions).
+
+            Verified:
+
+            - Scope and fidelity: the delta is release.yml (push-triggered patch releases), conversion of attest-release.yml to a dual workflow_call/workflow_dispatch reusable signer, runtime version/name/author metadata only (main.js diff is confined to the version-comment and copyright lines and the embedded help name; reader logic byte-identical — confirmed by the local check comparing all lines after the header), the operator's exact README prose and committed manifest description preserved verbatim, licence attribution added to LICENSE and main.js, and the automation/history documentation. Earlier 0.1.0 evidence is retained as explicitly superseded history, not rewritten. No runtime behaviour, dependency, or build tooling change.
+
+            - Workflow material correctness: the prepare step validates the manifest version as semver, special-cases the initial untagged 1.0.0, increments only the patch component via jq, rewrites only the version comment line, commits with a Release-Run trailer so a rerun detaches to and reuses the same tagged revision (idempotent retry), and pushes branch+tag with git push --atomic so a competing push fails visibly without publishing an orphan tag or force. The release step creates the release only if absent (--verify-tag) and never overwrites existing assets. Recursion is prevented by GitHub's documented workflow-token behaviour; concurrency uses queue:max as documented; the attest job reuses the signer workflow via workflow_call, matching the caller-context verification that gh treats the reusable workflow as signer.
+
+            - Security: top-level permissions: {} with job-scoped grants (release: contents:write via ephemeral GITHUB_TOKEN; attest: contents:read, id-token:write, attestations:write), both actions SHA-pinned, no secrets or new credentials, no release-asset mutation, and tag/asset equality enforced before signing.
+
+            - Test evidence: OT004.4 GREEN with real-Git local cases (initial 1.0.0, 1.0.1 increment, same-run retry, invalid-version exit 2, conflicting-push atomic failure, unrelated-byte and executable-source preservation), YAML parse and ShellCheck of all shell bodies, plus make lint and 12/12 make test. One-off with recorded justification — bounded GitHub orchestration, no source-text regression suite — consistent with TESTING.md. The existing RTs are unchanged and were rerun for this candidate. Hosted initial publication and cryptographic verification are explicitly recorded as following this pre-publication review under the operator's recorded bounds; that sequencing is the authorized production operation, not missing evidence.
+
+            - Documentation: docs/releases/automation.md accurately describes push semantics (one release per master push using latest master at job start, multi-commit pushes forming one release), recovery, and verification; README uses the operator's prose with historical material clearly relocated to the explicitly labelled docs/readme-history.md; Vision reflects 1.0.0 and automation.
+
+            - Audit-state hygiene: no duplicated audit findings, verdicts, or session state in any supplied artefact; validation.org carries only test evidence.
+
+            No blocking findings. The main.js line-index-based comment rewrite is slightly coupled to the current header layout, but it is guarded by the tag/asset equality checks and local non-metadata comparison, so it is not a defect. Hosted 1.0.0 publication and attestation verification remain the recorded post-review step.
+          updated: "2026-09-16T13:02:48Z"
     - work_item: W004-marketplace-prep
       gate: definition
       session_id: 20260916_124026_c94d0b
