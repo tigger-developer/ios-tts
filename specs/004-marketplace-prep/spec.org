@@ -14,7 +14,7 @@
 - Original baseline: the public repository had *no licence or release*. Release 0.1.0 is now published; its attestation workflow was manual-only.
 ** After
 - The published release contains *only the three supported installation assets*, with Apache licensing retained in the repository and main.js.
-- Each *master push* publishes one patch release and invokes *provenance attestation* after checking the three assets against their tag; manual attestation remains available for recovery.
+- *=make release=* publishes one patch release, and publication invokes *provenance attestation* after checking the three assets against their tag; manual attestation remains available for recovery. Push-triggered publication is superseded.
 - Documentation records *native test passes and acceptance dated 2026-09-16*.
 ** Changes
 - Add licensing, release notes and matching source metadata; update the README.
@@ -24,9 +24,9 @@
 ** Edge cases
 - Existing tags and release assets are *never overwritten*. Reruns reuse the same version; conflicting pushes fail without force.
 ** Decisions
-- Apache 2.0; automatic releases starting at 1.0.0, followed by patch increments. Native macOS and iPhone tests passed on 2026-09-16.
+- Apache 2.0; releases starting at 1.0.0, followed by patch increments. Publication moved from each master push to *=make release=*. Native macOS and iPhone tests passed on 2026-09-16.
 ** Next step
-- Review the local documentation diff before publication. This checkpoint includes no push.
+- Review the local release-workflow diff, then publish the next version with =make release=.
 
 * Context
 - Approval :: Document approved 2026-09-16.
@@ -146,7 +146,8 @@
 :PROPERTIES:
 :CUSTOM_ID: ac-004-5
 :END:
-- Criterion :: A trusted master push automatically publishes the next version with *three matching installation files* and invokes *provenance attestation*. First version is 1.0.0; subsequent pushes increment the patch once. Rerunning the same workflow reuses its version. Old releases and unrelated source content remain intact.
+- Historical criterion :: A trusted master push automatically publishes the next version with *three matching installation files* and invokes *provenance attestation*. First version is 1.0.0; subsequent pushes increment the patch once. Rerunning the same workflow reuses its version. Old releases and unrelated source content remain intact.
+- Superseded :: Replaced on 2026-09-16 by [[#ac-004-7][AC004.7 - Operator-invoked release with publication-triggered attestation]]. Releases 1.0.0 to 1.0.4 remain its delivered evidence; the identifier is not reused.
 - Proven by :: [[#ot-004-4][OT004.4 - Release orchestration verification]].
 
 ** OT004.4 - Release orchestration verification :testdef:
@@ -186,3 +187,31 @@
 - Command :: Display name: =Preview for Accessibility View (TTS on iOS/macOS)=. Retain command ID =open-full-document-reader= and its callback, preserving existing hotkey assignments. Obsidian Settings > Hotkeys supplies shortcut assignment; no plugin settings control is added.
 - Documentation :: README and bundled help use the same setup sequence and command name. The additional active-reading screenshot is a README asset only. The eleven README annotation dispositions are recorded in =feedback.yaml=.
 - Verification :: OT004.5 covers image order and paths, unchanged image bytes, bundled-help equality, exact command name and preservation of all other source. Existing lint and reader tests remain applicable; no new persistent prose test.
+
+* Operator-invoked release amendment, 2026-09-16
+
+- Approval :: Operator-invoked releases approved 2026-09-16. =make release= owns publication; pushing to master no longer publishes a release.
+- Supersedes :: The push-triggered release job of the *Automatic patch-release amendment*. Releases 1.0.0 to 1.0.4 remain historical evidence of that process. Runtime behaviour, the patch-increment scheme and the three-file release inventory are unchanged.
+- Scope :: Add =scripts/release.sh= and a =make release= target that publishes one release from =master=. Remove =.github/workflows/release.yml=. Trigger =.github/workflows/attest-release.yml= on release publication, retaining manual dispatch for recovery. No reader feature, dependency, build step or credential is added.
+- Design :: =make release= runs =make lint= and =make test=, then =scripts/release.sh=. The script validates its invocation, requires =git=, =jq=, =gh= and =trash=, and refuses to continue unless the current branch is =master=, the working tree is clean and the local branch equals =origin/master=. It selects the next patch version from the manifest, or the exact =VERSION= when supplied, and refuses a tag that already exists locally or on the remote. It rewrites =manifest.json= and the =main.js= version comment through temporary files beside their targets, commits both as =chore: release <version>=, creates an annotated tag, pushes commit and tag atomically, then creates the GitHub release with =main.js=, =manifest.json= and =styles.css= and generated notes. =--dry-run= reports the version and attachments without changing the repository or the remote; =--help= and =--version= exit successfully without side effects.
+- Attestation :: The attestation job is unchanged in what it verifies and signs. Its trigger becomes =release: published= with =workflow_dispatch= recovery, and its tag comes from =github.event.release.tag_name= or the dispatch input. It also asserts that the release inventory is exactly the three installation files. Concurrent runs queue without cancelling an active signing run.
+- Concurrency and recovery :: A competing push makes the atomic push fail visibly; no force push or automatic conflict resolution is performed. When the push succeeds but release creation fails, the published tag is reused through =gh release create= rather than retagging. A release created by any other route also triggers attestation, which is intended. Release 1.0.4 was published by the superseded process before this change and carries no attestation from it; manual dispatch can sign it.
+- Security :: No workflow retains =contents: write=. Publication uses the operator's authenticated =gh= and the configured SSH remote, so an automated push can no longer create a release. The attestation job retains =contents: read=, =id-token: write= and =attestations: write=, without persisted checkout credentials. Actions remain pinned to verified upstream commit hashes.
+- Documentation :: =docs/release-help.md= documents the target, options and recovery. =docs/releases/automation.md= describes the operator-invoked release and the publication-triggered attestation, and identifies the superseded push-triggered process. The developer target list records =make release=.
+- Proportionality :: One short shell script and one trigger change are sufficient. No packaging framework, release service or persistent source-text test is introduced.
+
+** AC004.7 - Operator-invoked release with publication-triggered attestation :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-7
+:END:
+- Criterion :: =make release= publishes exactly one release from a clean, synchronized =master=, carrying =main.js=, =manifest.json= and =styles.css= whose version metadata matches the pushed annotated tag. It increments the patch version by default and honours an explicit =VERSION=. It refuses, without changing the repository or the remote, when a required tool is missing, the branch is not =master=, the working tree is dirty, the local branch differs from =origin/master=, the requested version is malformed, or the tag already exists. Pushing to =master= publishes nothing. Publishing a release invokes provenance attestation, and manual dispatch remains available.
+- Proven by :: [[#ot-004-6][OT004.6 - Operator-invoked release verification]].
+
+** OT004.6 - Operator-invoked release verification :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-6
+:END:
+- Covers :: [[#ac-004-7][AC004.7 - Operator-invoked release with publication-triggered attestation]].
+- Procedure :: Exercise =scripts/release.sh= in disposable Git repositories with a local bare upstream and a stub =gh= that records its arguments at the GitHub boundary: help, version and invalid invocation; dry run; each refusal condition; a full release; a following release; an explicit =VERSION=; and a competing upstream push. Compare the released manifest, source version comment, unrelated source bytes, commit subject, annotated tag and upstream refs. Parse the attestation workflow YAML, confirm its triggers and permissions, and ShellCheck its extracted verification step. Run =make lint= and =make test=, and =scripts/release.sh --dry-run= against the real repository. Review changed documentation and its links.
+- Expected :: Exact next and explicit versions, matching metadata and tag, exactly three attached files, no scratch file left behind, nonzero refusal before any change for each invalid condition, exit 2 for invalid invocation and malformed =VERSION=, publication-triggered and dispatch-triggered attestation with unchanged verification and no release-write permission, and 12 passing reader cases. These are bounded one-off packaging checks; no persistent third-party simulation or source-text regression test is retained.
+- Bounds :: Local disposable repositories in OS temporary space and read-only remote queries. No release, tag or GitHub state is created or replaced by the check. Hosted publication and signing evidence follows the operator's first =make release=.

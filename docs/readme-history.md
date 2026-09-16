@@ -95,6 +95,10 @@ No clone, compiler or development dependencies are needed on iOS.
   These are developer checks, not installation prerequisites.
 - `make sync`: stage all changes, commit if needed, pull, then push. Supply
   `COMMIT_MESSAGE` to replace its default message. See [sync help](../docs/sync-help.md).
+- `make release`: lint, test, then publish the next patch release from `master`.
+  Supply `VERSION` to release an exact version. See
+  [release help](../docs/release-help.md) and
+  [releases and provenance](releases/automation.md).
 
 The former `make build` and npm-based `make vulncheck` targets were removed:
 there is no compilation step or package-managed dependency graph. Node, npm and TypeScript were removed on 2026-09-10.

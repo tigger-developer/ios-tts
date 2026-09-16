@@ -1,31 +1,46 @@
-# Automatic releases
+# Releases and provenance
 
-Each push to `master` publishes one release, starting with **1.0.0**, then
-**1.0.1**, **1.0.2**, and so on. Several commits in one push form one release.
-Feature branches and pull requests do not publish releases.
+Releases are published on demand from the `master` branch:
 
-The **Release and attest** workflow uses the latest `master` when its job starts.
-It updates the manifest and source version comment, commits the metadata and
-pushes an annotated version tag. It publishes only `main.js`, `manifest.json`
-and `styles.css`, then invokes **Attest release** to compare and attest those
-files. Licence text remains in the repository and inside `main.js`.
+```sh
+make release
+```
 
-GitHub's workflow token prevents its own version-bump push from starting another
-release. Release jobs queue instead of cancelling an active publication, up to
-GitHub's limit of 100 waiting runs. A competing push that prevents a fast-forward
-fails visibly; the workflow never force-pushes.
+The target runs `make lint` and `make test`, then `scripts/release.sh`. The
+script increments the manifest's patch version, updates the matching version
+comment in `main.js`, commits both as `chore: release <version>`, creates an
+annotated tag, pushes the commit and tag atomically, and creates the GitHub
+release with `main.js`, `manifest.json` and `styles.css` attached. Licence text
+remains in the repository and inside `main.js`.
 
-## Recovery and verification
+`VERSION=x.y.z make release` publishes that exact version instead of the next
+patch. `bash scripts/release.sh --dry-run` reports the version and attachments
+without changing the repository or the remote. See the
+[release help](../release-help.md).
 
-Rerun a failed **Release and attest** run to reuse its tagged version. A run-ID
-trailer on the metadata commit prevents a second version bump. Existing release
-assets are never overwritten. An incomplete draft or mismatched asset requires
-manual repair before retrying. The manually dispatched **Attest release**
-workflow remains available for a published tag.
+The release stops before changing anything when a required tool is missing, the
+current branch is not `master`, the working tree has uncommitted changes, the
+local branch differs from `origin/master`, or the computed tag already exists
+locally or on the remote. Pushing the commit and tag is atomic, so a competing
+push fails visibly rather than being forced.
 
-The attestation records the workflow's triggering revision as its build entry
-point. The generated tag contains the version metadata and the exact distributed
-files; verification compares the downloads with that tag before signing.
+Pushing to `master` no longer publishes a release. The previous push-triggered
+`Release and attest` workflow was removed when `make release` took ownership of
+publication; releases 1.0.0 to 1.0.4 were produced by that superseded process.
+
+## Attestation
+
+Publishing a release triggers the **Attest release** workflow. It checks out the
+release tag without persisted credentials, confirms the tag exists and that the
+manifest version equals it, confirms the release is not a draft and carries
+exactly `main.js`, `manifest.json` and `styles.css`, then downloads those assets
+and compares each with both the tagged source and its own checkout. Only then
+does it create GitHub provenance attestations. It never builds, executes or
+modifies release content, and any mismatch stops signing.
+
+The workflow also accepts a manual dispatch with a published `release_tag`, which
+attests or re-attests an existing release. Concurrent runs queue rather than
+cancel an active signing run.
 
 For each downloaded installation file, verify its provenance with GitHub CLI:
 
@@ -33,8 +48,7 @@ For each downloaded installation file, verify its provenance with GitHub CLI:
 gh attestation verify main.js --repo tigger-developer/ios-tts --signer-workflow tigger-developer/ios-tts/.github/workflows/attest-release.yml --deny-self-hosted-runners
 ```
 
-Repeat for `manifest.json` and `styles.css`. The reusable **Attest release**
-workflow is the signer for both automatic and manual runs.
+Repeat for `manifest.json` and `styles.css`.
 
 The earlier manual-only release process is retained in
 [README history](../readme-history.md#release-provenance).

@@ -94,6 +94,6 @@ The default limit is **100,000 words**, adjustable in plugin settings.
 [Shortcut setup and further help](docs/reader-help.md) ·
 [Manual installation](docs/readme-history.md#install-and-use) ·
 [Development](docs/readme-history.md#develop-outside-the-vault) ·
-[Release provenance](docs/releases/automation.md)
+[Releases and provenance](docs/releases/automation.md)
 
 Licensed under [Apache License 2.0](LICENSE).

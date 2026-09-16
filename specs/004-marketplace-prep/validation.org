@@ -89,3 +89,20 @@
 - Scope :: Eleven annotation dispositions recorded in =feedback.yaml=. README images follow the source sequence, with the icon beside its instruction and the active-reading screenshot after playback. Offline help uses the same setup instructions.
 - Result :: PASS. Ten image paths and alt texts checked; added screenshot byte-identical to its source; README and help render with Pandoc; local link targets exist. Bundled help matches =docs/reader-help.md=. Source comparison permits only the help literal and exact command display-name change; command ID and callback are unchanged.
 - Existing checks :: =make lint= PASS; =make test= PASS, 12/12. No new persistent prose test or hotkey control. Native visual review remains separate.
+
+* GREEN OT004.6 - Operator-invoked release verification :testdef:
+:PROPERTIES:
+:REVISION: eb30bcf plus the operator-invoked release script, Makefile target, workflow trigger change and documentation
+:EVIDENCE: 36 of 36 one-off checks passed against real Git repositories with a local bare upstream and a stub gh; workflow YAML parsed with the expected triggers and permissions; extracted verification step passed ShellCheck with no exclusions; make lint and make test passed with 12/12 reader cases.
+:END:
+- Execution :: 2026-09-16, macOS with Homebrew Bash, Git, jq, yj and ShellCheck. Disposable repositories in OS temporary space exercised =scripts/release.sh=; a stub =gh= recorded its arguments instead of contacting GitHub. No GitHub release, tag or workflow run was created.
+- Invocation :: =--help= printed the release help and exited 0; =--version= exited 0; an unknown option and a trailing argument each exited 2.
+- Dry run :: Reported next version 1.0.5 from a 1.0.4 manifest, left the manifest and history unchanged and issued no GitHub operation.
+- Refusals :: Uncommitted changes, a non-release branch, divergence from =origin/master= and an existing tag each exited 1 with an explanatory message; =VERSION=1.0= and =VERSION=1.0.01= each exited 2. None changed the repository or the remote.
+- Release :: The manifest recorded 1.0.5, the =main.js= version comment matched and all other source bytes were unchanged. The commit subject was =chore: release 1.0.5=, the tag was annotated, the bare upstream held both the commit and the tag, and the tagged manifest matched. =gh release create= received exactly =main.js manifest.json styles.css --verify-tag=. No scratch file remained. A following release produced 1.0.6, and =VERSION=1.1.0= published that exact version.
+- Conflict :: A competing upstream commit made the atomic push fail with exit 1; no force push or retag occurred.
+- Workflow :: =.github/workflows/attest-release.yml= parses with triggers =release: published= and =workflow_dispatch=, job permissions =contents: read=, =id-token: write= and =attestations: write=, and concurrency group =attest-release= without cancellation. Its extracted verification step passed ShellCheck with no exclusions. =.github/workflows/release.yml= and its =contents: write= permission were removed, so no workflow can publish.
+- Project checks :: =make lint= and =make test= passed, 12/12 reader cases. =bash scripts/release.sh --dry-run= against the real repository correctly refused the uncommitted review state with exit 1.
+- Documentation :: =docs/releases/automation.md=, =docs/release-help.md= and the developer target list describe the operator-invoked release and publication-triggered attestation. All changed local links and the =#release-provenance= anchor resolve.
+- Limits :: Local evidence does not establish hosted publication or signing. The first =make release= supplies that evidence. Release 1.0.4 was published by the superseded push-triggered process and carries no attestation from it; manual dispatch of the attestation workflow with tag 1.0.4 would sign it.
+- Scope :: Bounded one-off packaging checks. The stub =gh= models only the release-creation boundary and is not retained; no persistent source-text or third-party simulation test was added.
