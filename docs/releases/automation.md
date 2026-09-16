@@ -20,7 +20,7 @@ fails visibly; the workflow never force-pushes.
 Rerun a failed **Release and attest** run to reuse its tagged version. A run-ID
 trailer on the metadata commit prevents a second version bump. Existing release
 assets are never overwritten. An incomplete draft or mismatched asset requires
-operator repair before retrying. The manually dispatched **Attest release**
+manual repair before retrying. The manually dispatched **Attest release**
 workflow remains available for a published tag.
 
 The attestation records the workflow's triggering revision as its build entry

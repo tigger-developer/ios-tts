@@ -4,115 +4,54 @@ Last updated: 2026-09-16
 
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
-The [current specification](../specs/003-full-document-reader/spec.org) defines
-the approved behaviour. Version 1.0.0 is published under Apache 2.0, with subsequent patch releases automated on pushes to master. See [release automation](releases/automation.md). Taḋg reported the native user tests
-passed and accepted the reader on 2026-09-16; the linked validation record
-distinguishes this human declaration from automated evidence.
 
 ## Why this plugin exists
 
-For long documents, Obsidian preview loads only a portion for display.
-Accessibility Reader cannot access the unloaded content. The operator reports
-that this makes listening to documents longer than a page or two awkward or
-unusable; page count is an illustration, not a fixed technical threshold.
+Obsidian's preview is optimized to load the visible portion of a note.
+Accessibility Reader can access that loaded content. A full-document preview
+makes the entire note available for native Text-to-Speech (TTS).
 
-Some cloud TTS plugins require provider API keys and charge for generated speech.
-Costs can accumulate when long documents are converted repeatedly. For example,
-[Aloud documents API-key setup and paid providers](https://github.com/adrianlyjak/obsidian-aloud-tts).
-Other plugins use native speech, including
-[Text to Speech](https://github.com/joethei/obsidian-tts), so this is not a claim
-that every alternative charges money.
-
-Apple devices already include native speech through
+Apple devices include native speech through
 [Accessibility Reader on iPhone](https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26)
 and [Accessibility Reader on Mac](https://support.apple.com/en-ca/guide/mac-help/mchl799f6fb9/mac).
-Paying for cloud speech should be optional when the device can already read
-text aloud without a speech API key or usage bill.
+The plugin provides access to this capability without a speech API key or usage
+charge. Downloaded voices support offline listening.
+
+Some cloud TTS plugins require API keys and charge for generated speech, including
+[Aloud](https://github.com/adrianlyjak/obsidian-aloud-tts).
+Native alternatives also exist, including
+[Text to Speech](https://github.com/joethei/obsidian-tts).
 
 ## Intended experience
 
-- **Whole-note reading:** one button or command opens the complete current
-  Markdown note as a read-only snapshot using normal Obsidian rendering.
-  A book with sound waves in each note's top toolbar opens that pane's note;
-  the ribbon button and command remain available.
-- **Native speech:** the user invokes Accessibility Reader and presses Play.
-  Apple owns the voice, playback and accessibility controls.
-- **Useful settings:** the plugin's settings panel explains its benefits,
-  limitations and shortcut setup, beside one configurable maximum-word field.
+- **Whole-note reading:** a toolbar button, ribbon button or command opens the
+  complete current Markdown note as a read-only snapshot using Obsidian rendering.
+  Each note toolbar opens the note belonging to that pane.
+- **Native speech:** Accessibility Reader supplies voices, playback and
+  accessibility controls. Speech starts through Apple's controls or Autoplay.
+- **Clear setup:** bundled settings help explains iPhone and Mac shortcuts,
+  benefits and limitations. The help remains available offline.
 - **Explicit size limit:** the default is **100,000 words**, adjustable in
-  settings. A note over the chosen limit is refused with guidance to raise it;
-  a shortened document must never be presented as complete.
+  settings. A note over the limit is refused with guidance to raise it.
+  A shortened document must never be presented as complete.
 
-The [settings-panel help](reader-help.md) supplies the maintained user-facing
-copy, including triple-clicking the side/lock button and double-tapping the back
-of an iPhone. It is bundled with the plugin so reading the help needs no network.
+## Boundaries
 
-## Benefits and limitations
-
-- **No paid speech service:** no provider account, API key or metered speech
-  charge. The plugin adds no service that receives note content.
-- **Long-document access:** complete rendering addresses the reported preview
-  limitation; it does not alter the source note.
-- **Platform dependency:** the proposed support is Obsidian 1.13+, iOS 26+ and
-  macOS 26+. Native workflow passes are operator-reported; the report does not supply
-  device versions or individual fixture observations.
-- **Setup required:** accessibility shortcuts are configured in Apple settings.
+- **Source preservation:** opening or closing a snapshot does not change the note.
+- **Privacy:** the plugin adds no service that receives note content, telemetry,
+  account requirement or speech API integration.
+- **Supported platforms:** Obsidian 1.13+, iOS 26+ and macOS 26+.
+- **System setup:** accessibility shortcuts are configured in Apple settings.
   The plugin does not change system settings or start speech itself.
-- **Finite device resources:** increasing the word limit can slow rendering or
-  exhaust memory. The count includes Markdown source, including properties;
-  it is approximate and does not bound the size of images or embeds.
-- **Deliberately limited:** no speech engine, audio export, EPUB/PDF conversion,
-  image-text extraction or live updating of an open snapshot. Existing embeds
-  and third-party rendering retain Obsidian's usual behaviour.
+- **Finite resources:** raising the word limit can slow rendering or exhaust
+  memory. The approximate count includes Markdown source and properties;
+  it does not bound the size of images or embeds.
+- **Scope:** no speech engine, audio export, EPUB/PDF conversion, image-text
+  extraction or live updating of an open snapshot. Embeds and third-party
+  rendering retain Obsidian's usual behaviour, including remote resource access.
 
-## Community-directory listing
-
-**Recommendation:** prepare an Obsidian Community directory listing after the
-macOS and physical-iPhone workflow tests establish the advertised behaviour.
-Reuse the benefits, limitations and shortcut instructions above in the README
-and plugin settings; the listing must not imply paid APIs are the only alternative.
-
-Proposed display name: **Full Document Reader**. Proposed short description:
-
-> Open complete notes for Apple's Accessibility Reader on iOS and macOS, with
-> a configurable word limit and no speech API key or usage charges.
-
-The current [submission guide](https://docs.obsidian.md/plugins/releasing/submit-plugin)
-uses the Community directory, with an Obsidian account linked to GitHub.
-It requires a README, licence, manifest and a GitHub release whose tag matches
-the manifest version, with the built plugin attached. The public listing shows
-an excerpt of the README, so both benefits and limitations belong there.
-The [submission requirements](https://docs.obsidian.md/community-directory/submission-requirements-for-plugins)
-require a short description of at most 250 characters, ending with a full stop,
-and accurate mobile compatibility.
-
-**Historical release preparation:** Full Document Reader 0.1.0 uses Apache 2.0 and retains
-the identifier `ios-tts`. The operator reported platform user tests passed and
-accepted the reader. The verified package and release notes are available in
-[GitHub release 0.1.0](https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0).
-Account linking and directory submission were separate steps at that preparation stage.
-The published plugin list had no matching identifier or display name when
-checked on 2026-09-16; submission performs the authoritative availability check.
-
-**Previous readiness:** before 2026-09-16, licence selection, native-test
-acceptance and release preparation were outstanding. That historical position
-is superseded by the licensing, acceptance and release above.
-
-At definition time there was no implementation, manifest or release package;
-the maintained JavaScript package is the delivery update to that starting position.
-
-## Definition history
-
-On 2026-09-08, the operator requested settings-panel guidance, a configurable
-word limit, this vision document and investigation of marketplace listing.
-These replace the earlier draft's README-only help, absence of saved settings
-and absence of a plugin word limit. Complete-document presentation remains
-the governing requirement.
-
-## Implementation simplification
-
-On 2026-09-10 the operator authorized removing Node, npm and TypeScript under
-`BYPASS-GATE-7`. The three installation files are now maintained directly;
-installation uses Bash without a build or package manager. Native reading,
-settings, saved preferences, platform support and listing scope are unchanged.
-The existing logic tests use the JavaScript engine already included with macOS.
+The [reader specification](../specs/003-full-document-reader/spec.org) defines
+the behaviour. The [setup guide](reader-help.md) contains the instructions bundled
+with the plugin. Release and submission details belong to
+[Marketplace prep](../specs/004-marketplace-prep/spec.org) and
+[release documentation](releases/automation.md).

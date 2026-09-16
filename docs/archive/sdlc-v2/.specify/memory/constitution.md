@@ -47,7 +47,7 @@ For staged Spec Kit delivery, each audit MUST run in a fresh agent context that 
 
 Record each audit name, auditor provider and model, artefact revision, exact verdict, findings, and superseding rerun in the active feature's `audits.md`. `speckit-analyze` is a consistency check and does not replace an independent audit.
 
-When the operator explicitly selects paired development under `~/.agents/sdlc/PAIRING.md`, its change-scoped closure and user-validation contract replaces these staged transitions for that change. Engineering standards and applicable audit requirements remain mandatory.
+When paired development is explicitly approved under `~/.agents/sdlc/PAIRING.md`, its change-scoped closure and user-validation contract replaces these staged transitions for that change. Engineering standards and applicable audit requirements remain mandatory.
 
 ## Project-Specific Principles
 
@@ -61,8 +61,7 @@ purpose unless a constitutional amendment explicitly changes it.
 
 ## Project Ownership and Architecture Boundaries
 
-- **Human governance:** Tadhg O'Brien, the human project owner, controls constitutional ratification,
-  amendments, and standards deviations.
+- **Governance:** Constitutional ratification, amendments and standards deviations require explicit approval.
 - **Engineering and governance:** This constitution and its selected standards
   govern engineering and governance within their named concerns.
 - **Purpose and policy:** `README.md` governs durable project purpose and policy. Approved feature
@@ -86,12 +85,11 @@ purpose unless a constitutional amendment explicitly changes it.
 
 This constitution governs project specifications, plans, tasks, implementation, and review.
 
-Tadhg O'Brien, the human project owner, is the ratification and amendment authority. An amendment
+Ratification and amendments require explicit approval. An amendment
 MUST state its compatibility and migration effects and update the version and dates below.
 
 Amendment 1.0.1 updates only the adopted SDLC release from `v2.0.8` to `v2.0.9`. It changes no
-project-specific principle, product behaviour, data format, or migration requirement. Tadhg O'Brien
-ratified this amendment on 2026-09-05.
+project-specific principle, product behaviour, data format, or migration requirement. Amendment ratified: 2026-09-05.
 
 MAJOR removes or incompatibly redefines governance, MINOR adds or materially expands governance,
 and PATCH clarifies governance without changing its meaning.

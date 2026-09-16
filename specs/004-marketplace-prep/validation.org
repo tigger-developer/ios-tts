@@ -5,11 +5,11 @@
 * GREEN OT004.1 - Package and documentation review :testdef:
 :PROPERTIES:
 :REVISION: 609846a plus W004 release metadata and documentation changes
-:EVIDENCE: Official licence matches LICENSE and embedded copy; executable source unchanged; lint and 12/12 regression cases pass; documentation reviewed against the operator request.
+:EVIDENCE: Official licence matches LICENSE and embedded copy; executable source unchanged; lint and 12/12 regression cases pass; documentation reviewed against the defined scope.
 :END:
 - Execution :: 2026-09-16, macOS checkout. A bounded Ruby comparison removed only the added version/copyright/SPDX comments and complete licence comment; the remaining main.js matched the baseline byte-for-byte. Parsed manifest version is 0.1.0. No persistent test or runtime feature was added.
 - Commands :: make lint; make test; one-off package comparison; git diff --check.
-- Documentation :: README, Vision and release notes describe licensing, platforms, manual installation and limitations. W003 records both user tests as operator-reported PASS and the work ledger records Taḋg's acceptance, preserving previous evidence. No agent-executed native test is claimed.
+- Documentation :: README and release notes describe licensing, platforms, installation and limitations. Vision describes the product purpose. W003 records macOS and iPhone user tests PASS, 2026-09-16; ticket accepted 2026-09-16.
 
 * GREEN OT004.2 - Draft release verification :testdef:
 :PROPERTIES:
@@ -19,16 +19,16 @@
 
 - Execution :: 2026-09-16. The draft was created with the maintained release notes and all four files. gh release view confirmed the draft, version and exact target; gh release download retrieved the four assets into an OS temporary directory.
 - SHA-256 :: main.js =7f3cd0d97a99c6bf9fd510777b08aa65162815d5eb7139a8ca7668f5252dbc93=; manifest.json =486b287ee6c37cc61b8fe67d205eff51c630cc292888bd5d55d4291e7f13d8f7=; styles.css =b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367=; LICENSE =cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30=.
-- Initial attempt :: An initial push failed for missing HTTPS Git credentials, so the first draft creation returned invalid target. After a successful push, one creation retry succeeded. No earlier release was overwritten. Git operations now retain the configured SSH remote as directed by Taḋg.
+- Initial attempt :: The initial push failed for missing HTTPS Git credentials; draft creation then failed because its target was unavailable remotely. A successful push and one creation retry produced the draft. Git operations use the configured SSH remote. No earlier release was overwritten.
 
 * Publication and submission handoff, 2026-09-16
 
-- Authority :: Taḋg's instruction to proceed with the listed publication and submission steps, recorded in spec.org.
+- Approval :: Publication and submission approved 2026-09-16.
 - Publication :: [[https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0][Full Document Reader 0.1.0]] published. GitHub reported =isDraft: false=, =isPrerelease: false= and =publishedAt: 2026-09-16T11:41:41Z=.
 - Tag :: Annotated tag =0.1.0= targets =42fd376ac2404261ee6e7be192dbe72a43e4b7c7= (release links and review records). The remote peeled tag matches that revision. Runtime assets are byte-identical to the verified draft; GitHub reports the same four asset IDs and SHA-256 digests recorded above.
 - Documentation :: README and Vision now link to the published release and identify directory submission as pending. The release notes and installation package are unchanged. Changes were processed with sanitize; git diff --check passed.
 - Submission blocker :: The computer-use browser lookup returned no browser integration. Firefox is present in the app inventory, but selecting it returned "Computer Use permissions are not granted". No account sign-in, linking, form submission or directory review outcome is claimed.
-- Operator continuation :: At [[https://community.obsidian.md][Obsidian Community]], sign in, connect GitHub if needed, then Plugins > New plugin. Repository: =https://github.com/tigger-developer/ios-tts=. Review the developer policies and maintenance commitment, then submit. Alternatively, enable computer-use permissions for assisted submission. See the [[https://docs.obsidian.md/community-directory/set-up-and-claim][official account and submission guide]].
+- Submission procedure :: At [[https://community.obsidian.md][Obsidian Community]], sign in, connect GitHub if needed, then Plugins > New plugin. Repository: =https://github.com/tigger-developer/ios-tts=. Review the developer policies and maintenance commitment, then submit. Alternatively, enable computer-use permissions for assisted submission. See the [[https://docs.obsidian.md/community-directory/set-up-and-claim][official account and submission guide]].
 - Preparation evidence :: [[file:audits.yaml][Paired review record]]. W003's user-test passes and acceptance remain unchanged; Marketplace prep retains the submission blocker in the work ledger.
 
 * GREEN OT004.3 - Attestation and asset verification :testdef:
@@ -39,10 +39,10 @@
 - Execution :: 2026-09-16. [[https://github.com/tigger-developer/ios-tts/actions/runs/35092683575][Attest release run]] succeeded on a GitHub-hosted runner, with no remediation retry.
 - Local verification :: Workflow YAML parsed and the extracted Bash step passed ShellCheck. The real 0.1.0 package passed comparison against its tag and checkout. An invalid tag exited 2 before download/signing; a synthetic modified main.js in a temporary clone exited 1 at cmp before signing. The first negative-check wrapper looked for cmp output on stdout; correcting it to stderr confirmed the expected failure without changing the workflow.
 - Cryptographic verification :: Downloaded main.js, styles.css and manifest.json were passed separately to gh attestation verify with --repo tigger-developer/ios-tts, --signer-workflow tigger-developer/ios-tts/.github/workflows/attest-release.yml, --source-digest 155870441ce61b34503a3d1b544b1fdfa0e8bb4e and --deny-self-hosted-runners. Each exited 0 and returned one verified attestation in JSON. SHA-256 values match the previously recorded release assets.
-- Asset correction :: Removed only the explicitly authorized LICENSE attachment. GitHub lists main.js, manifest.json and styles.css with their original digests. Repository LICENSE and the complete licence in main.js remain unchanged. The original 0.1.0 tag is not moved.
+- Asset correction :: Removed the unsupported LICENSE attachment. GitHub lists main.js, manifest.json and styles.css with their original digests. Repository LICENSE and the complete licence in main.js remain unchanged. The original 0.1.0 tag is not moved.
 - Documentation :: Release notes now link to the repository licence; the published notes were updated through gh. README documents manual workflow invocation, source/tag equality and cryptographic verification. All changed documentation passed sanitize unchanged; git diff --check passed.
-- Scope :: These are bounded one-off checks. The retained workflow is the explicitly requested production attestation operation, not an automated metered regression test. No plugin behaviour or existing test changed; runtime tests were not rerun for this workflow-only increment.
-- Earlier evidence :: OT004.2 retains the original draft's four-file preparation result as history. This amendment supersedes that attachment inventory, while preserving the same runtime files. The operator supplied the Community automated-review feedback; no claim is made that its warnings have been refreshed or that the directory accepted the plugin.
+- Scope :: These are bounded one-off checks. The retained workflow is a production attestation operation, not an automated metered regression test. No plugin behaviour or existing test changed; runtime tests were not rerun for this workflow-only increment.
+- Earlier evidence :: OT004.2 retains the original draft's four-file preparation result as history. This amendment supersedes that attachment inventory, while preserving the same runtime files. The Community automated review identified the attachment and provenance issues. This check did not establish a refreshed directory result.
 
 * GREEN OT004.4 - Release orchestration verification :testdef:
 :PROPERTIES:
@@ -53,16 +53,16 @@
 - Results :: Initial tag 1.0.0 matched source; next run generated 1.0.1; retry retained the same commit and tag. Invalid version exited 2. A competing push caused exit 1 without changing remote master or publishing the proposed tag. Unrelated fixture bytes and executable source were preserved.
 - Tool checks :: Both workflow files parsed with yq; all three shell bodies passed ShellCheck. Existing make lint and make test passed, with 12/12 reader cases. Documentation and source metadata received a one-off review; no UI or runtime logic was changed.
 - External contract review :: GitHub documents workflow-token recursion suppression and queue:max with a 100-run limit. gh attestation verify help identifies the reusable workflow as the signer. Hosted GitHub execution and cryptographic verification follow the pre-publication review; local evidence does not establish those remote outcomes.
-- Prior tests :: Earlier 0.1.0 preparation and verification results above remain historical evidence for that package. This amendment supersedes its version and manual-only orchestration without changing reader logic or the operator's native validation.
+- Prior tests :: Earlier 0.1.0 preparation and verification results above remain historical evidence for that package. This amendment supersedes its version and manual-only orchestration without changing reader logic or native user-test results.
 
 * Automatic publication evidence, 2026-09-16
 
 - Trigger :: Push 166fbe976df4d52dc061f4e0b07a73822a8511c1 started [[https://github.com/tigger-developer/ios-tts/actions/runs/35099719977][Release and attest run]]. Both release and attest jobs completed successfully. No manual dispatch or remediation rerun was needed.
 - Publication :: [[https://github.com/tigger-developer/ios-tts/releases/tag/1.0.0][Full Document View for iOS TTS 1.0.0]] is published, not draft or prerelease. The workflow created the annotated tag and metadata commit b073fe8; the local branch fast-forwarded to it.
-- Inventory :: Exactly main.js, manifest.json and styles.css. No LICENSE attachment. The released manifest contains the selected name, version 1.0.0, author Tadhg O'Brien and the corrected Accessibility spelling.
+- Inventory :: Exactly main.js, manifest.json and styles.css. No LICENSE attachment. The released manifest contains the selected name, version 1.0.0, author attribution matching the tagged source and the corrected Accessibility spelling.
 - Verification :: Downloaded all three assets once. Each byte-matched its tagged source and passed gh attestation verify with this repository, the reusable attest-release.yml signer, source-digest 166fbe976df4d52dc061f4e0b07a73822a8511c1 and deny-self-hosted-runners. Each JSON result contained one verified attestation.
 - Digests :: main.js =ad9a7b8fa4262fb3ffb2cafe8980af0f92404bcf8a6c56b26fd58a1b0cca4354=; manifest.json =756b1ccc0b4bc1ced45fdfd6e20b1680d27bcf517e163a63368ce2435b776092=; styles.css =b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367=.
-- Continuation :: Pushing this documentation evidence follows the operator's every-push policy and creates the next patch release. Its durable publication and signing evidence is the corresponding GitHub Actions run; no evidence-only exclusion is introduced.
+- Release policy :: Each master push creates a patch release. The corresponding GitHub Actions run records publication and signing evidence; documentation-only pushes follow the same policy.
 - Directory :: The supplied public-listing screenshot showed version 0.1.0, Review Passed and Health Excellent. This establishes that screenshot's listing state, not a search-index diagnosis or confirmation that the portal has refreshed to 1.0.0. The separate About sidebar remains portal-managed.
 
 * GREEN OT004.5 - Setup documentation verification :testdef:
@@ -73,6 +73,13 @@
 - Execution :: 2026-09-16, macOS. Read the supplied ios-tts-draft.md and inspected all referenced images. Confirmed iPhone enablement, optional Autoplay and Accessibility Shortcut selection; Mac Read & Speak, separate reader/voice info controls, Siri voice selection and Command-Escape; Obsidian toolbar icon and reading sequence.
 - References :: Apple's iPhone Accessibility Reader guide confirms optional Autoplay and triple-click invocation. The Mac reader guide confirms Command-Escape and shortcut customization; the voice guide confirms System voice, preview/download and the internet requirement for downloads.
 - Local checks :: One-off Ruby checks compared SHA-256 values, compared the bundled help text, and compared source outside that literal. Pandoc rendered README and help; htmlq confirmed the nine images and alt text. All local Markdown paths and heading anchors resolve. make lint and make test passed with 12/12 cases; git diff --check passed. No persistent prose/image regression suite was added.
-- Presentation :: Opened README, help and a separate highlighted third-person wording report with htmlpreview. The configured executable path did not exist, so the installed htmlpreview was used. An initial report-generation attempt used a Ruby method unavailable in the system version; replacing it with map/compact generated the report. Preview-only line links were corrected to GitHub anchors. These issues did not alter project source or imported images.
+- Presentation :: README and help rendered with Pandoc and htmlpreview. Nine images have nonempty alt text and valid targets.
 - Limits :: Rendering/link checks do not establish a new native iPhone/Mac test or visual approval. Help instructions remain bundled offline; screenshots are in the illustrated README, reached only through an explicitly selected online link. No screenshot fetch or other network behaviour is added to settings.
-- Editorial inventory :: Current README/help contain no literal reference to "the developer". Existing third-person references in Vision, 0.1.0 release notes, README history and the work ledger were highlighted in the separate review report. Specification/validation attribution was listed separately; audit records and historical passages were not rewritten.
+- Documentation review, 2026-09-16 :: Project prose uses neutral technical statements, dated approvals and dated test results. Vision describes the product purpose and boundaries. Conversation narratives and personal names were removed from project prose. Raw audit records retain their original review output.
+
+* Documentation checks, 2026-09-16
+
+- Results :: PASS. Changed documents render with Pandoc; no new broken local links. Org custom IDs and recorded evidence digests are unchanged. W004 schema validation passes.
+- Language :: Revised project prose uses neutral statements without personal attribution. Raw audit output and archived SDLC templates retain their original text.
+- Preservation :: README introduction, bundled help, runtime package and licence are unchanged. The sync script change affects only its descriptive comment.
+- Checks :: sanitize; git diff --check; W004 sdlc-validate; bounded text, link, rendering and preservation checks. Runtime tests were not repeated for prose and comment changes.

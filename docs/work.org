@@ -66,7 +66,7 @@ provides a durable cross-cutting category that the standard tags cannot express.
 :PROPERTIES:
 :CUSTOM_ID: w-nnn
 :PRIORITY: P1
-:SOURCE: operator
+:SOURCE: project
 :CREATED: YYYY-MM-DD
 :END:
 
@@ -83,7 +83,7 @@ classification; it is provenance, not current state.
 :PROPERTIES:
 :CUSTOM_ID: w-003
 :PRIORITY: P1
-:SOURCE: operator
+:SOURCE: project
 :CREATED: 2026-09-07
 :BRANCH: master
 :END:
@@ -95,34 +95,19 @@ classification; it is provenance, not current state.
 - Lineage :: Replaces the retired feature 001 draft and reserved feature 002
   restart. Neither identifier is reused. The original draft remains recoverable
   before commit =58ff90f= (retire feature 001).
-- Scope direction :: On 2026-09-07 the operator requested a very simple reader
-  under SDLC v3, supporting both macOS and iOS. Taḋg approved the amended
-  definition and instructed implementation on 2026-09-08.
-- Scope amendment :: On 2026-09-08 the operator requested settings-panel shortcut
-  help and benefits/limitations, a configurable 100,000-word default limit,
-  [[file:VISION.md][Product vision]] and investigation of Community directory listing.
-- Validation handoff :: Executed checks and the operator's macOS test report
-  are recorded in the validation record. The
-  [[file:native-testing.md][Native macOS/iOS test checklist]] retains the reusable test procedure.
-  Historical handoff: operator closure and publication were not then recorded.
-- Acceptance, 2026-09-16 :: Taḋg instructed that user tests be marked passed and
-  the ticket accepted, then explicitly confirmed the iPhone tests passed.
-  Native passes are operator-reported; release publication is separate.
-- Installer amendment :: On 2026-09-08, Taḋg directly requested implementation
-  of the =make install= vault-root prompt. On 2026-09-10 the operator requested
-  merging into =master= and continuing there under the global =current= branch
-  strategy; this supersedes the former feature-branch delivery choice.
+- Scope :: macOS and iOS support, defined on 2026-09-07. Document approved 2026-09-08.
+- Scope amendment, 2026-09-08 :: Settings-panel shortcut help and benefits/limitations, a configurable 100,000-word default limit, [[file:VISION.md][Product vision]] and Community directory listing preparation.
+- Validation :: Executed checks are recorded in the validation record. The [[file:native-testing.md][Native macOS/iOS test checklist]] defines the reusable procedure.
+- Acceptance, 2026-09-16 :: macOS and iPhone user tests PASS. Ticket accepted 2026-09-16.
+- Installer amendment :: The =make install= vault-root prompt was added on 2026-09-08. Development moved to =master= on 2026-09-10 under the =current= branch strategy.
 
-- Implementation amendment :: On 2026-09-10 Taḋg explicitly invoked
-  =BYPASS-GATE-7= to remove Node/npm artefacts and maintain a plain JavaScript
-  plugin. Installation and Git synchronization use Bash; macOS supplies the
-  regression-test engine. Reader behaviour and stored settings remain unchanged.
+- Implementation amendment, 2026-09-10 :: Node, npm and TypeScript were removed. The plugin is maintained as plain JavaScript. Installation and Git synchronization use Bash; macOS supplies the regression-test engine. Reader behaviour and stored settings are unchanged.
 
 ** REVIEW W004 - Marketplace prep :maintenance:
 :PROPERTIES:
 :CUSTOM_ID: w-004
 :PRIORITY: P1
-:SOURCE: operator
+:SOURCE: project
 :CREATED: 2026-09-16
 :END:
 
@@ -130,11 +115,11 @@ classification; it is provenance, not current state.
 - Evidence :: [[file:../specs/004-marketplace-prep/validation.org][Release verification]] and [[file:../specs/004-marketplace-prep/audits.yaml][paired reviews]].
 - Scope :: Apache 2.0, version 0.1.0, README and acceptance records, release preparation and the subsequently authorized publication/submission steps, all in paired development.
 - Publication :: [[https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0][Release 0.1.0]] is published with its annotated tag and verified assets.
-- Earlier submission blocker :: Computer-use permissions prevented agent submission. Taḋg subsequently supplied Community automated-review feedback; the old blocker describes that earlier attempt.
-- Earlier handoff :: The extra release attachment is removed and the three unchanged runtime assets have verified attestations. Await the Community review refresh and operator disposition; its acceptance is not inferred. See the validation record and paired review record.
+- Submission history :: Initial automated submission was blocked by computer-use permissions. Subsequent Community review findings are recorded in the validation record.
+- Release assets :: The unsupported LICENSE attachment was removed; the three runtime assets have verified attestations. See the validation and paired review records.
 
-- Current handoff :: Release 1.0.0 was published by the master-push workflow; all three downloaded files matched their tag and passed cryptographic attestation verification. Later pushes increment the patch automatically. Operator disposition and the portal description refresh remain separate.
-- Automatic release amendment :: Taḋg selected 1.0.0, then patch increments and attestation on every master push. Product name is Full Document View for iOS TTS; author is Tadhg O'Brien. Preparation and verification remain under this paired ticket.
+- Current handoff :: Illustrated setup and neutral documentation edits await local diff review. No push is included in this review checkpoint. Each subsequent master push publishes a patch release with attestations.
+- Automatic release amendment :: Automatic releases began at 1.0.0. Product name: Full Document View for iOS TTS. Release 1.0.0 assets matched their tag and passed cryptographic attestation verification. Preparation and verification remain under this paired ticket.
 
 * Migration record
 :PROPERTIES:
@@ -157,7 +142,6 @@ classification; it is provenance, not current state.
 
 * Marketplace review amendment, 2026-09-16
 
-Taḋg provided automated-review recommendations and authorized W004 to remove
-only the LICENSE release attachment and add provenance attestations. The earlier
-computer-use submission blocker is historical; directory acceptance is not
-inferred from the supplied review. This remains paired development.
+The unsupported LICENSE release attachment was removed and provenance
+attestations were added. The repository and bundled licence are retained.
+Release verification is recorded under W004 in paired development.

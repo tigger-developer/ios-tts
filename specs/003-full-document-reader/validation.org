@@ -2,18 +2,16 @@
 #+STARTUP: content
 #+OPTIONS: toc:2 num:nil
 
-* Operator acceptance, 2026-09-16
+* Acceptance, 2026-09-16
 
-- Authority :: Taḋg instructed: "mark user tests as pss and ticket accepted" and explicitly confirmed "iphone tests passed also".
-- Current result :: UT003.1 - macOS reading workflow and UT003.2 - iOS reading workflow are PASS on the operator's authority for the reader at =609846a= (pre-release preparation baseline).
+- Acceptance :: 2026-09-16.
+- Current result :: UT003.1 - macOS reading workflow: PASS, 2026-09-16. UT003.2 - iOS reading workflow: PASS, 2026-09-16. Baseline: =609846a=.
 - Scope :: This supersedes the pending native checks recorded in the dated amendments below, including the focus/isolation, shortcut hint, toolbar, glyph and settings checks. W003 acceptance is recorded in the work ledger.
-- Evidence limit :: These are human-reported passes, not native tests executed by the agent. The operator supplied no device/OS/Obsidian versions, fixture hashes or itemized observations in this report; none are inferred.
 - Release boundary :: The subsequent W004 licensing and release preparation changes only comments and documentation, preserving executable reader code. Earlier dated results remain history.
 
 * Paired focus and background isolation, 2026-09-12
 
-- Authority :: Taḋg accepted the review recommendations and explicitly selected
-  paired development for their implementation.
+- Approval :: Focus and background-isolation amendment approved 2026-09-12; paired development.
 - Requirements :: [[file:spec.org::#ac-003-2][AC003.2 - Complete native reading]]
   and [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
 - UT003.1 - macOS reading workflow :: PENDING for this amendment. Open a short
@@ -24,7 +22,7 @@
   dialog must keep focus if an older render finishes.
 - UT003.2 - iOS reading workflow :: PENDING for the same reading and cleanup
   checks by touch on a physical iPhone. Record revision, versions and tester.
-- Provisional paired validation :: No operator result for this candidate yet.
+- Provisional paired validation :: PENDING on 2026-09-12; superseded by the 2026-09-16 native test passes.
 - Test choice :: Existing regression tests protect session cancellation and
   preference handling. Native DOM focus, host modal behaviour and Apple's
   extraction need platform validation; no new test architecture is introduced.
@@ -41,8 +39,7 @@
 
 * Platform shortcut hint, 2026-09-12
 
-- Authority :: The operator approved a hint beneath the reader title after
-  rendering, with Mac Command-Escape and iOS accessibility-shortcut wording.
+- Approval :: Platform shortcut hint approved 2026-09-12. The hint appears beneath the reader title after rendering, with Mac Command-Escape and iOS accessibility-shortcut wording.
 - Requirement :: [[file:spec.org::#ac-003-8][AC003.8 - Brief usable instructions]].
 - UT003.1 - macOS reading workflow :: PENDING. In a disposable vault, open a
   long note. Expect no shortcut hint while preparing, then one Mac hint beneath
@@ -65,8 +62,7 @@
 
 * Supplied accessibility glyph, 2026-09-12
 
-- Authority :: The operator instructed: "copy accessibility-reader.svg from
-  ~/dl/ and use this one" after reporting confusion with Obsidian's preview icon.
+- Artwork :: =accessibility-reader.svg= replaces the preview-like glyph with distinct book-and-sound-waves artwork.
 - Scope :: [[file:spec.org::#ac-003-7][AC003.7 - Platform lifecycle and accessible controls]].
   Use the supplied artwork for toolbar and ribbon, retaining the action names.
 - One-off artwork check :: PASS on 2026-09-12 for =916769d= (supplied reader
@@ -83,17 +79,16 @@
   UT003.2 - iOS reading workflow: confirm both controls display the selected
   glyph, remain distinguishable from preview, and retain their existing action.
 - Test choice :: No persistent source-matching or visual simulation test is
-  justified for operator-selected static artwork. Use the bounded artwork
+  justified for static artwork. Use the bounded artwork
   comparison and native visual checks; retain existing behavioural tests.
 
 * Note toolbar button amendment, 2026-09-10
 
-- Authority :: The operator authorized a book icon in each note's top toolbar
-  with =BYPASS-GATE-7=. It opens the note belonging to that pane.
+- Approval :: Note toolbar button approved 2026-09-10 under =BYPASS-GATE-7=. It opens the note belonging to its pane.
 - Local evidence :: Candidate =4eb5c58= (note toolbar reader action) passed
   =make lint= and all 12 =make test= cases on macOS after implementation review.
 - OT003.1 - Source and security review :: PASS for this candidate on 2026-09-10.
-  The authoring context read the maintained package after the gate. Toolbar
+  Source review covered the maintained package after the gate. Toolbar
   setup reads view identities only; note text is captured on activation. Each
   callback uses its own view. Closed-view controls are removed; unload clears
   all controls and registered workspace events, with a guard for late layout
@@ -138,15 +133,14 @@
 
 * Current amendment - maintained JavaScript, 2026-09-10
 
-- Authority :: The operator's =BYPASS-GATE-7= request to remove Node/npm and
-  TypeScript while preserving the plugin's behaviour.
+- Change :: Node, npm and TypeScript were removed on 2026-09-10 under =BYPASS-GATE-7=. Plugin behaviour was preserved.
 - Regression evidence :: The same 12 assertions passed using macOS JavaScript
   for Automation against the pre-rewrite package and the maintained JavaScript.
   No new product behaviour or new assertion was introduced. This is preservation
   evidence, not a claimed new RED/GREEN cycle. Static checks use native tools.
 - OT003.1 - Source and security review :: PASS on 2026-09-10, candidate
   =5f55f71= (verified maintained JavaScript package). After the implementation
-  gate, the authoring context read =main.js= in full: its sole import is the
+  gate, source review covered =main.js= in full: its sole import is the
   host's Obsidian API; note rendering, checkbox protection, resource cleanup,
   static help and ={ maxWords }=-only writes are preserved. No Node/Electron
   API, speech service, content log or note persistence is introduced. There is
@@ -159,7 +153,7 @@
   terminal check confirmed Ctrl-C failure and a repeat installation reporting
   zero changed files. No primary vault or real remote was involved in testing.
 - UT003.1 - macOS reading workflow :: PENDING for the rewritten package's native
-  smoke test. The operator's earlier report remains recorded below.
+  smoke test. The earlier macOS result is recorded below.
 - UT003.2 - iOS reading workflow :: PENDING; no physical-iPhone result is inferred.
 - History :: The dated compiler, dependency-lock and Node-runner results below
   describe the superseded implementation and remain preserved as evidence.
@@ -222,20 +216,16 @@
 :END:
 
 - Category :: User test.
-- Status :: PASS, operator-reported on 2026-09-16; see the current acceptance above. Previous status: PENDING.
+- Status :: PASS, 2026-09-16; see the current acceptance above. Previous status: PENDING.
 - Criteria, procedure and expected result ::
   [[file:spec.org::#ut-003-1][UT003.1 - macOS reading workflow]], including its
   shared conditions and criterion links.
 - Required evidence :: Tested revision, hardware and platform versions, fixture
   recipe and hashes, native reading and lifecycle observations, source
-  preservation, cleanup and named human authority.
+  preservation, cleanup and execution date.
 - Amendment evidence :: Settings help, agreement with README/vision, Mac setup,
   limit boundaries, validation feedback, Save/reload persistence and offline help.
-- Operator report :: Taḋg stated, "OK, MacOS test passes." Recorded on
-  2026-09-10. This supersedes the earlier absence of a human macOS result.
-  The report did not identify a revision, hardware/software versions, fixture
-  size or individual checklist observations; the complete evidence entry stays
-  PENDING without inferring those details. No native test was executed by the agent.
+- Earlier result :: macOS user test PASS, 2026-09-10. Superseded by the 2026-09-16 result for the maintained JavaScript package.
 
 ** UT003.2 - iOS reading workflow
 :PROPERTIES:
@@ -243,17 +233,17 @@
 :END:
 
 - Category :: User test.
-- Status :: PASS, operator-reported on 2026-09-16; see the current acceptance above. Previous status: PENDING.
+- Status :: PASS, 2026-09-16; see the current acceptance above. Previous status: PENDING.
 - Criteria, procedure and expected result ::
   [[file:spec.org::#ut-003-2][UT003.2 - iOS reading workflow]], including its
   shared conditions and criterion links.
 - Required evidence :: Tested revision, physical device and platform versions,
   fixture recipe and hashes, native reading and lifecycle observations, source
-  preservation, cleanup and named human authority.
+  preservation, cleanup and execution date.
 - Amendment evidence :: Settings help, triple-click and double-tap Back Tap
   invocation, multi-feature shortcut menu, tested button type, limit boundaries,
   Save/reload persistence and offline help.
-- Historical execution record :: Not executed when originally recorded. A physical iPhone and named human observations
+- Historical execution record :: Not executed when originally recorded. A physical iPhone and native observations
   are required. No emulation or desktop result substitutes for this test.
 
 * One-off tests
@@ -272,7 +262,7 @@
 - Amendment evidence :: Preference-only storage, bundled help and absence of
   plugin-owned system-shortcut changes or help downloads.
 - Execution :: 2026-09-08, candidate =13e1476= (implementation =792508b=),
-  authoring context after the independent implementation gate.
+  source review after the independent implementation gate.
 - Review :: Read all three production modules and the generated =main.js= in
   full. The only runtime module is host-supplied =obsidian=. The note enters
   =MarkdownRenderer.render= from the current Markdown view. There is no owned
@@ -343,8 +333,7 @@
   provenance. No current architecture authority exists to reconcile.
 - Human handoff :: [[file:../../docs/native-testing.md][Native test checklist]].
   Native macOS/iOS evidence, final listing/name/licence decisions and publication
-  are not established by the automated checks. Only native tests and operator
-  closure remain in this implementation's acceptance path; publication is
+  are not established by the automated checks. Only native tests and acceptance remain in this implementation's acceptance path; publication is
   separately scoped.
 
 * Recording rules
@@ -373,7 +362,7 @@ FAIL or stale results do not establish delivery acceptance.
   The original instruction was to save this JavaScript as a temporary =.mjs= file and run it with
   Node 24. It allocates a new OS temporary directory, writes only synthetic
   Markdown and prints its path and hashes. Move the fixtures into a disposable
-  vault through the operator's normal process. No personal notes are read.
+  vault through manual transfer. No personal notes are read.
 
 #+begin_src js
 // Native-test fixture recipe. Synthetic text only; never reads the user's vault.

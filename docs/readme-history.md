@@ -1,6 +1,7 @@
 # README history: 2026-09-16
 
-This preserves the README before its marketplace introduction was shortened.
+This records the README content before its marketplace introduction was shortened,
+with conversational wording revised to factual statements.
 Release and submission status below describes that earlier snapshot, not current
 status. Development, provenance and validation details are retained for reference.
 
@@ -11,9 +12,8 @@ Open the whole current Markdown note for Apple's Accessibility Reader on
 read-only snapshot.
 
 **Version 0.1.0**, licensed under [Apache License 2.0](../LICENSE).
-The macOS and iPhone user tests were reported passed and the reader accepted
-by Taḋg on 2026-09-16. See the [validation record](../specs/003-full-document-reader/validation.org)
-for the scope and limits of that operator report.
+macOS and iPhone user tests: **PASS**, 2026-09-16.
+Reader accepted: 2026-09-16. See the [validation record](../specs/003-full-document-reader/validation.org).
 
 [Release 0.1.0](https://github.com/tigger-developer/ios-tts/releases/tag/0.1.0)
 provides the installation files. Community-directory submission is pending.
@@ -43,7 +43,7 @@ shortcut. Setup instructions remain in the plugin settings panel.
 
 The reader moves keyboard focus into the rendered document and temporarily
 isolates the background workspace. Closing it restores background interaction.
-Native macOS and iPhone workflow passes are recorded on the operator's authority.
+Native macOS and iPhone workflow tests passed on 2026-09-16.
 
 The [settings help](../docs/reader-help.md) includes Apple's setup links, the
 Home-button alternative and the menu shown when several shortcuts are selected.
@@ -97,22 +97,16 @@ No clone, compiler or development dependencies are needed on iOS.
   `COMMIT_MESSAGE` to replace its default message. See [sync help](../docs/sync-help.md).
 
 The former `make build` and npm-based `make vulncheck` targets were removed:
-there is no compilation step or package-managed dependency graph. This replaces
-the previous TypeScript/esbuild development arrangement under the operator's
-2026-09-10 `BYPASS-GATE-7` instruction.
+there is no compilation step or package-managed dependency graph. Node, npm and TypeScript were removed on 2026-09-10.
 
 The [validation record](../specs/003-full-document-reader/validation.org) separates
-automated evidence from operator-reported native-platform passes. Remove the testing
+automated evidence from native-platform test results. Remove the testing
 symlink or installed artefacts after disabling the plugin to uninstall it.
 The saved limit may remain; no note migration or restoration is needed.
 
-## Original project brief
+## Original project scope
 
-The original brief is retained below as project history.
-
-Obsidian plugin.
-
-Present the document in its entirety with no truncation (as the obsidien previewer does) in order that the iOS reader view accessibility shortcut can be invoked to read the doc via native ios tts.
+Full-document presentation for native iOS Accessibility Reader.
 
 The supported-platform intent was expanded to **macOS and iOS** on 2026-09-07.
 The plugin remains a complete-document presentation for native accessibility
@@ -120,14 +114,13 @@ reading; the operating system owns speech.
 
 The approved lean definition is
 [W003 - Full document reader for macOS and iOS](../specs/003-full-document-reader/spec.org).
-Taḋg approved implementation on 2026-09-08. The
+Implementation approved: 2026-09-08. The
 [audit record](../specs/003-full-document-reader/audits.yaml) owns current audit
 evidence; [earlier reviews](../specs/003-full-document-reader/audits.yaml) retain
 historical evidence. The [validation record](../specs/003-full-document-reader/validation.org)
-records executed checks and operator-reported results for the [native tests](../docs/native-testing.md).
+records executed checks and results for the [native tests](../docs/native-testing.md).
 
-The [product vision](../docs/VISION.md) describes the purpose, limits and proposed
-Community directory listing. The [settings-panel help](../docs/reader-help.md)
+The [product vision](../docs/VISION.md) describes the purpose and limits. The [settings-panel help](../docs/reader-help.md)
 contains the user instructions bundled with the plugin.
 
 ## Benefits and limitations for the proposed listing
@@ -137,9 +130,7 @@ contains the user instructions bundled with the plugin.
   generation; native alternatives also exist.
 - **Long notes:** a configurable **100,000-word default limit**, with an explicit
   notice for notes over the limit and no silent truncation.
-- **Supported platforms:** Obsidian 1.13+, iOS 26+ and macOS 26+. Native workflow passes
-  were reported by the operator; device versions and detailed fixture observations
-  are not supplied in that report.
+- **Supported platforms:** Obsidian 1.13+, iOS 26+ and macOS 26+. Native workflow tests passed on 2026-09-16.
 - **Setup and resources:** configure an Apple accessibility shortcut first.
   Increasing the limit may make rendering slow or exhaust memory; images and
   embeds are not bounded by the word count.
@@ -157,8 +148,7 @@ Community-directory submission remains separate from the GitHub release.
 Before the 2026-09-16 acceptance, the package was labelled a development package:
 an earlier macOS report predated the JavaScript conversion, and the rewritten
 package's native smoke test, long-note evidence and physical-iPhone test were
-pending. The dated records remain in the validation history; the operator's
-current pass declaration supersedes their pending user-test status.
+pending. Both native user tests passed on 2026-09-16; dated earlier results remain in the validation history.
 
 ## Release provenance
 

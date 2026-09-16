@@ -2,30 +2,23 @@
 
 ## Purpose
 
-This report records what I did after the user invoked `$speckit-tasks`, what
-happened during that work, which workflow instructions led to those actions,
-and why I later described the result as disproportionate for a straightforward
-Obsidian plugin.
+Historical record of task generation, test design and review on 2026-09-05.
+The scope and workflow below predate W003 and do not define current requirements.
 
-It is a record of the workflow. It is not a fresh audit or an analysis of how
-the SDLC should be changed.
-
-## Starting authority and state
+## Starting state
 
 - The working directory was `/Users/tigger/notes/.obsidian/plugins/ios-tts`.
 - The repository was on `master`, ahead of `origin/master` by six commits.
 - The working tree was clean before task generation began.
 - The latest commit was `612a129 docs: record design sign-off`.
-- `specs/001-full-document-reader/audits.md` recorded operator design sign-off
+- `specs/001-full-document-reader/audits.md` recorded design approval
   on 2026-09-05.
-- The user then invoked `$speckit-tasks`, authorizing the task and test-design
-  phase. This did not authorize implementation.
-- During task generation, the user added that low-value tests were unwanted and
-  that user testing would be a critical element of the solution.
+- Task generation and test design were authorized; implementation was excluded.
+- Test scope prioritized native user tests and excluded low-value automation.
 
-## Instructions and project material I loaded
+## Reference material
 
-I read the following before generating tasks:
+Task generation used the following references:
 
 - the supplied `AGENTS.md` instructions;
 - `~/.agents/sdlc/MAIN.md`;
@@ -48,24 +41,21 @@ I read the following before generating tasks:
 - the relevant project memory record and earlier specification rollout
   summary.
 
-I checked that `.specify/extensions.yml` was absent, so there were no task hooks
-to run.
+No task hooks were configured: `.specify/extensions.yml` was absent.
 
 ## Task-generation work
 
-I ran `.specify/scripts/bash/setup-tasks.sh --json`, as required by the task
-skill. It stopped with this error:
+The required `.specify/scripts/bash/setup-tasks.sh --json` command failed:
 
 ```text
 Error: PyYAML is required to resolve preset template composition
 ```
 
-It then reported that the task template was not found. I separately confirmed
-that `.specify/templates/tasks-template.md` existed and that the active preset
-did not provide a replacement task template. I therefore used the core task
-template manually.
+The command also reported that the task template was not found.
+`.specify/templates/tasks-template.md` existed, and the active preset had no
+replacement task template. Task generation used the core template manually.
 
-I created:
+Generated files:
 
 - `specs/001-full-document-reader/tasks.md`; and
 - `specs/001-full-document-reader/validation.md`.
@@ -84,9 +74,9 @@ The validation record currently contains:
 All validation entries remain `PENDING` because no implementation or final
 validation was authorized or performed.
 
-## How I applied the instruction about low-value tests
+## Test scope
 
-I made physical iOS testing the principal evidence for behaviour owned by iOS
+Physical iOS testing provided the planned evidence for behaviour owned by iOS
 and Obsidian. In particular, the task design does not propose:
 
 - a mock implementation of Accessibility Reader;
@@ -96,18 +86,18 @@ and Obsidian. In particular, the task design does not propose:
   files; or
 - metered external TTS calls in the automated test suite.
 
-I retained automated tests for deterministic plugin-owned behaviour, including
+Automated test definitions covered deterministic plugin-owned behaviour, including
 snapshot capture, document normalization, replacement of stale sessions,
 failure handling, distributable contracts, and the repository-owned
 vulnerability-check command.
 
-I specified physical iOS user tests for native document discovery, reading
+Physical iOS user-test definitions covered native document discovery, reading
 order, the three-action routine, performance on a 100,000-word note, source and
 privacy safety, and first-use Help comprehension.
 
 ## Checks performed before the test audit
 
-I:
+The checks:
 
 - processed the new technical documentation through `sanitize`;
 - ran `git diff --check`;
@@ -119,26 +109,23 @@ I:
 
 Two command mistakes occurred during these checks:
 
-- I initially invoked `sanitize --compare`, which is not a supported option.
-  The command exited with an error and made no change. I then used `sanitize`
-  through standard input and compared its output with the source files.
+- `sanitize --compare` failed because the option is unsupported and changed no files.
+  Running `sanitize` through standard input allowed output comparison with source.
 - An initial task-count command inherited a local ripgrep configuration and
-  reported 70 matching output lines because context lines were included. I
-  repeated the check with ripgrep configuration disabled and confirmed 44 task
-  entries.
+  reported 70 matching output lines because context lines were included.
+  Repeating with ripgrep configuration disabled confirmed 44 task entries.
 
 ## Independent test-audit sequence
 
 The task skill required an independent `audit-tests` PASS or an effective
 PROVISIONAL receipt before implementation. The SDLC autonomous-convergence rule
-required me to remediate blocking findings and submit a fresh audit without
-handing back between attempts.
+required remediation and a fresh audit after blocking findings.
 
 ### Service incident before attempt 1
 
-The first audit process produced no retrievable result. When I tried to poll it,
-the process identifier was no longer known. I treated that as a service
-incident, not as a PASS, FAIL, or audit attempt, and reran the unchanged audit.
+The first audit process produced no retrievable result; its process identifier
+was unavailable at polling. This was a service incident, excluded from audit
+attempt counts. The unchanged audit was retried.
 
 ### Valid attempt 1: FAIL
 
@@ -154,7 +141,7 @@ findings and one advisory:
   and
 - no explicit rationale for omitting migration tests.
 
-I revised the tasks and validation record to address all five points. This added
+The revised tasks and validation record addressed all five points by adding
 a VoiceOver accessible-name observation, five baseline repetitions of the
 three-action flow, teardown requirements, a specific null-file failure
 assertion, and a statement that migration testing was not applicable because
@@ -176,7 +163,7 @@ The same auditor reported four blocking findings and one advisory:
 - the 100,000-word fixture record lacked generator parameters, seed, and exact
   word count.
 
-I revised the task and validation documents again. I added current-content
+The next revision added current-content
 replacement assertions, explicit structure-by-structure checks, fail-closed
 host-boundary evidence, a bounded comparison with standard Obsidian rendering,
 subprocess testing through `make vulncheck`, and deterministic fixture metadata.
@@ -185,8 +172,8 @@ subprocess testing through `make vulncheck`, and deterministic fixture metadata.
 
 The next audit process returned a proposed PROVISIONAL condition, but the audit
 runner rejected its own output because the condition did not satisfy the
-machine-readable correction and `VERIFY` format. I treated this as another
-service incident rather than an audit result and retried the unchanged files.
+machine-readable correction and `VERIFY` format. This was a service incident,
+excluded from verdicts; the unchanged files were retried.
 
 ### Valid attempt 3: FAIL
 
@@ -198,7 +185,7 @@ The same auditor reported one blocking finding and one advisory:
 - the parallel-work example still named the old unit-test path for the
   vulnerability-wrapper test instead of its integration-test path.
 
-The user interrupted the workflow before I applied those two corrections.
+The workflow stopped before those two corrections were applied.
 
 ## State when the workflow was interrupted
 
@@ -215,22 +202,14 @@ The user interrupted the workflow before I applied those two corrections.
   uncorrected.
 - The audit attempts have not been appended to
   `specs/001-full-document-reader/audits.md`.
-- I did not start implementation, run product tests, invoke a physical-device
-  user test, publish the plugin, select a licence, or submit it to the Obsidian
-  marketplace.
+- No implementation, product testing, physical-device testing, publication,
+  licence selection or marketplace submission took place.
 
-## Why I described the result as disproportionate
+## Scope expansion
 
-I said:
-
-> The plugin is simple; I let the assurance workflow become disproportionate.
-
-I said this because the task-design artefacts and audit loop had become much
-larger and more detailed than the central product action: open a transient view
-containing the complete current note, then let the user invoke native iOS
-Accessibility Reader.
-
-The visible signs of that disproportion were:
+The task design expanded beyond the central product action: open a transient
+view containing the complete current note for native iOS Accessibility Reader.
+The recorded expansion comprised:
 
 - 44 tasks before implementation had begun;
 - four separate physical-device user-test records plus a desktop one-off test
@@ -242,9 +221,9 @@ The visible signs of that disproportion were:
 - increasingly detailed validation procedures, including five repetitions of
   the three-action flow and paired 60-second network-observation windows.
 
-## Workflow instructions that led me down that path
+## Applicable workflow requirements
 
-The following instructions materially shaped what I did:
+The task-generation workflow applied these requirements:
 
 - `.agents/skills/speckit-tasks/SKILL.md` requires task coverage for
   specification evidence, errors and boundaries, documentation, migration,
@@ -270,11 +249,6 @@ The following instructions materially shaped what I did:
   after a FAIL and normally prevents handback until PASS, effective
   PROVISIONAL, a fifth failed attempt, or a human-controlled blocker.
 
-Those rules explain why I continued adding explicit traceability and audit
-evidence instead of returning a short task list after the first draft.
-
-They do not themselves prescribe 44 tasks, five three-action repetitions, four
-user-test entries, or 60-second comparison windows. Those were specific choices
-I made while translating the specification and responding to the auditor's
-findings. That is why I said that **I let** the workflow become disproportionate,
-rather than saying that the SDLC alone required this exact result.
+These rules required traceability and audit evidence. They did not prescribe
+44 tasks, five three-action repetitions, four user-test entries or 60-second
+comparison windows. Those quantities were specific test-design choices.

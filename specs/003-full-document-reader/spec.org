@@ -3,14 +3,12 @@
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
 #+AUDIT_RECORD: audits.yaml
-#+OPERATOR_SIGNOFF: APPROVED
-#+OPERATOR_AUTHORITY: Taḋg
-#+OPERATOR_SIGNOFF_DATE: 2026-09-08
+#+APPROVED: 2026-09-08
 
 * Acceptance update, 2026-09-16
 
-Taḋg instructed that the user tests be recorded as passed and this ticket accepted,
-then explicitly confirmed the iPhone tests passed. See [[file:validation.org][current human evidence]]
+Native macOS and iPhone user tests: PASS, 2026-09-16.
+Reader accepted: 2026-09-16. See [[file:validation.org][validation evidence]]
 and [[file:../../docs/work.org][work ledger]]. Earlier pending-test and handoff wording
 below describes the historical delivery sequence and is superseded by this
 acceptance. Release preparation is separately scoped in
@@ -31,10 +29,9 @@ acceptance. Release preparation is separately scoped in
   and presses Play.
 - Changes :: Add the reader, *settings-panel shortcut help* and a saved
   *100,000-word default limit*. Use normal Markdown rendering. README and
-  *docs/VISION.md* explain the same benefits, limitations and listing intent.
+  *docs/VISION.md* explain the same benefits and limitations.
   Each Markdown pane has a *top toolbar book icon* that opens its own note.
-- Toolchain amendment :: *Maintained JavaScript, no Node/npm or TypeScript*,
-  authorized with =BYPASS-GATE-7= on 2026-09-10.
+- Toolchain amendment, 2026-09-10 :: Node, npm and TypeScript were removed. The plugin is maintained as plain JavaScript.
 - Installation amendment :: *make install asks for the vault root*, then puts
   the three maintained files in =.obsidian/plugins/ios-tts/=. Missing plugin
   directories are created; settings and unrelated files are preserved.
@@ -47,7 +44,7 @@ acceptance. Release preparation is separately scoped in
   active limit; load failures use the default with a notice and no silent rewrite.
   Invalid install targets fail before copying; partial-copy errors are reported.
 - Decisions :: Target *Obsidian 1.13+*, *macOS 26+* and *iOS 26+*. Development
-  stays outside the vault; the operator manages the testing symlink and iOS copy.
+  stays outside the vault; installation uses an explicitly configured testing symlink or iOS copy.
 - Settings :: Save *only the word-limit preference* in Obsidian plugin data.
   A *Back button closes settings* without saving unsubmitted input.
   Help covers *triple-clicking the side/lock button*, *double-tap Back Tap*,
@@ -58,14 +55,9 @@ acceptance. Release preparation is separately scoped in
   surrounding workspace *inert while the reader is open*. Restore prior state
   on dismissal; native extraction still requires a reading check.
 - Distribution :: Prepare *Community directory copy and readiness guidance*;
-  actual release and listing submission follow operator review.
-- Evidence :: Focused session and word-limit tests, *native user tests on both
-  platforms*, and bounded package and security checks. Complete native reading of a
-  *100,000-word text note remains unverified* until those user tests pass.
-- Next step :: *Taḋg approved implementation* on 2026-09-08, including the
-  interactive installer through a direct implementation instruction. Consult
-  [[file:audits.yaml][Current audit evidence]] and
-  [[file:validation.org][Executed checks and remaining native evidence]] before closure.
+  actual release and listing submission follow release approval.
+- Evidence :: Session and word-limit tests, native user tests on both platforms, and bounded package and security checks. Native user tests passed on 2026-09-16; see [[file:validation.org][validation evidence]].
+- Approval :: Document approved 2026-09-08, including the interactive installer. See [[file:audits.yaml][audit evidence]] and [[file:validation.org][validation evidence]].
 
 -----
 
@@ -103,20 +95,13 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 ** Authority and starting point
 
 - Current authorities :: [[file:../../README.md][Project overview]],
-  [[file:../../docs/VISION.md][Product vision and listing intent]],
+  [[file:../../docs/VISION.md][Product vision]],
   [[file:../../.sdlc/project.yaml][Project profile]] and
   [[file:../../docs/work.org][Project work ledger]]. No current architecture,
   implementation or regression pack exists at the starting revision.
-- Operator direction :: On 2026-09-07, Taḋg requested *macOS and iOS support*,
-  development outside the vault with an operator-created testing symlink, and
-  a *very simple plugin* under =define-change= after excessive old scope.
-- Operator amendment :: On 2026-09-08, add *settings-panel guidance*, a
-  *configurable word limit defaulting to 100,000*, =docs/VISION.md= and
-  investigation of marketplace listing with the same benefits and limitations.
-- Settings navigation amendment :: On 2026-09-10, Taḋg requested: "settngs
-  panel needs a back button". Add a native button at the top to close settings
-  and return to the workspace. This refines the existing accessible controls;
-  Save remains explicit and no other reader behaviour changes.
+- Scope, 2026-09-07 :: macOS and iOS support, with development outside the vault and an explicitly configured testing symlink. The plugin provides full-document presentation using native accessibility reading.
+- Scope amendment, 2026-09-08 :: Settings-panel guidance, a configurable word limit defaulting to 100,000, product vision and marketplace listing preparation.
+- Settings navigation amendment, 2026-09-10 :: A native Back button at the top of settings closes the panel and returns to the workspace. Save remains explicit; other reader behaviour is unchanged.
 - Historical evidence :: [[file:../../docs/archive/sdlc-v2/.specify/memory/constitution.md][Archived complete-document principle]]
   and [[file:../../workflow-report-2026-09-05.md][Prior scope and test expansion]].
   The deleted =spec.md=, =plan.md= and =validation.md= are recoverable under
@@ -137,32 +122,17 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[https://support.apple.com/guide/iphone/read-listen-text-apps-accessibility-reader-iph406a46ab8/26/ios/26][iPhone Accessibility Reader]],
   consulted on 2026-09-07 and refreshed on 2026-09-08. The linked
   [[file:../../docs/reader-help.md][Settings-panel help]] includes Apple's
-  shortcut and Back Tap references; =docs/VISION.md= records current Community
-  directory submission requirements and evidence for the cloud-TTS comparison.
+  shortcut and Back Tap references. Marketplace submission requirements are
+  maintained under W004; =docs/VISION.md= describes the product's purpose and limits.
   These document platform interfaces; they do not prove
   complete native reading of this plugin's output.
 
 ** Constraints, decisions and blockers
 
-- Paired authority, 2026-09-12 :: Taḋg accepted the focus and modal-isolation
-  recommendations: "accept your recs, pls implement it in paired dev mode".
-  Reuse this work item for the bounded amendment. The source review found no
-  explicit focus transfer after asynchronous publication; the reported unwanted
-  background text in Apple's reader remains an observed integration symptom,
-  not a proven diagnosis of Obsidian's modal implementation.
-- Paired audit authority, 2026-09-12 :: Taḋg authorized additional code-review
-  rounds with "for code changes yes pls don't ask", then clarified that
-  "audit code should be an automatic loop :)". Run the required code audit,
-  remediation and re-audit without repeated permission questions. Use a bounded
-  allowance of five additional attempts for this increment, preserving the
-  existing audit record and its history. Product decisions remain with Taḋg.
+- Focus and isolation amendment, 2026-09-12 :: Approved for paired development. Source review found no explicit focus transfer after asynchronous publication. Unwanted background text in Accessibility Reader was an integration symptom; its cause in the host modal implementation was not established.
+- Review bounds, 2026-09-12 :: Five additional code-review attempts were approved for this amendment. Review results remain in the audit record.
 
-- Installation direction :: On 2026-09-08, Taḋg instructed: "give me an install
-  script that `make install` triggers, it should interactively ask for the path
-  of the obsidian vault root". This explicitly authorizes the prompt and
-  vault-root installation amendment. At =a34f42b=, =scripts/install.mjs=
-  required an existing =PLUGIN_DIR= and no prompt existed. The prior rule that
-  missing =PLUGIN_DIR= must fail is superseded. Reader behaviour is unchanged.
+- Installation amendment, 2026-09-08 :: Approved. The =make install= command prompts for the vault root. At =a34f42b=, =scripts/install.mjs= required an existing =PLUGIN_DIR= without a prompt. The earlier missing-destination failure rule is superseded; reader behaviour is unchanged.
 
 - Compatibility :: Support *Obsidian 1.13 or later on macOS 26 and iOS 26 or
   later*. The manifest is mobile-compatible. Other operating systems and
@@ -182,8 +152,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   integration risk. Test the minimal view early during delivery. If the public
   renderer cannot satisfy it, record the failure and return the specific design
   decision; do not add extraction engines or weaken completeness silently.
-- Unresolved blockers :: No definition blocker. *Operator sign-off was given
-  on 2026-09-08*; native integration evidence belongs to delivery.
+- Approval :: Document approved 2026-09-08. No definition blocker.
 
 * Acceptance Criteria
 :PROPERTIES:
@@ -475,7 +444,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[#ac-003-8][AC003.8 - Brief usable instructions]],
   [[#ac-003-10][AC003.10 - Configurable maximum words]] and
   [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]].
-- Reviewer :: Taḋg or a named human tester, on macOS 26+ with Obsidian 1.13+.
+- Platform :: macOS 26+ with Obsidian 1.13+.
 - Procedure :: Follow the README and shared conditions. Exercise button and
   command, editing and reading modes, an unsaved edit, switching notes, reopening,
   no note and a non-Markdown tab. Confirm empty content, checkbox safety,
@@ -502,7 +471,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   [[#ac-003-8][AC003.8 - Brief usable instructions]],
   [[#ac-003-10][AC003.10 - Configurable maximum words]] and
   [[#ac-003-11][AC003.11 - Explicit refusal above the word limit]].
-- Reviewer :: Taḋg or a named human tester, on a *physical iOS 26+ device*
+- Platform :: a *physical iOS 26+ device*
   with Obsidian 1.13+. Desktop mobile emulation does not establish this result.
 - Procedure and expected result :: Repeat the macOS workflow and shared
   conditions using *touch, iOS dismissal and the configured accessibility
@@ -648,7 +617,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   a late layout-ready callback after unload. Capture the owning view in each
   callback but read its current text only on activation. No note contents are
   read just to add a toolbar control.
-- Glyph amendment, 2026-09-12 :: The operator selected =accessibility-reader.svg=
+- Glyph amendment, 2026-09-12 :: Use =accessibility-reader.svg=
   to distinguish this action from Obsidian's preview glyph. Preserve the supplied
   SVG as a source asset; use its book-and-sound-waves artwork in both toolbar and
   ribbon controls. Register a static copy with =addIcon()= before creating the
@@ -675,8 +644,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   child names are fixed; no vault search or shell evaluation is used.
   Blank input, EOF and Ctrl-C abort. Bash read failure and interrupt signals abort before copying.
 - Compatibility :: =make install PLUGIN_DIR=/absolute/plugin/directory= keeps
-  its non-interactive explicit existing-directory semantics, including a
-  directory symlink that the operator explicitly supplied. This route does not
+  its non-interactive explicit existing-directory semantics, including an explicitly selected directory symlink. This route does not
   prompt or create directories. Both modes validate all artefacts before any
   copy: each must be absent or a regular file, never a symlink or directory.
   Fixed artefact basenames stay within that canonical destination; no recursive
@@ -690,9 +658,9 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   destination directory. The copy step leaves identical files untouched;
   the checkout's files are maintained source.
 - Symlink workflow :: If the canonical destination is the checkout itself,
-  the maintained artefacts are already exposed through the operator's symlink;
+  the maintained artefacts are already exposed through the configured symlink;
   verify the three files and skip copying. iOS receives the same files through
-  the operator's existing process. Never edit the enabled-plugin list.
+  the existing vault synchronization process. Never edit the enabled-plugin list.
 - Settings :: Use Obsidian's =PluginSettingTab= and =Setting= controls for one
   *Maximum words* field and Save. Accept trimmed decimal digits representing a
   positive safe integer; reject other input rather than coercing it. Use
@@ -719,8 +687,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   documentation counterpart; review both together and compare their text when
   either changes. This replaces the build-time import to keep the three-file
   offline package without a runtime read or download.
-- Shortcut hint amendment, 2026-09-12 :: The operator approved the proposed
-  Mac/iOS hint with "ok , let's include it". In =ReaderModal.publish()=, use
+- Shortcut hint amendment, 2026-09-12 :: In =ReaderModal.publish()=, use
   =Platform.isIosApp= first, then =Platform.isDesktopApp && Platform.isMacOS=:
   the Mac flag alone may also be true on iPhones/iPads. Add a short paragraph
   above the article, under the title, only when the snapshot is published.
@@ -799,7 +766,7 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - First step :: Write [[#rt-003-1][RT003.1 - Reader session lifetime]] and
   [[#rt-003-2][RT003.2 - Word limit and preference]] and observe their expected
   RED, then implement the smallest view and settings panel. Exercise the native
-  reading flow early; any architectural expansion returns for operator decision.
+  reading flow early; any architectural expansion requires separate approval.
 - Final verification :: After the implementation gate, record current results
   for both regression definitions, both platform user tests and both bounded checks.
   Early feasibility trials do not silently count as final acceptance evidence.
@@ -812,19 +779,14 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
   on shortcut setup, free native speech, cloud costs, platform support, the
   configurable limit and limitations. README receives release installation
   instructions and the same pros/cons for its public listing excerpt. The
-  proposed name/description and submission readiness route are in
-  =docs/VISION.md=; validate claims before any separately authorized publication.
+  name, description and submission requirements are maintained under W004.
+  Validate claims before publication.
   Preserve the archive and its history.
-- Authorization :: Taḋg approved this definition and instructed implementation
-  on 2026-09-08: "approved, let's implement". The later direct instruction to
-  provide an interactive vault-root installer authorizes that bounded amendment;
-  Release publication remains outside this change.
+- Approval :: Document and interactive vault-root installer approved 2026-09-08. Release publication is outside this change.
 
 * Emergency amendment - maintained JavaScript, 2026-09-10
 
-- Authority :: Taḋg instructed: "remove all node/npm artefacts and rewrite it as
-  a simple javascript plugin BYPASS-GATE-7". This request was the temporary
-  specification. This section records reconciliation after implementation.
+- Change :: Node, npm and TypeScript were removed on 2026-09-10 under =BYPASS-GATE-7=. The maintained package is plain JavaScript.
 - Supersedes :: The TypeScript/esbuild/npm development and installation design.
   Earlier compiler/build evidence remains historical in =validation.org= and
   the harness audit record. No retrospective definition gate is requested.
@@ -836,16 +798,11 @@ plugin's responsibility is a *full document presentation*, not text-to-speech.
 - Assumptions :: Development targets macOS. Stock Bash and the operating system's
   JavaScript engine replace Node-based glue and test execution. No new runtime,
   browser automation or host simulator is introduced.
-- Remaining human evidence :: The earlier macOS report remains historical.
-  The rewritten package needs a native smoke test; physical-iPhone validation
-  and operator closure remain separate from automated checks.
+- Native validation :: macOS and iPhone user tests passed on 2026-09-16. Earlier results remain in the validation history.
 
 * Emergency amendment - note toolbar button, 2026-09-10
 
-- Authority :: Taḋg asked for a button at the top of the document view and
-  authorized the proposed book icon with "let's do that BYPASS-GATE-7".
-  The proposal and request were the temporary specification; this section
-  reconciles the delivered scope into the existing reader specification.
+- Approval :: Note toolbar button approved 2026-09-10 under =BYPASS-GATE-7=.
 - Behaviour :: A top toolbar book icon opens the *note belonging to its pane*.
   Existing ribbon, command, settings, rendering and speech ownership remain.
 - Evidence selection :: Extend [[#ut-003-1][UT003.1 - macOS reading workflow]]

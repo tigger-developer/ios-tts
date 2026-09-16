@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ABOUTME: Creates the operator-requested checkpoint and synchronizes through Git.
+# ABOUTME: Creates a commit checkpoint and synchronizes through Git.
 # ABOUTME: Stops on failure and never selects branches or rewrites history.
 # Supports stock macOS Bash 3.2.
 set -eo pipefail

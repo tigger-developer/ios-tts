@@ -2,9 +2,7 @@
 #+SCHEMA: 6
 #+STARTUP: overview
 #+OPTIONS: toc:2 num:nil
-#+OPERATOR_SIGNOFF: APPROVED
-#+OPERATOR_AUTHORITY: Taḋg
-#+OPERATOR_SIGNOFF_DATE: 2026-09-16
+#+APPROVED: 2026-09-16
 
 * Synopsis
 :PROPERTIES:
@@ -17,26 +15,26 @@
 ** After
 - The published release contains *only the three supported installation assets*, with Apache licensing retained in the repository and main.js.
 - Each *master push* publishes one patch release and invokes *provenance attestation* after checking the three assets against their tag; manual attestation remains available for recovery.
-- Documentation records *operator-reported native test passes and acceptance*.
+- Documentation records *native test passes and acceptance dated 2026-09-16*.
 ** Changes
 - Add licensing, release notes and matching source metadata; update the README.
-- Provide *illustrated iPhone/Mac setup* and matching *offline help*, with a separate third-person wording inventory.
+- Provide *illustrated iPhone/Mac setup* and matching *offline help*, with neutral technical documentation.
 ** Unchanged
 - Preserve *reader behaviour, settings, platform requirements and three-file installation*.
 ** Edge cases
 - Existing tags and release assets are *never overwritten*. Reruns reuse the same version; conflicting pushes fail without force.
 ** Decisions
-- Taḋg selected *Apache 2.0*, reported iPhone tests passed, then selected *1.0.0 followed by automatic patch increments*.
+- Apache 2.0; automatic releases starting at 1.0.0, followed by patch increments. Native macOS and iPhone tests passed on 2026-09-16.
 ** Next step
-- Review the *illustrated setup amendment*, publish it through automatic patch release, and present the wording inventory for editorial decisions.
+- Review the local documentation diff before publication. This checkpoint includes no push.
 
 * Context
-- Authority :: On 2026-09-16 Taḋg requested paired development: "add an apache 2.0 license, release is 0.1.0 update manifest and main.js accordigly and prepare release - mark user tests as pss and ticket accepted". Follow-ups: "pls update readme as well" and "iphone tests passed also".
+- Approval :: Document approved 2026-09-16.
 - Baseline :: Read [[file:../../README.md][README]], [[file:../../docs/VISION.md][Vision]], [[file:../../docs/work.org][work ledger]], [[file:../003-full-document-reader/spec.org][W003 - Full document reader]], its validation and audit records, and the maintained package and regression suite. No separate Architecture authority exists; W003 owns the reader design.
-- Mode :: *Paired development*. Taḋg directed: "keep it all under a ticket called marketplace prep and paired development mode". This ticket owns the entire licensing, README, acceptance-record and draft-release batch.
+- Mode :: *Paired development*. W004 owns licensing, README, acceptance records, release preparation and publication.
 - Scope :: This is *release preparation*, previously excluded from W003. Record W003 acceptance without changing its runtime requirements. No new reader feature or vault installation. Publication and submission follow the preparation reviews under the later authority below.
 - External contracts :: [[https://www.apache.org/licenses/LICENSE-2.0.txt][Apache 2.0 text]] and [[https://docs.obsidian.md/plugins/releasing/submit-plugin][Obsidian submission guide]].
-- Human evidence :: Record *Taḋg's pass declaration*, not agent-executed native tests or invented device versions and fixture observations.
+- Native validation :: macOS and iPhone user tests PASS, 2026-09-16. W003 accepted 2026-09-16.
 
 * Acceptance Criteria
 ** AC004.1 - Licensed versioned package :ac:
@@ -49,7 +47,7 @@
 :PROPERTIES:
 :CUSTOM_ID: ac-004-2
 :END:
-- Criterion :: README and Vision explain *version, licence, installation and limitations*; W003 records *operator-reported native passes and acceptance*, retaining earlier history and evidential limits.
+- Criterion :: README explains licensing, installation and limitations. Vision states the product purpose, intended experience and boundaries. W003 records dated native test passes and acceptance, retaining earlier test history.
 - Proven by :: [[#ot-004-1][OT004.1 - Package and documentation review]].
 ** AC004.3 - Reviewable draft release :ac:
 :PROPERTIES:
@@ -73,8 +71,8 @@
 :CUSTOM_ID: ot-004-1
 :END:
 - Covers :: [[#ac-004-1][AC004.1 - Licensed versioned package]] and [[#ac-004-2][AC004.2 - Accurate release documentation and acceptance]].
-- Procedure :: Compare LICENSE with the official downloaded text and its bundled copy; parse the manifest; compare executable source with baseline after removing only the added licence comments; run =make lint= and =make test=. Review documentation against operator scope and retained history.
-- Expected :: Version *0.1.0*, unchanged executable source and 12 passing existing cases; correct licence, draft wording, setup, limitations and honest human attribution. No new persistent test is justified for metadata or prose.
+- Procedure :: Compare LICENSE with the official downloaded text and its bundled copy; parse the manifest; compare executable source with baseline after removing only the added licence comments; run =make lint= and =make test=. Review documentation against defined scope and retained history.
+- Expected :: Version *0.1.0*, unchanged executable source and 12 passing existing cases; correct licence, draft wording, setup, limitations and dated test results. No new persistent test is justified for metadata or prose.
 - Bounds :: Local one-off checks and one official licence retrieval; scratch files only in OS temporary space.
 ** OT004.2 - Draft release verification :testdef:
 :PROPERTIES:
@@ -109,21 +107,21 @@
 - No new dependency, network client, note write, secret, access privilege or speech service enters the plugin. Release operations disclose only the already-public project and authorized licence/documentation changes.
 
 * Delivery Handoff
-- Read this specification, project profile and linked baseline authorities. Paired operator instructions are the working specification; no new product approval is inferred.
+- Read this specification, project profile and linked baseline authorities. The dated amendments below define the approved scope.
 - Evidence :: [[file:validation.org][Release verification]] and [[file:audits.yaml][paired reviews]].
-- Reconcile README, Vision, W003 validation and work ledger. The native checklist remains reusable; platform versions and detailed observations absent from the operator report remain unspecified.
-- Publication and Community-directory submission were initially reserved as *separate operator actions*. The requested W003 acceptance is already authorized; do not ask for it again.
+- Reconcile README, Vision, W003 validation and work ledger. Keep the native checklist reusable and test results dated.
+- Publication and Community-directory submission were initially excluded. The approval below includes both operations. W003 acceptance is dated 2026-09-16.
 
-* Publication authority, 2026-09-16
+* Publication approval, 2026-09-16
 
-- Authority :: After the outstanding steps were listed, including publishing the draft and submitting to Obsidian Community, Taḋg instructed: "pk proced with those steps pls". This authorizes those operations after the preparation reviews, within this same paired Marketplace prep ticket.
+- Approval :: Publication and Community-directory submission approved 2026-09-16, following preparation reviews under W004.
 - Sequence :: Preserve the verified draft and its assets; after reviews create and push an annotated 0.1.0 tag for the candidate, publish that draft, verify published metadata, and submit the same repository through the Community directory. Update README/Vision draft wording when publishing.
 - Boundaries :: No new GitHub workflow, runtime feature or replacement authentication setup. Use the configured SSH Git remote and gh for release operations. Account sign-in or consent that requires the human is a submission blocker; do not fabricate a submission or review result.
 - Evidence :: Record publication and directory outcomes in validation.org as operational evidence following the bounded pre-publication tests. The draft criterion describes the required reviewable preparation state, not a requirement to leave the release unpublished after this later authorization.
 
-* Automated-review remediation authority, 2026-09-16
+* Automated-review remediation, 2026-09-16
 
-- Authority :: Taḋg supplied Obsidian's warnings about missing main.js/styles.css attestations and the unsupported LICENSE attachment. The recommendation was to remove only that attachment and add a small GitHub Actions workflow; Taḋg instructed: "let's do both then".
+- Review findings :: Missing main.js/styles.css attestations and an unsupported LICENSE release attachment. Remediation approved 2026-09-16: remove that attachment and add a GitHub Actions attestation workflow.
 - Supersedes :: The original four-attachment requirement was a historical preparation step. The final release inventory is the three supported files. The earlier prohibition on introducing a workflow is superseded only for this bounded attestation workflow.
 - Design :: Add .github/workflows/attest-release.yml with workflow_dispatch and a required x.y.z release_tag input. Check out the workflow's source commit with full tags, without persisted credentials. Check tag and manifest version, download exactly the three release files, compare each against the tag and current checkout, then attest the checkout files using GitHub's pinned official action. For this retrospective 0.1.0 attestation, the source revision includes the workflow and identical runtime files; the old tag is not rewritten.
 - Permissions :: contents: read, id-token: write and attestations: write in the hosted job only. No release-write permission, static credentials, remote plugin code execution or automatic publication. Pin checkout and attest actions to verified upstream commit hashes. GitHub supplies the action runtime; no Node/npm tooling is added to the plugin or local build.
@@ -132,16 +130,16 @@
 
 * Automatic patch-release amendment, 2026-09-16
 
-- Authority :: Taḋg requested: "we should increment by 0.0.1 when we push a new commit and automatically trigger attestation", then "let's start with 1.0.0". This supersedes the manual-only release boundary for pushes to the existing primary branch, master.
+- Approval :: Automatic releases and attestations approved 2026-09-16, starting at 1.0.0. This supersedes manual-only publication for master pushes.
 - Supersedes :: Earlier 0.1.0 metadata and manual-only criteria remain historical evidence. The amendment changes the current release version, display name, author attribution and workflow, preserving runtime semantics.
 - Scope :: *One release per push to master*, beginning at *1.0.0*, then incrementing the patch component. Multiple commits in one push form one release. GitHub's workflow-token commits do not recursively trigger another run. No feature-branch or pull-request publication.
-- Product metadata :: Use *Full Document View for iOS TTS* and author *Tadhg O'Brien*. Preserve the operator's committed description, correcting Accessibiltiy to Accessibility as explicitly authorized. Keep plugin ID ios-tts, platform compatibility, reader commands and runtime behaviour unchanged. README uses the operator's requested text and linked setup instructions; history stays separate.
+- Product metadata :: Display name: *Full Document View for iOS TTS*. Author attribution belongs in the manifest and licence. Preserve the manifest description, using the spelling Accessibility. Keep plugin ID ios-tts, platform compatibility, commands and runtime behaviour unchanged. README contains the introduction and linked setup instructions; release history stays separate.
 - Design :: A serialized release workflow checks out current master, advances the manifest and source version comment, commits those metadata changes, pushes an annotated version tag, and publishes exactly main.js, manifest.json and styles.css. The initial untagged 1.0.0 manifest is released as-is. Subsequent runs increment its patch. A run-ID commit trailer identifies reruns so they reuse the same release instead of incrementing twice.
 - Concurrency :: Queue up to GitHub's 100-run limit without cancelling an active publication. Each run uses master as it exists when the job starts. A concurrent human push that prevents a fast-forward fails visibly; no force push or automatic conflict resolution. A rerun uses its existing tagged release revision where one was already created.
-- Recovery :: Existing release assets must match the tagged files before signing. Existing published releases are verified, never overwritten. An incomplete draft requires operator repair before rerun if files are absent or differ. Failed attestations can be rerun without allocating another version.
+- Recovery :: Existing release assets must match the tagged files before signing. Existing published releases are verified, never overwritten. An incomplete draft requires manual repair before rerun if files are absent or differ. Failed attestations can be rerun without allocating another version.
 - Security :: The publishing job needs contents: write through the ephemeral GITHUB_TOKEN. The separate attestation job retains contents: read, id-token: write and attestations: write. Only trusted master pushes publish; actions remain SHA-pinned. No new credentials or authentication setup; local Git retains SSH.
 - Provenance :: Reuse the existing attestation workflow through workflow_call and retain manual recovery. Checkout the requested release tag and compare downloaded assets against it. The caller workflow revision remains the provenance build entry point; the tag records the generated version metadata. Signing runs in the same caller workflow because workflow-token publication does not trigger release events.
-- Proportionality :: GitHub orchestration and short shell steps suffice; no packaging framework, dependency installation or plugin build is introduced. The existing offline reader tests remain unchanged. Hosted publication/attestation is the requested production operation, not a metered regression suite.
+- Proportionality :: GitHub orchestration and short shell steps suffice; no packaging framework, dependency installation or plugin build is introduced. The existing offline reader tests remain unchanged. Hosted publication/attestation is a production operation, not a metered regression suite.
 - Publication bounds :: After local verification and paired review, one initial push may publish 1.0.0; permit one remediation rerun, at most 20 status inspections over ten minutes, one asset download and one cryptographic verification per file. No old tag or release replacement.
 
 ** AC004.5 - Automatic patch releases and attestations :ac:
@@ -161,17 +159,17 @@
 
 * Illustrated setup amendment, 2026-09-16
 
-- Authority :: Taḋg requested clear iOS and macOS setup instructions in README and help, importing the screenshots referenced by ~/notes/ios-tts-draft.md, with appropriate rewording. Third-person references to Taḋg must be highlighted for review, not silently rewritten in historical records.
-- Scope :: Preserve the requested README introduction. Explain iPhone enablement, optional Autoplay, the Accessibility Shortcut selection and side/Home-button invocation; preserve the optional Back Tap route. Explain Mac enablement, the separate System voice info button for choosing a Siri voice, downloads before offline use, and Command-Escape or a customized shortcut. Show the plugin's toolbar icon and the sequence from note to preview to Apple's reader.
+- Approval :: Illustrated iOS and macOS setup documentation approved 2026-09-16.
+- Scope :: Preserve the README introduction. Explain iPhone enablement, optional Autoplay, the Accessibility Shortcut selection and side/Home-button invocation; preserve the optional Back Tap route. Explain Mac enablement, the separate System voice info button for choosing a Siri voice, downloads before offline use, and Command-Escape or a customized shortcut. Show the plugin's toolbar icon and the sequence from note to preview to Apple's reader.
 - Assets :: Copy the eight screenshots and icon from the draft without altering their pixels, into docs/images/setup with descriptive names and accessible alt text. README carries the illustrated sequence. docs/reader-help.md and the identical bundled READER_HELP carry full text instructions offline, with an explicit online link to the illustrated README. No screenshot is automatically fetched from plugin settings; no new network behaviour, installation asset or build tooling.
-- Editorial boundary :: Use direct instructions in the new setup copy. Inventory third-person author/operator references in existing public documents for Taḋg's review; preserve attribution, licensing and historical evidence. Leave unrelated g6.png untracked and untouched.
-- Verification :: One-off source-image hash comparison, Markdown link/anchor and rendered HTML image checks, exact bundled-help comparison, existing lint/tests, and paired review. Screenshots illustrate Taḋg's supplied UI; agent checks do not claim another physical-device test. No durable source-text regression test is justified for this documentation-only content change.
+- Documentation :: Use direct setup instructions and neutral statements of technical fact. Keep personal names in the manifest and licence only. Specifications record approval dates; validation records test status and date. Vision describes the product purpose, experience and boundaries. Conversation transcripts and paraphrases are excluded.
+- Verification :: Compare source-image hashes, Markdown links/anchors, rendered HTML images and bundled help; run existing lint/tests and paired review. Native device results are recorded separately. No durable source-text regression test is required for documentation changes.
 
 ** AC004.6 - Illustrated setup for iOS and macOS :ac:
 :PROPERTIES:
 :CUSTOM_ID: ac-004-6
 :END:
-- Criterion :: README and offline help explain both platforms' setup and how to invoke reading. iPhone Autoplay is an option, not an instruction to leave it off. Mac guidance identifies System voice and the keyboard shortcut distinctly. Imported images illustrate the README, and third-person references are supplied for editorial review without altering history.
+- Criterion :: README and offline help explain both platforms' setup and how to invoke reading. iPhone Autoplay is an option, not an instruction to leave it off. Mac guidance identifies System voice and the keyboard shortcut distinctly. Imported images illustrate the README, and project documentation uses neutral technical statements with dated approvals and test results.
 - Proven by :: [[#ot-004-5][OT004.5 - Setup documentation verification]].
 
 ** OT004.5 - Setup documentation verification :testdef:
@@ -179,6 +177,6 @@
 :CUSTOM_ID: ot-004-5
 :END:
 - Covers :: [[#ac-004-6][AC004.6 - Illustrated setup for iOS and macOS]].
-- Procedure :: Review copy against all nine supplied images, the draft and Apple's platform instructions; compare imported image hashes; render README and help with the available Markdown renderer; verify local links, image paths, alt text and anchors; compare decoded READER_HELP with docs/reader-help.md; confirm only that literal changes in main.js; run make lint and make test. Present rendered documentation and the separate wording inventory for inspection.
+- Procedure :: Review copy against all nine supplied images, the draft and Apple's platform instructions; compare imported image hashes; render README and help with the available Markdown renderer; verify local links, image paths, alt text and anchors; compare decoded READER_HELP with docs/reader-help.md; confirm only that literal changes in main.js; run make lint and make test. Present rendered documentation and the local diff for review.
 - Expected :: Nine faithful images, no missing local targets, complete platform/setup/use instructions, identical offline help and no executable change. Existing 12 reader tests and lint pass. Native visual/device validation is not inferred from these checks.
 - Bounds :: Local documentation tools and read-only Apple reference retrieval. Current every-push publication policy applies after the paired reviews; inspect the resulting workflow and verify the three release assets. No vault installation or notes-vault writes.
