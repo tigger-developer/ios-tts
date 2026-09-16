@@ -11,27 +11,28 @@ audits:
         harness: hermes
         provider: nous
         model: z-ai/glm-5.3
-      external_round: 4
+      external_round: 5
       status: passed
-      updated: "2026-09-16T13:04:27Z"
-      revision: 99c86b1 (automatic-release amendment with authorized description correction)
+      updated: "2026-09-16T15:26:58Z"
+      revision: e7d51de (illustrated-setup amendment; W004)
       verdict: PASS
       response: |-
         GATE: delivery-code
-        REVISION: 99c86b1 (automatic-release amendment with authorized description correction)
+        REVISION: e7d51de (illustrated-setup amendment; W004)
         VERDICT: PASS
 
-        Resuming the retained implementation context. Since the previous PASS at ddfc067, the delta is exactly the explicitly authorized spelling correction in the manifest description ("Accessibiltiy" → "Accessibility") plus its recorded authority line in the W004 spec amendment ("Preserve the operator's committed description, correcting Accessibiltiy to Accessibility as explicitly authorized").
+        Resuming the retained implementation context. Reviewed the illustrated-setup delta against the recorded operator request (clear iOS/macOS instructions in help and README, import the draft's images, reword appropriately, highlight third-person references).
 
         Verified:
 
-        - Manifest: description now reads "…so that the Accessibility Reader can access it." — the only change from the previously reviewed manifest; id, name, version 1.0.0, minAppVersion, author and isDesktopOnly are unchanged, and the operator's committed description wording is otherwise preserved verbatim as required.
-        - Workflows, main.js, styles.css, tests, scripts and all documentation are byte-identical (matching hashes) to the previously reviewed and passed state; the previously reported workflow correctness, security posture (job-scoped permissions, SHA-pinned actions, atomic push, pre-signing tag/asset equality), and fidelity findings remain current and are not reopened.
-        - Test evidence: make lint and 12/12 make test were rerun for this candidate and reported passing; a description-string change requires no new test, consistent with the earlier recorded justification that metadata/prose changes receive one-off review rather than regression tests.
-        - Documentation: the corrected description is the public Community-directory copy; the spec amendment records the authorization, and no other documentation references the misspelling. Historical 0.1.0 evidence remains retained as history.
-        - Audit-state hygiene: no duplicated audit findings, verdicts, revisions or session state in the supplied artefacts; validation.org remains test evidence only.
+        - Scope and fidelity: the delta is documentation plus one main.js literal. The one-off baseline comparison confirms the only main.js change is the READER_HELP literal (all other bytes identical to the committed baseline), and the bundled help matches docs/reader-help.md substantively, with the illustrative screenshots replaced by an explicit online link to the README. No executable logic, stylesheet, renderer, workflow, installer or network-behaviour change; images are not plugin installation assets. The 1.0.1 version metadata in main.js and manifest comes from the already-authorized automatic-release workflow's own version-bump commit, consistent with the recorded every-push policy, not a manual edit.
+        - Instruction accuracy: the new copy covers iPhone enablement, Autoplay as an explicit option (preserving the earlier "leave off to start manually" behaviour without prescribing), Accessibility Shortcut selection with tick confirmation, side/Home-button triple-click and menu case, Back Tap alternative, Mac enablement, the distinct System voice info button with Siri voice recommendation and the download-before-offline caveat, Command-Escape/customized shortcut, and the note-to-preview-to-reader sequence. These match the operator's draft content and the recorded Apple-docs checks; the draft's first-person notes ("I usually have Autoplay on") were appropriately reworded into neutral guidance rather than imported.
+        - Assets: nine images imported unaltered (SHA-256 comparison against the supplied originals passed per the one-off check); the check script's filename-to-source mapping is explicit and complete. Images are binary and outside this text channel; I rely on the recorded hash evidence, which is the credible verification available. All nine rendered image targets exist with nonempty alt text; local Markdown links and anchors resolve; pandoc/htmlq rendering checks passed. Operator authorization for public screenshot use is recorded.
+        - Test evidence: OT004.5 GREEN with current revision; make lint and 12/12 make test rerun and passing. No new persistent prose/image regression test, correctly justified under TESTING.md (documentation change, one-off review) and the earlier recorded test-strategy decisions. Existing release/attestation OTs remain historical/unchanged; native operator acceptance is untouched and not re-claimed.
+        - Editorial boundary: the third-person review report inventories references without editing historical records, exactly as requested; no historical evidence was rewritten. The untracked g6.png is left untouched. One-off scratch files live in OS temporary space with project sources unmodified by the checks.
+        - Spec and records: AC004.6/OT004.5 added with the recorded operator authority; no duplicated audit findings, verdicts, revisions or session state in any supplied artefact; validation.org remains test evidence only.
 
-        No blocking findings. Hosted initial 1.0.0 publication and cryptographic attestation verification remain the recorded post-review step under the operator's bounded authorization.
+        No blocking findings. The candidate being committed locally and not pushed until after this review is the correct sequencing given the every-push publication policy; the resulting patch release will be published automatically under the standing authorization.
       history:
         - readiness_check: delivery-code
           cache_key: sha256:d894d406a10ad90e84725539be2db6c1c744aa286889965fc2f0f90179ff6ea5
@@ -534,6 +535,130 @@ audits:
 
             No blocking findings. Hosted initial 1.0.0 publication and cryptographic attestation verification remain the recorded post-review step under the operator's bounded authorization.
           updated: "2026-09-16T13:04:10Z"
+        - readiness_check: delivery-code
+          cache_key: sha256:4c324739165708ecfa05c9f422b7b6c0ee751cdf0e59fe29e03817ad3eb09b87
+          session_id: 20260916_123925_ec44c0
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: f09dc141ec5694be21b9e0e550bcc81b8b3311d104b22270c5a2137970fbbca4
+              bytes: 14566
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: 3d63d81a8054974b21e04018ce583c47938bdb5dd38ba5f1af9ce5f8c0ba1c66
+              bytes: 4547
+            - path: /Users/tigger/.agents/sdlc/GIT.md
+              sha256: 97bbf89af1c65d159688b452a0434e77d9775f7a98dd1c822ffd264b41012bbb
+              bytes: 7807
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 74191750df80fe804c8a0b7ea938ea7184425d4762ce6c870e1b22b46eba788d
+              bytes: 4804
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 198a6c665a2a253802d02686721e43f528b6bbaff7a9a7cc3cbdb9a8ffdf7f09
+              bytes: 16107
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: 9fa8cac86b04aab640064ec8ce6bc51c4305f4ceed1599995f5adb01a33d09ab
+              bytes: 6544
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 5e4e0cdee08d7803523b8ceef638ada4e53ca1bfee09109e63640485eeb83fce
+              bytes: 6917
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: f40aa53736a356e1713eee59a987bf5cc598c0cc7ce2e45c09bf11f2814119c0
+              bytes: 4742
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/readme-history.md
+              sha256: 9631a3539e513e45d1b07897396a60ff622c50b23440e2b39c8ff9a32782bcc1
+              bytes: 9481
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/releases/automation.md
+              sha256: 2e9c10c9ff5905232f626c79d8647500322d15b1a3937f8d834b0bbe44d1131a
+              bytes: 2049
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 5d91f85960f80ebbcaa620d4bc08a8fec3d8054176f31d988c02e3e28bb2a62c
+              bytes: 8176
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 61fa76601304ded5f96c62fe72fb328dc16e28f786b49f3e6cbad8fa5e7037c9
+              bytes: 31026
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 8dc0c62ab1bb2d3f69d5bdac72a8da20299f488163de40290d07bf5c2f051fd1
+              bytes: 305
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: a73b09e837afe15a5fc13edf55742b19b77242d1fe5e5d26ff6b3b29b731c26f
+              bytes: 21803
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: a561c43a9acdac11a5c5d1e9766f893a3fe47921470963caeb5b2289cd1479e4
+              bytes: 13082
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367
+              bytes: 723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+            - path: /Users/tigger/notes/ios-tts-draft.md
+              sha256: 01b9afdb8a89b1b6347a728a3097690baaafb65e3a1abab29a0ebf509f7f15cf
+              bytes: 1060
+            - path: /var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/ios-tts-help.PQyBBU5zOQ/check.rb
+              sha256: 637f9f294be12e94662a547f0f7554c2800b7290b5c9d41c89f7bcb542de39fd
+              bytes: 2670
+            - path: /var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/ios-tts-help.PQyBBU5zOQ/third-person-review.md
+              sha256: da5e1d0435c983e60adb2fab4fdd4bc7bb703cd9705ecab78f37e999803a047b
+              bytes: 7690
+          round: 5
+          revision: e7d51de (illustrated-setup amendment; W004)
+          verdict: PASS
+          response: |-
+            GATE: delivery-code
+            REVISION: e7d51de (illustrated-setup amendment; W004)
+            VERDICT: PASS
+
+            Resuming the retained implementation context. Reviewed the illustrated-setup delta against the recorded operator request (clear iOS/macOS instructions in help and README, import the draft's images, reword appropriately, highlight third-person references).
+
+            Verified:
+
+            - Scope and fidelity: the delta is documentation plus one main.js literal. The one-off baseline comparison confirms the only main.js change is the READER_HELP literal (all other bytes identical to the committed baseline), and the bundled help matches docs/reader-help.md substantively, with the illustrative screenshots replaced by an explicit online link to the README. No executable logic, stylesheet, renderer, workflow, installer or network-behaviour change; images are not plugin installation assets. The 1.0.1 version metadata in main.js and manifest comes from the already-authorized automatic-release workflow's own version-bump commit, consistent with the recorded every-push policy, not a manual edit.
+            - Instruction accuracy: the new copy covers iPhone enablement, Autoplay as an explicit option (preserving the earlier "leave off to start manually" behaviour without prescribing), Accessibility Shortcut selection with tick confirmation, side/Home-button triple-click and menu case, Back Tap alternative, Mac enablement, the distinct System voice info button with Siri voice recommendation and the download-before-offline caveat, Command-Escape/customized shortcut, and the note-to-preview-to-reader sequence. These match the operator's draft content and the recorded Apple-docs checks; the draft's first-person notes ("I usually have Autoplay on") were appropriately reworded into neutral guidance rather than imported.
+            - Assets: nine images imported unaltered (SHA-256 comparison against the supplied originals passed per the one-off check); the check script's filename-to-source mapping is explicit and complete. Images are binary and outside this text channel; I rely on the recorded hash evidence, which is the credible verification available. All nine rendered image targets exist with nonempty alt text; local Markdown links and anchors resolve; pandoc/htmlq rendering checks passed. Operator authorization for public screenshot use is recorded.
+            - Test evidence: OT004.5 GREEN with current revision; make lint and 12/12 make test rerun and passing. No new persistent prose/image regression test, correctly justified under TESTING.md (documentation change, one-off review) and the earlier recorded test-strategy decisions. Existing release/attestation OTs remain historical/unchanged; native operator acceptance is untouched and not re-claimed.
+            - Editorial boundary: the third-person review report inventories references without editing historical records, exactly as requested; no historical evidence was rewritten. The untracked g6.png is left untouched. One-off scratch files live in OS temporary space with project sources unmodified by the checks.
+            - Spec and records: AC004.6/OT004.5 added with the recorded operator authority; no duplicated audit findings, verdicts, revisions or session state in any supplied artefact; validation.org remains test evidence only.
+
+            No blocking findings. The candidate being committed locally and not pushed until after this review is the correct sequencing given the every-push publication policy; the resulting patch release will be published automatically under the standing authorization.
+          updated: "2026-09-16T15:26:21Z"
     - work_item: W004-marketplace-prep
       gate: definition
       session_id: 20260916_124026_c94d0b
@@ -544,28 +669,28 @@ audits:
         harness: hermes
         provider: nous
         model: z-ai/glm-5.3
-      external_round: 3
+      external_round: 4
       status: passed
-      updated: "2026-09-16T13:05:10Z"
-      revision: 909fe62309d6621d901881d90365775b76493c8c25f5a37536c85ddfacce7ae9 (W004 spec.org)
+      updated: "2026-09-16T15:30:59Z"
+      revision: a73b09e837afe15a5fc13edf55742b19b77242d1fe5e5d26ff6b3b29b731c26f (W004 spec.org)
       verdict: PASS
       response: |-
         GATE: definition
-        REVISION: 909fe62309d6621d901881d90365775b76493c8c25f5a37536c85ddfacce7ae9 (W004 spec.org)
+        REVISION: a73b09e837afe15a5fc13edf55742b19b77242d1fe5e5d26ff6b3b29b731c26f (W004 spec.org)
         VERDICT: PASS
 
-        Findings and assessment of the automatic-release amendment:
+        Findings and assessment of the illustrated-setup amendment:
 
-        - Annotation check: no annotation records or blocks in spec.org; ordinary paired-authority prose only. No feedback.yaml required.
-        - Audit-state duplication: validation.org carries test evidence (GREEN records with revisions, commands and observations), which is its designated role; audit state remains linked to audits.yaml only. No FAIL trigger.
-        - Scope and fidelity: the amendment matches the recorded operator instructions exactly — patch increments on master pushes with automatic attestation, 1.0.0 as the starting version, the new display name and author in the manifest, the operator's committed description with only the authorized Accessibiltiy→Accessibility correction (authority recorded in the spec), the requested README prose, and licence attribution (LICENSE now carries "Copyright 2026 Tadhg O'Brien", mirrored in main.js header and embedded licence). main.js differs from the prior revision only in metadata lines; the local one-off check verifies executable source lines are otherwise unchanged, and make lint plus 12/12 reader tests pass. No runtime logic change; reader behaviour, settings and tests are untouched.
-        - Workflow correctness and security: release.yml checks out latest master, validates the manifest version, special-cases the initial untagged 1.0.0, otherwise increments the patch, uses a run-ID commit trailer so reruns reuse the existing version (idempotent retry), pushes commit and tag atomically, never force-pushes, and creates the release only if absent — never overwriting assets. Attestation is delegated to the retained attest-release.yml via workflow_call, which now checks out the release tag itself (an improvement over the prior later-commit source) and still compares downloaded assets against the tag before signing. Concurrency uses queue:max; the job-token recursion question was resolved against GitHub's current documented contracts rather than by invention. Permissions are job-scoped: contents:write only in the publishing job, read/id-token/attestations in the attest job, none at workflow top level. Actions remain SHA-pinned; no credentials, secrets or Node/npm tooling are introduced.
-        - Test definitions: OT004.4 is a correctly bounded one-off orchestration check — real local bare-repository Git executions of the extracted prepare step (initial version, patch increment, same-run retry, invalid version, conflicting push, unrelated-byte preservation), YAML parsing and ShellCheck, plus existing suite and lint reruns. It uses real Git and jq, no third-party simulation and no persistent source-text regression suite, satisfying the no-RT justification for orchestration one-offs. AC004.5 traces to OT004.4. The supplied check.rb confirms each expected outcome including the atomic-failure invariant that a conflicting push neither moves master nor publishes the tag.
-        - Sequencing honesty: the hosted publication, run inspection and cryptographic attestation verification are correctly deferred to after this pre-publication review under recorded bounds (one push, one remediation rerun, bounded status inspections), since pushing now would itself publish. Publication as a production operation is authorized, not a repeated metered test — consistent with TESTING.md.
-        - Documentation: README was rewritten to the operator's requested prose with history preserved in the explicitly labelled docs/readme-history.md; new docs/releases/automation.md documents the automation, recovery and verification commands; Vision and work.org record the amendment. The historical 0.1.0 evidence is retained as history, with the version supersession recorded rather than silently rewritten.
-        - Proportionality: GitHub Actions orchestration with short shell steps is the minimum mechanism for the requested automation; no build pipeline, packaging framework or new moving parts beyond the one release workflow. Not over-engineered; no template inflation.
+        - Annotation check: no annotation records or blocks in spec.org; the "Illustrated setup amendment" is recorded paired authorization, not feedback. The third-person wording report is an untracked scratch document in OS temporary space, correctly presented for operator decision rather than committed as a parallel decision record. No feedback.yaml required.
+        - Audit-state duplication: validation.org carries test evidence in its designated role; audit state remains only in audits.yaml. No FAIL trigger.
+        - Scope and fidelity: the amendment matches the operator request exactly — clear iOS/macOS setup in README and help, import of the draft's associated images (unaltered pixels, SHA-256 verified against the supplied originals), appropriate rewording preserving the requested README introduction and the optional Back Tap route, and a highlight-only inventory of third-person references without rewriting historical records. The main.js delta is confined to the READER_HELP literal, verified by exact baseline comparison outside that literal; stylesheet, renderer and all executable logic are unchanged, with make lint and 12/12 reader tests passing. Manifest/main.js version metadata (1.0.1) is the workflow-generated patch under the already-authorized every-push policy, not a new product decision.
+        - Content correctness: the new setup copy aligns with the operator's draft and current Apple documentation — iPhone enablement with Autoplay as an option (not an instruction to leave it off), shortcut selection with tick confirmation, side/Home-button invocation; Mac enablement with the System voice info button, Siri voice recommendation, download-before-offline caveat, and Command-Escape as default with customization noted. The Mac reader and voice info buttons are correctly distinguished, which the draft flagged as important.
+        - Boundary handling: README embeds the illustrations in collapsible sections; the bundled help carries identical substantive steps offline with an explicit online link to the illustrated README — a plain Markdown link adds no network behaviour, fetch, or installation asset, and no screenshot is auto-fetched from plugin settings. This respects the three-file install package and the offline-help requirement.
+        - Test definitions: OT004.5 is a correctly bounded documentation one-off — image hash comparison against originals, rendered-HTML checks (nine images with nonempty alt text), local link/anchor resolution via pandoc/htmlq, bundled-help equality, byte-level main.js confinement, lint and existing suite. No persistent prose or source-text regression suite, correctly justified under TESTING.md; no physical-device or visual-approval claim is made, and the earlier operator-reported native acceptance is left unaffected. AC004.6 traces to OT004.5.
+        - Proportionality: no new framework, UI test architecture, or moving parts; pandoc/htmlq one-off rendering checks are proportionate. Not over-engineered; no template inflation. The untracked g6.png is preserved untouched, respecting human edits.
+        - Sequencing: the candidate is committed locally and not pushed pending review, consistent with the authorized automatic publication policy; pushing after review will publish the next patch under the recorded bounds.
 
-        No blocking findings. The deferred hosted-run evidence is bounded follow-up under the recorded publication bounds and does not invalidate this definition sign-off.
+        No blocking findings. The third-person rewording remains an operator editorial decision, correctly deferred rather than applied.
       history:
         - cache_key: sha256:3bef90c77fa7d3b994b66d8cd66fd31ed09cb0ef2114daaecc50eb1c9254c92b
           session_id: 20260916_124026_c94d0b
@@ -925,3 +1050,126 @@ audits:
 
             No blocking findings. The deferred hosted-run evidence is bounded follow-up under the recorded publication bounds and does not invalidate this definition sign-off.
           updated: "2026-09-16T13:04:41Z"
+        - cache_key: sha256:f7fa6af817c5888dfed93ac2992f8bd9d1a28898e502da1c2d2a115dc93fbc14
+          session_id: 20260916_124026_c94d0b
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: f09dc141ec5694be21b9e0e550bcc81b8b3311d104b22270c5a2137970fbbca4
+              bytes: 14566
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: 3d63d81a8054974b21e04018ce583c47938bdb5dd38ba5f1af9ce5f8c0ba1c66
+              bytes: 4547
+            - path: /Users/tigger/.agents/sdlc/GIT.md
+              sha256: 97bbf89af1c65d159688b452a0434e77d9775f7a98dd1c822ffd264b41012bbb
+              bytes: 7807
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 74191750df80fe804c8a0b7ea938ea7184425d4762ce6c870e1b22b46eba788d
+              bytes: 4804
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 198a6c665a2a253802d02686721e43f528b6bbaff7a9a7cc3cbdb9a8ffdf7f09
+              bytes: 16107
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/Makefile
+              sha256: c8034f39a44630c85dc3e58b7d86fdd3a9604f695165c938508e092b51ae1ee9
+              bytes: 568
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: 9fa8cac86b04aab640064ec8ce6bc51c4305f4ceed1599995f5adb01a33d09ab
+              bytes: 6544
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 5e4e0cdee08d7803523b8ceef638ada4e53ca1bfee09109e63640485eeb83fce
+              bytes: 6917
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: f40aa53736a356e1713eee59a987bf5cc598c0cc7ce2e45c09bf11f2814119c0
+              bytes: 4742
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/readme-history.md
+              sha256: 9631a3539e513e45d1b07897396a60ff622c50b23440e2b39c8ff9a32782bcc1
+              bytes: 9481
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/releases/automation.md
+              sha256: 2e9c10c9ff5905232f626c79d8647500322d15b1a3937f8d834b0bbe44d1131a
+              bytes: 2049
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 5d91f85960f80ebbcaa620d4bc08a8fec3d8054176f31d988c02e3e28bb2a62c
+              bytes: 8176
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 61fa76601304ded5f96c62fe72fb328dc16e28f786b49f3e6cbad8fa5e7037c9
+              bytes: 31026
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 8dc0c62ab1bb2d3f69d5bdac72a8da20299f488163de40290d07bf5c2f051fd1
+              bytes: 305
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: a73b09e837afe15a5fc13edf55742b19b77242d1fe5e5d26ff6b3b29b731c26f
+              bytes: 21803
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: a561c43a9acdac11a5c5d1e9766f893a3fe47921470963caeb5b2289cd1479e4
+              bytes: 13082
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: b9c4eecc5843dd7d07322013b4f178ec1ca37199f06d60b38b8bcf93f67a4367
+              bytes: 723
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+            - path: /Users/tigger/notes/ios-tts-draft.md
+              sha256: 01b9afdb8a89b1b6347a728a3097690baaafb65e3a1abab29a0ebf509f7f15cf
+              bytes: 1060
+            - path: /var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/ios-tts-help.PQyBBU5zOQ/check.rb
+              sha256: 637f9f294be12e94662a547f0f7554c2800b7290b5c9d41c89f7bcb542de39fd
+              bytes: 2670
+            - path: /var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/ios-tts-help.PQyBBU5zOQ/third-person-review.md
+              sha256: da5e1d0435c983e60adb2fab4fdd4bc7bb703cd9705ecab78f37e999803a047b
+              bytes: 7690
+          round: 4
+          revision: a73b09e837afe15a5fc13edf55742b19b77242d1fe5e5d26ff6b3b29b731c26f (W004 spec.org)
+          verdict: PASS
+          response: |-
+            GATE: definition
+            REVISION: a73b09e837afe15a5fc13edf55742b19b77242d1fe5e5d26ff6b3b29b731c26f (W004 spec.org)
+            VERDICT: PASS
+
+            Findings and assessment of the illustrated-setup amendment:
+
+            - Annotation check: no annotation records or blocks in spec.org; the "Illustrated setup amendment" is recorded paired authorization, not feedback. The third-person wording report is an untracked scratch document in OS temporary space, correctly presented for operator decision rather than committed as a parallel decision record. No feedback.yaml required.
+            - Audit-state duplication: validation.org carries test evidence in its designated role; audit state remains only in audits.yaml. No FAIL trigger.
+            - Scope and fidelity: the amendment matches the operator request exactly — clear iOS/macOS setup in README and help, import of the draft's associated images (unaltered pixels, SHA-256 verified against the supplied originals), appropriate rewording preserving the requested README introduction and the optional Back Tap route, and a highlight-only inventory of third-person references without rewriting historical records. The main.js delta is confined to the READER_HELP literal, verified by exact baseline comparison outside that literal; stylesheet, renderer and all executable logic are unchanged, with make lint and 12/12 reader tests passing. Manifest/main.js version metadata (1.0.1) is the workflow-generated patch under the already-authorized every-push policy, not a new product decision.
+            - Content correctness: the new setup copy aligns with the operator's draft and current Apple documentation — iPhone enablement with Autoplay as an option (not an instruction to leave it off), shortcut selection with tick confirmation, side/Home-button invocation; Mac enablement with the System voice info button, Siri voice recommendation, download-before-offline caveat, and Command-Escape as default with customization noted. The Mac reader and voice info buttons are correctly distinguished, which the draft flagged as important.
+            - Boundary handling: README embeds the illustrations in collapsible sections; the bundled help carries identical substantive steps offline with an explicit online link to the illustrated README — a plain Markdown link adds no network behaviour, fetch, or installation asset, and no screenshot is auto-fetched from plugin settings. This respects the three-file install package and the offline-help requirement.
+            - Test definitions: OT004.5 is a correctly bounded documentation one-off — image hash comparison against originals, rendered-HTML checks (nine images with nonempty alt text), local link/anchor resolution via pandoc/htmlq, bundled-help equality, byte-level main.js confinement, lint and existing suite. No persistent prose or source-text regression suite, correctly justified under TESTING.md; no physical-device or visual-approval claim is made, and the earlier operator-reported native acceptance is left unaffected. AC004.6 traces to OT004.5.
+            - Proportionality: no new framework, UI test architecture, or moving parts; pandoc/htmlq one-off rendering checks are proportionate. Not over-engineered; no template inflation. The untracked g6.png is preserved untouched, respecting human edits.
+            - Sequencing: the candidate is committed locally and not pushed pending review, consistent with the authorized automatic publication policy; pushing after review will publish the next patch under the recorded bounds.
+
+            No blocking findings. The third-person rewording remains an operator editorial decision, correctly deferred rather than applied.
+          updated: "2026-09-16T15:27:08Z"
