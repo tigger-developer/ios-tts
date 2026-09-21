@@ -14,6 +14,10 @@ below describes the historical delivery sequence and is superseded by this
 acceptance. Release preparation is separately scoped in
 [[file:../004-marketplace-prep/spec.org][W004 - Marketplace prep]].
 
+* Accessibility Preview amendment, 2026-09-21
+
+The current paired amendment in [[file:../004-marketplace-prep/spec.org][W004 - Marketplace prep]] adds explicit rendered paragraph/heading breaks, renames the modal and opening controls to Accessibility Preview, and replaces the permanent shortcut hint with Help on demand. It supersedes the corresponding no-transformation, view-name and permanent-hint requirements below. Historical acceptance remains attached to its tested revision; current macOS and iPhone user tests are pending under W004. Other snapshot, lifecycle and source-preservation requirements remain applicable.
+
 * Full document reader for macOS and iOS
 :PROPERTIES:
 :CUSTOM_ID: summary

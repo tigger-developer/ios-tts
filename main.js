@@ -175,10 +175,13 @@ buttons in the document pane.
 
 Click the plugin's preview icon beside the edit/preview buttons.
 
-This opens the full-document preview. You can also use
+This opens **Accessibility Preview**. You can also use
 **Preview for Accessibility View (TTS on iOS/macOS)** in Obsidian's **command palette**.
 On Mac, you can assign a hotkey to this command in **Obsidian Settings > Hotkeys**
 to open the preview from the keyboard.
+
+The preview's **Help** button shows the shortcut reminder when needed. Select
+**Help** again to close it before starting Accessibility Reader.
 
 Invoke Apple's Accessibility Reader. The defaults are **triple-click the lock
 button** on iPhone and **Command-Escape** on Mac.
@@ -228,6 +231,24 @@ class RenderOwner extends Component {
     this.unload();
   }
 }
+// Explicit breaks survive native extraction where block boundaries can be lost.
+function separateReadingBlocks(article) {
+  const blocks = article.querySelectorAll("p, h1, h2, h3, h4, h5, h6");
+  for (const block of blocks) {
+    if (
+      block.namespaceURI !== "http://www.w3.org/1999/xhtml" ||
+      block.closest("pre") ||
+      block.classList.contains("full-document-reader-separated")
+    )
+      continue;
+    block.append(
+      article.ownerDocument.createElement("br"),
+      article.ownerDocument.createElement("br"),
+    );
+    block.classList.add("full-document-reader-separated");
+  }
+}
+
 class ReaderModal extends Modal {
   owner = new RenderOwner();
   article;
@@ -238,11 +259,11 @@ class ReaderModal extends Modal {
   constructor(app, closed) {
     super(app);
     this.closed = closed;
-    this.setTitle("Full document reader");
+    this.setTitle("Accessibility Preview");
     this.modalEl.addClass("full-document-reader");
     this.modalEl.setAttribute("role", "dialog");
     this.modalEl.setAttribute("aria-modal", "true");
-    this.modalEl.setAttribute("aria-label", "Full document reader");
+    this.modalEl.setAttribute("aria-label", "Accessibility Preview");
     this.modalEl.tabIndex = -1;
     this.article = this.contentEl.ownerDocument.createElement("article");
     this.article.classList.add(
@@ -286,28 +307,44 @@ class ReaderModal extends Modal {
   }
   publish() {
     if (this.disposed) return;
+    separateReadingBlocks(this.article);
     for (const checkbox of this.article.querySelectorAll(
       'input[type="checkbox"]',
     )) {
       checkbox.disabled = true;
     }
-    const shortcut = Platform.isIosApp
-      ? "Use your accessibility shortcut to open Accessibility Reader."
-      : Platform.isDesktopApp && Platform.isMacOS
-        ? "Press \u2318Esc to open Accessibility Reader, or use your customized shortcut."
-        : "";
     this.contentEl.replaceChildren();
-    if (shortcut) {
-      this.contentEl.createEl("p", {
-        text: shortcut,
-        cls: "full-document-reader-hint",
-      });
-    }
+    this.addHelp();
     this.contentEl.append(this.article);
     // Do not take focus back from a newer dialog opened during rendering.
     if (this.containerEl.contains(this.article.ownerDocument.activeElement)) {
       this.article.focus({ preventScroll: true });
     }
+  }
+  addHelp() {
+    const shortcut = Platform.isIosApp
+      ? "Triple-click the lock button to open Accessibility Reader."
+      : Platform.isDesktopApp && Platform.isMacOS
+        ? "Press \u2318Esc to open Accessibility Reader."
+        : "Open Accessibility Reader using your accessibility shortcut.";
+    const help = this.contentEl.createDiv({ cls: "full-document-reader-help" });
+    const button = help.createEl("button", {
+      text: "Help",
+      attr: { type: "button", "aria-expanded": "false" },
+    });
+    let hint = null;
+    this.owner.registerDomEvent(button, "click", () => {
+      if (hint) {
+        hint.remove();
+        hint = null;
+      } else {
+        hint = help.createEl("p", {
+          text: `${shortcut} These are the default shortcuts. Setup instructions are in the plugin settings. Close Help before starting the reader.`,
+          cls: "full-document-reader-hint",
+        });
+      }
+      button.setAttribute("aria-expanded", String(hint !== null));
+    });
   }
   isolateBackground() {
     // Keep the host's backdrop and close controls usable. Only sibling branches
@@ -459,17 +496,15 @@ class FullDocumentReaderPlugin extends Plugin {
     this.register(() => removeIcon(READER_ICON));
     if (loadError)
       new Notice(
-        "Could not load Maximum words. Using 100,000; check the value in Full document reader settings and Save to replace it.",
+        "Could not load Maximum words. Using 100,000; check the value in plugin settings and Save to replace it.",
       );
     const reader = new ReaderSession({
       create: (onClose) => new ReaderModal(this.app, onClose),
       notice: (reason, maximum) => {
         const messages = {
-          unsupported:
-            "Open a Markdown note, then open the full document reader.",
-          render:
-            "Could not open the full document reader. Try opening it again.",
-          limit: `This note exceeds the maximum of ${maximum?.toLocaleString()} words. Increase Maximum words in Full document reader settings to read it.`,
+          unsupported: "Open a Markdown note, then open Accessibility Preview.",
+          render: "Could not open Accessibility Preview. Try opening it again.",
+          limit: `This note exceeds the maximum of ${maximum?.toLocaleString()} words. Increase Maximum words in plugin settings to read it.`,
         };
         new Notice(messages[reason]);
       },
@@ -485,7 +520,7 @@ class FullDocumentReaderPlugin extends Plugin {
           : null;
       void reader.open(snapshot, preference.maxWords);
     };
-    this.addRibbonIcon(READER_ICON, "Open full document reader", () =>
+    this.addRibbonIcon(READER_ICON, "Open Accessibility Preview", () =>
       openReader(),
     );
     this.addCommand({
@@ -518,7 +553,7 @@ class FullDocumentReaderPlugin extends Plugin {
       if (this.headerButtons.has(view)) continue;
       const button = view.addAction(
         READER_ICON,
-        "Open full document reader",
+        "Open Accessibility Preview",
         () => openReader(view),
       );
       this.headerButtons.set(view, button);

@@ -29,6 +29,7 @@
 - Review the local release-workflow diff, then publish the next version with =make release=.
 
 * Context
+- Current runtime amendment :: The Accessibility Preview amendment dated 2026-09-21 below extends this paired ticket beyond release preparation. Earlier runtime-preservation constraints remain historical for the earlier increments.
 - Approval :: Document approved 2026-09-16.
 - Baseline :: Read [[file:../../README.md][README]], [[file:../../docs/VISION.md][Vision]], [[file:../../docs/work.org][work ledger]], [[file:../003-full-document-reader/spec.org][W003 - Full document reader]], its validation and audit records, and the maintained package and regression suite. No separate Architecture authority exists; W003 owns the reader design.
 - Mode :: *Paired development*. W004 owns licensing, README, acceptance records, release preparation and publication.
@@ -215,3 +216,44 @@
 - Procedure :: Exercise =scripts/release.sh= in disposable Git repositories with a local bare upstream and a stub =gh= that records its arguments at the GitHub boundary: help, version and invalid invocation; dry run; each refusal condition; a full release; a following release; an explicit =VERSION=; and a competing upstream push. Compare the released manifest, source version comment, unrelated source bytes, commit subject, annotated tag and upstream refs. Parse the attestation workflow YAML, confirm its triggers and permissions, and ShellCheck its extracted verification step. Run =make lint= and =make test=, and =scripts/release.sh --dry-run= against the real repository. Review changed documentation and its links.
 - Expected :: Exact next and explicit versions, matching metadata and tag, exactly three attached files, no scratch file left behind, nonzero refusal before any change for each invalid condition, exit 2 for invalid invocation and malformed =VERSION=, publication-triggered and dispatch-triggered attestation with unchanged verification and no release-write permission, and 12 passing reader cases. These are bounded one-off packaging checks; no persistent third-party simulation or source-text regression test is retained.
 - Bounds :: Local disposable repositories in OS temporary space and read-only remote queries. No release, tag or GitHub state is created or replaced by the check. Hosted publication and signing evidence follows the operator's first =make release=.
+
+* Accessibility Preview amendment, 2026-09-21
+
+- Approval :: Approved 2026-09-21, paired development under W004 - Marketplace prep.
+- Scope :: Add explicit reading boundaries to rendered paragraphs and headings; rename the modal and its opening controls to Accessibility Preview; replace the permanent shortcut hint with Help on demand. Retain the existing modal on macOS and iOS. Desktop pop-out windows and Notes automation are outside this increment.
+- Supersedes :: W003's prohibition on rendered-content adjustment is superseded only for explicit boundary breaks. Its permanent shortcut hint and Full document reader view label are superseded. Source preservation, snapshot ownership, word limits, command ID/display name, product manifest name, native speech ownership and release policy remain unchanged.
+- Design :: After Obsidian renders the detached article and before publication, append two explicit line breaks inside each paragraph and heading, without replacing its text or inline elements. Mark processed blocks to prevent repeated additions. Exclude preformatted and non-HTML content. Preserve existing breaks. Put the platform-specific shortcut paragraph into the help area only while its button is expanded; remove it on collapse. The button uses aria-expanded and a session-owned click handler. No timer or image-based text is introduced.
+- Verification choice :: Native DOM rendering and Accessibility Reader extraction need user validation. Retain the existing session/settings regressions; do not introduce a mock browser or source-matching regression suite. Source review checks snapshot-only mutation and resource ownership. User tests check visible spacing, paragraph highlighting and audible pacing independently.
+- Security :: No new dependency, network access, note write, speech API, persistence or privileged interface. The existing renderer remains responsible for note HTML; additions use fixed DOM elements only.
+- Known limits :: This candidate targets paragraph and heading boundaries. Footnote handling, iPhone duplication and arbitrary embedded content are not claimed resolved. Preformatted text is preserved. Native acceptance remains pending for this revision.
+
+** AC004.8 - Accessible paragraph presentation and help :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-8
+:END:
+- Criterion :: Accessibility Preview preserves complete note text and semantic headings/paragraphs, with explicit breaks supporting separate paragraph highlighting and paced reading on macOS and iPhone. The note is unchanged. Shortcut instructions appear only after Help is activated and disappear on collapse. Help is keyboard- and touch-operable; reopening resets it to collapsed. Existing commands and hotkeys remain valid.
+- Proven by :: [[#ot-004-7][OT004.7 - Preview implementation checks]], [[#ut-004-1][UT004.1 - macOS paragraph reading]] and [[#ut-004-2][UT004.2 - iPhone paragraph reading]].
+
+** OT004.7 - Preview implementation checks :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-7
+:END:
+- Covers :: [[#ac-004-8][AC004.8 - Accessible paragraph presentation and help]].
+- Procedure :: Run make lint, make test and git diff --check. Review the DOM changes for source safety, semantic preservation, repeat-publication safety and cleanup. Compare bundled help with docs/reader-help.md; review updated usage instructions.
+- Expected :: Existing 12 regression cases pass; lint succeeds; no source-note write or new dependency; paragraph and heading elements retained; help text absent from the DOM until requested and removed on collapse. Native behaviour is established only by the platform user tests.
+
+** UT004.1 - macOS paragraph reading :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ut-004-1
+:END:
+- Covers :: [[#ac-004-8][AC004.8 - Accessible paragraph presentation and help]].
+- Procedure :: Open the three-variant paragraph fixture and a longer chapter through the plugin from both editing and reading mode. Invoke Accessibility Reader. Check paragraph separation, independent highlighting, natural pauses, no duplicated content and reading through the final paragraph. Check headings with emphasis/links, existing hard breaks and paragraphs in lists. Open and collapse Help by keyboard and pointer, then reopen the preview. Check source text remains unchanged and dismissal restores the workspace.
+- Expected :: Ordinary paragraphs and headings no longer concatenate; existing line breaks remain; layout is usable. Help starts collapsed and its instructions do not enter the reading content while collapsed. Record any title/control announcement separately. No new claim about footnote support follows from plain-prose success.
+
+** UT004.2 - iPhone paragraph reading :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ut-004-2
+:END:
+- Covers :: [[#ac-004-8][AC004.8 - Accessible paragraph presentation and help]].
+- Procedure :: Repeat the macOS fixture and chapter procedure on iPhone using touch and the Accessibility Shortcut. Check Help by tapping, no repeated sentences, full-document reading and source preservation.
+- Expected :: The same paragraph, completeness and collapsed-help outcomes as the macOS test, without duplication. Record iOS version and tested revision.

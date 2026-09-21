@@ -44,10 +44,13 @@ buttons in the document pane.
 
 Click the plugin's preview icon beside the edit/preview buttons.
 
-This opens the full-document preview. You can also use
+This opens **Accessibility Preview**. You can also use
 **Preview for Accessibility View (TTS on iOS/macOS)** in Obsidian's **command palette**.
 On Mac, you can assign a hotkey to this command in **Obsidian Settings > Hotkeys**
 to open the preview from the keyboard.
+
+The preview's **Help** button shows the shortcut reminder when needed. Select
+**Help** again to close it before starting Accessibility Reader.
 
 Invoke Apple's Accessibility Reader. The defaults are **triple-click the lock
 button** on iPhone and **Command-Escape** on Mac.
