@@ -3,36 +3,49 @@ audits:
     - readiness_check: delivery-code
       work_item: W004-marketplace-prep
       gate: implementation
-      session_id: 20260916_123925_ec44c0
+      session_id: 20260921_133628_abab10
       harness: hermes
       provider: nous
       model: z-ai/glm-5.3
       configured:
-        harness: hermes
-        provider: nous
-        model: z-ai/glm-5.3
-      external_round: 5
+        harness: claude
+        model: claude-opus-5
+      previous_sessions:
+        - session_id: 20260916_123925_ec44c0
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          reason: configuration-changed
+          updated: "2026-09-21T12:36:24Z"
+        - session_id: f963bf0a-59b8-4fed-8704-ab2d5501f89f
+          harness: claude
+          model: claude-opus-5
+          reason: start-failed-fallback
+          updated: "2026-09-21T12:36:26Z"
+      external_round: 7
+      budget_resets:
+        - after_round: 5
+          updated: "2026-09-21T12:36:13Z"
       status: passed
-      updated: "2026-09-16T15:26:58Z"
-      revision: e7d51de (illustrated-setup amendment; W004)
+      updated: "2026-09-21T12:37:08Z"
+      revision: d0c0488 (Accessibility Preview amendment, W004)
       verdict: PASS
       response: |-
         GATE: delivery-code
-        REVISION: e7d51de (illustrated-setup amendment; W004)
+        REVISION: d0c0488 (Accessibility Preview amendment, W004)
         VERDICT: PASS
 
-        Resuming the retained implementation context. Reviewed the illustrated-setup delta against the recorded operator request (clear iOS/macOS instructions in help and README, import the draft's images, reword appropriately, highlight third-person references).
+        Reviewed the Accessibility Preview increment against the 2026-09-21 amendment (AC004.8, OT004.7, UT004.1/UT004.2) and the current evidence.
 
         Verified:
 
-        - Scope and fidelity: the delta is documentation plus one main.js literal. The one-off baseline comparison confirms the only main.js change is the READER_HELP literal (all other bytes identical to the committed baseline), and the bundled help matches docs/reader-help.md substantively, with the illustrative screenshots replaced by an explicit online link to the README. No executable logic, stylesheet, renderer, workflow, installer or network-behaviour change; images are not plugin installation assets. The 1.0.1 version metadata in main.js and manifest comes from the already-authorized automatic-release workflow's own version-bump commit, consistent with the recorded every-push policy, not a manual edit.
-        - Instruction accuracy: the new copy covers iPhone enablement, Autoplay as an explicit option (preserving the earlier "leave off to start manually" behaviour without prescribing), Accessibility Shortcut selection with tick confirmation, side/Home-button triple-click and menu case, Back Tap alternative, Mac enablement, the distinct System voice info button with Siri voice recommendation and the download-before-offline caveat, Command-Escape/customized shortcut, and the note-to-preview-to-reader sequence. These match the operator's draft content and the recorded Apple-docs checks; the draft's first-person notes ("I usually have Autoplay on") were appropriately reworded into neutral guidance rather than imported.
-        - Assets: nine images imported unaltered (SHA-256 comparison against the supplied originals passed per the one-off check); the check script's filename-to-source mapping is explicit and complete. Images are binary and outside this text channel; I rely on the recorded hash evidence, which is the credible verification available. All nine rendered image targets exist with nonempty alt text; local Markdown links and anchors resolve; pandoc/htmlq rendering checks passed. Operator authorization for public screenshot use is recorded.
-        - Test evidence: OT004.5 GREEN with current revision; make lint and 12/12 make test rerun and passing. No new persistent prose/image regression test, correctly justified under TESTING.md (documentation change, one-off review) and the earlier recorded test-strategy decisions. Existing release/attestation OTs remain historical/unchanged; native operator acceptance is untouched and not re-claimed.
-        - Editorial boundary: the third-person review report inventories references without editing historical records, exactly as requested; no historical evidence was rewritten. The untracked g6.png is left untouched. One-off scratch files live in OS temporary space with project sources unmodified by the checks.
-        - Spec and records: AC004.6/OT004.5 added with the recorded operator authority; no duplicated audit findings, verdicts, revisions or session state in any supplied artefact; validation.org remains test evidence only.
+        - Scope and fidelity: the runtime delta is separateReadingBlocks (two appended br elements inside each XHTML paragraph/heading, excluding pre blocks and already-marked blocks), the Accessibility Preview modal label, and Help on demand replacing the permanent hint; plus a small styles.css addition and documentation updates. Command ID and display name are unchanged; ribbon/header names now say Open Accessibility Preview as specified. No new dependency, network, speech API, persistence or privileged interface. The 1.0.7 metadata is from the authorized make release process, not a manual edit in this delta.
+        - Implementation correctness: breaks are appended to the detached article only, inside each block, without replacing text or inline elements; the full-document-reader-separated class marker prevents repeat additions; existing hard breaks are preserved. Help content is created only on activation and removed on collapse, with aria-expanded maintained and the listener owned by the session RenderOwner, so disposal cleans it up. Double-dispose is safe; focus-restore and inert handling are unchanged from the previously reviewed accessibility work.
+        - Test evidence: OT004.7 GREEN for this candidate with make lint and 12/12 regressions recorded, DOM/source review (snapshot-only mutation, lifecycle-owned help, unchanged command identity), bundled-help equality with docs/reader-help.md, and git diff --check. UT004.1 and UT004.2 are AMBER with recorded reasons awaiting native operator validation, which is permitted at delivery-code. Existing regression tests are unchanged, consistent with the recorded verification choice that native rendering needs user validation, not a mock browser suite.
+        - Documentation: README, docs/reader-help.md and the bundled READER_HELP all describe Accessibility Preview and the Help button consistently; the bundled help matches the doc file. W003's amendment section correctly marks the superseded requirements as historical while preserving acceptance records. Voice is impersonal and factual; approvals and test results are dated.
+        - Spec/validation schema: AC004.8, OT004.7 and both UTs carry the required tags and evidence properties; validation.org records execution states only, no audit verdicts; no duplicated audit state in any artefact.
 
-        No blocking findings. The candidate being committed locally and not pushed until after this review is the correct sequencing given the every-push publication policy; the resulting patch release will be published automatically under the standing authorization.
+        No blocking findings. Native macOS and iPhone validation of this candidate remains outstanding as recorded.
       history:
         - readiness_check: delivery-code
           cache_key: sha256:d894d406a10ad90e84725539be2db6c1c744aa286889965fc2f0f90179ff6ea5
@@ -659,6 +672,198 @@ audits:
 
             No blocking findings. The candidate being committed locally and not pushed until after this review is the correct sequencing given the every-push publication policy; the resulting patch release will be published automatically under the standing authorization.
           updated: "2026-09-16T15:26:21Z"
+        - readiness_check: delivery-code
+          cache_key: sha256:388003a0f28cb2796ea7923e574f5f9669d4f7d307ce2f41e1534e3483c2183b
+          session_id: f963bf0a-59b8-4fed-8704-ab2d5501f89f
+          harness: claude
+          model: claude-opus-5
+          incident: start-failed
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: 17aefd3515d0d1deb97cbbf0f36e05891c581ec686159c40fc4ae0bcd62f76dc
+              bytes: 15497
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: d8696dca9f4ed75cc8487e064a8c6756a418bbe623e55bcde0bc58996b011c9c
+              bytes: 7652
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 4c93e9ebfd051a1caa3a3a456ef20228c4403f3ca00726ed1ac4c93676ac26cc
+              bytes: 4915
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 04a5798f1c77dfd9e0c4690bc43bbc4e7733ac7a18662e17d4f6cd8785f96858
+              bytes: 16237
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: f1b284836827dfec18e0c4fc42c42f2148819870aef1da0ca305705afab4de44
+              bytes: 5171
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: d45f539384e27d07b85eaa6198433ea99e1de1f3b626bfad1cdd5f27b099a88b
+              bytes: 3069
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 235a95071399c1bbe50109c02fdfcd20143c792326bfbb991b8a6d5fb1648135
+              bytes: 3810
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 06fbc9a2f0d9d216e32a00e6d2266cc76435b1cd6e04a32bbb623611b8cf224b
+              bytes: 7895
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 53254842b67c2a5b2ebde2edb7485d145659c177a05e8926f490784d69c4b4d5
+              bytes: 31325
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 0f44e077d67c7b902e15ed1d9bd4a4c20c031ce62ccbe7095cb61e79873c1369
+              bytes: 305
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: 40d261443060015ad9b688d89b0c21084ff2af437de90683313ef959787445f1
+              bytes: 50659
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: 25c55a7a3da5b338c726f479534bcc6fc5d7f39875db8b5efc454826e84b264c
+              bytes: 33170
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: 839e072132339c16e59829b38d5ba5dee203424587acf45cfff1b8047b8aa260
+              bytes: 19620
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: 98e36ad3e991e56844ef990031d018aed27aa242b680de09aa7aeeaf0921f0e3
+              bytes: 913
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 6
+          updated: "2026-09-21T12:36:24Z"
+        - readiness_check: delivery-code
+          cache_key: sha256:388003a0f28cb2796ea7923e574f5f9669d4f7d307ce2f41e1534e3483c2183b
+          session_id: 20260921_133628_abab10
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: 17aefd3515d0d1deb97cbbf0f36e05891c581ec686159c40fc4ae0bcd62f76dc
+              bytes: 15497
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: d8696dca9f4ed75cc8487e064a8c6756a418bbe623e55bcde0bc58996b011c9c
+              bytes: 7652
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 4c93e9ebfd051a1caa3a3a456ef20228c4403f3ca00726ed1ac4c93676ac26cc
+              bytes: 4915
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 04a5798f1c77dfd9e0c4690bc43bbc4e7733ac7a18662e17d4f6cd8785f96858
+              bytes: 16237
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: f1b284836827dfec18e0c4fc42c42f2148819870aef1da0ca305705afab4de44
+              bytes: 5171
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: d45f539384e27d07b85eaa6198433ea99e1de1f3b626bfad1cdd5f27b099a88b
+              bytes: 3069
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 235a95071399c1bbe50109c02fdfcd20143c792326bfbb991b8a6d5fb1648135
+              bytes: 3810
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/work.org
+              sha256: 06fbc9a2f0d9d216e32a00e6d2266cc76435b1cd6e04a32bbb623611b8cf224b
+              bytes: 7895
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 53254842b67c2a5b2ebde2edb7485d145659c177a05e8926f490784d69c4b4d5
+              bytes: 31325
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 0f44e077d67c7b902e15ed1d9bd4a4c20c031ce62ccbe7095cb61e79873c1369
+              bytes: 305
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: 40d261443060015ad9b688d89b0c21084ff2af437de90683313ef959787445f1
+              bytes: 50659
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/spec.org
+              sha256: 25c55a7a3da5b338c726f479534bcc6fc5d7f39875db8b5efc454826e84b264c
+              bytes: 33170
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/validation.org
+              sha256: 839e072132339c16e59829b38d5ba5dee203424587acf45cfff1b8047b8aa260
+              bytes: 19620
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: 98e36ad3e991e56844ef990031d018aed27aa242b680de09aa7aeeaf0921f0e3
+              bytes: 913
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 7
+          revision: d0c0488 (Accessibility Preview amendment, W004)
+          verdict: PASS
+          response: |-
+            GATE: delivery-code
+            REVISION: d0c0488 (Accessibility Preview amendment, W004)
+            VERDICT: PASS
+
+            Reviewed the Accessibility Preview increment against the 2026-09-21 amendment (AC004.8, OT004.7, UT004.1/UT004.2) and the current evidence.
+
+            Verified:
+
+            - Scope and fidelity: the runtime delta is separateReadingBlocks (two appended br elements inside each XHTML paragraph/heading, excluding pre blocks and already-marked blocks), the Accessibility Preview modal label, and Help on demand replacing the permanent hint; plus a small styles.css addition and documentation updates. Command ID and display name are unchanged; ribbon/header names now say Open Accessibility Preview as specified. No new dependency, network, speech API, persistence or privileged interface. The 1.0.7 metadata is from the authorized make release process, not a manual edit in this delta.
+            - Implementation correctness: breaks are appended to the detached article only, inside each block, without replacing text or inline elements; the full-document-reader-separated class marker prevents repeat additions; existing hard breaks are preserved. Help content is created only on activation and removed on collapse, with aria-expanded maintained and the listener owned by the session RenderOwner, so disposal cleans it up. Double-dispose is safe; focus-restore and inert handling are unchanged from the previously reviewed accessibility work.
+            - Test evidence: OT004.7 GREEN for this candidate with make lint and 12/12 regressions recorded, DOM/source review (snapshot-only mutation, lifecycle-owned help, unchanged command identity), bundled-help equality with docs/reader-help.md, and git diff --check. UT004.1 and UT004.2 are AMBER with recorded reasons awaiting native operator validation, which is permitted at delivery-code. Existing regression tests are unchanged, consistent with the recorded verification choice that native rendering needs user validation, not a mock browser suite.
+            - Documentation: README, docs/reader-help.md and the bundled READER_HELP all describe Accessibility Preview and the Help button consistently; the bundled help matches the doc file. W003's amendment section correctly marks the superseded requirements as historical while preserving acceptance records. Voice is impersonal and factual; approvals and test results are dated.
+            - Spec/validation schema: AC004.8, OT004.7 and both UTs carry the required tags and evidence properties; validation.org records execution states only, no audit verdicts; no duplicated audit state in any artefact.
+
+            No blocking findings. Native macOS and iPhone validation of this candidate remains outstanding as recorded.
+          updated: "2026-09-21T12:36:26Z"
     - work_item: W004-marketplace-prep
       gate: definition
       session_id: 20260916_124026_c94d0b
