@@ -103,7 +103,7 @@ classification; it is provenance, not current state.
 
 - Implementation amendment, 2026-09-10 :: Node, npm and TypeScript were removed. The plugin is maintained as plain JavaScript. Installation and Git synchronization use Bash; macOS supplies the regression-test engine. Reader behaviour and stored settings are unchanged.
 
-** REVIEW W004 - Marketplace prep :maintenance:
+** DONE W004 - Marketplace prep :maintenance:
 :PROPERTIES:
 :CUSTOM_ID: w-004
 :PRIORITY: P1
@@ -118,10 +118,25 @@ classification; it is provenance, not current state.
 - Submission history :: Initial automated submission was blocked by computer-use permissions. Subsequent Community review findings are recorded in the validation record.
 - Release assets :: The unsupported LICENSE attachment was removed; the three runtime assets have verified attestations. See the validation and paired review records.
 
-- Current handoff :: Illustrated setup and neutral documentation edits await local diff review. No push is included in this review checkpoint. Each subsequent master push publishes a patch release with attestations.
+- Historical handoff, superseded :: The illustrated-setup diff review and push-triggered release policy below describe the 2026-09-16 checkpoint. Publication now uses make release.
 - Automatic release amendment :: Automatic releases began at 1.0.0. Product name: Full Document View for iOS TTS. Release 1.0.0 assets matched their tag and passed cryptographic attestation verification. Preparation and verification remain under this paired ticket.
 - Operator-invoked release amendment, 2026-09-16 :: Publication moved from each master push to =make release=. The push-triggered release workflow was removed; attestation now runs when a release is published, retaining manual dispatch. Releases 1.0.0 to 1.0.4 remain evidence of the superseded process.
-- Accessibility Preview amendment, 2026-09-21 :: Paired runtime work adds explicit paragraph/heading boundaries, the Accessibility Preview view label and Help on demand. Native macOS and iPhone validation is pending for this candidate. The existing modal and command remain; no release or vault installation is included.
+- Accessibility Preview amendment, 2026-09-21 :: Runtime work was implemented here and transferred to W005 - Accessibility Preview paragraph boundaries on 2026-09-22. Existing requirement/test identifiers and code-review history are preserved.
+- Closure :: Approved 2026-09-22. Release preparation, licensing, documentation and marketplace publication are accepted; outstanding runtime checks belong to W005 - Accessibility Preview paragraph boundaries.
+
+** REVIEW W005 - Accessibility Preview paragraph boundaries :defect:
+:PROPERTIES:
+:CUSTOM_ID: w-005
+:PRIORITY: P1
+:SOURCE: project
+:CREATED: 2026-09-22
+:END:
+
+- Specification :: [[file:../specs/005-accessibility-preview-boundaries/spec.org][W005 - Accessibility Preview paragraph boundaries]].
+- Evidence :: [[file:../specs/005-accessibility-preview-boundaries/validation.org][Native and local validation]]; [[file:../specs/005-accessibility-preview-boundaries/audits.yaml][Current code review]]; [[file:../specs/004-marketplace-prep/audits.yaml][original code-review history]].
+- Scope :: Paired bugfix: explicit paragraph/heading breaks, Accessibility Preview naming and Help on demand. Records the browser comparisons, controlled experiment, Apple guidance and implemented solution.
+- Lineage :: Transferred from W004 - Marketplace prep without renumbering AC004.8 - Accessible paragraph presentation and help or its tests.
+- Remaining validation :: macOS paragraph separation and individual highlighting have positive native evidence. Full macOS acceptance and iPhone validation remain open; neither is inferred from marketplace closure.
 
 * Migration record
 :PROPERTIES:

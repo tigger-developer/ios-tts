@@ -1,6 +1,10 @@
-# Full Document View for iOS TTS: product vision
+---
+title: Full Document View for iOS TTS product vision
+version: 1
+last-updated: 2026-09-22
+---
 
-Last updated: 2026-09-16
+# Full Document View for iOS TTS: product vision
 
 **Purpose:** make complete Obsidian notes available to Apple's native
 Accessibility Reader on iOS and macOS, without a paid speech service.
@@ -27,10 +31,13 @@ Native alternatives also exist, including
 - **Whole-note reading:** a toolbar button, ribbon button or command opens the
   complete current Markdown note as a read-only snapshot using Obsidian rendering.
   Each note toolbar opens the note belonging to that pane.
+- **Paced reading:** preserve paragraph and heading boundaries so long notes
+  remain understandable through speech and synchronized highlighting.
 - **Native speech:** Accessibility Reader supplies voices, playback and
   accessibility controls. Speech starts through Apple's controls or Autoplay.
 - **Clear setup:** bundled settings help explains iPhone and Mac shortcuts,
-  benefits and limitations. The help remains available offline.
+  benefits and limitations. The preview offers a shortcut reminder through Help
+  on demand. The help remains available offline.
 - **Explicit size limit:** the default is **100,000 words**, adjustable in
   settings. A note over the limit is refused with guidance to raise it.
   A shortened document must never be presented as complete.
@@ -55,3 +62,10 @@ the behaviour. The [setup guide](reader-help.md) contains the instructions bundl
 with the plugin. Release and submission details belong to
 [Marketplace prep](../specs/004-marketplace-prep/spec.org) and
 [release documentation](releases/automation.md).
+
+The [paragraph-boundary bugfix](../specs/005-accessibility-preview-boundaries/spec.org)
+records the presentation design, research and native validation limits.
+
+## Document history
+
+- 2026-09-22: Added paced reading and on-demand preview help to the intended experience.

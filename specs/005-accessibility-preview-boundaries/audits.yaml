@@ -1,0 +1,364 @@
+version: 1
+audits:
+    - readiness_check: delivery-code
+      work_item: W005-accessibility-preview-boundaries
+      gate: implementation
+      session_id: 20260922_173101_8f5ef2
+      harness: hermes
+      provider: nous
+      model: z-ai/glm-5.3
+      configured:
+        harness: claude
+        model: claude-opus-5
+      previous_sessions:
+        - session_id: df51751d-f692-4a39-900c-09396a820a12
+          harness: claude
+          model: claude-opus-5
+          reason: start-failed-fallback
+          updated: "2026-09-22T16:30:59Z"
+      external_round: 3
+      status: passed
+      updated: "2026-09-22T16:33:30Z"
+      revision: a9d2ae3 (release 1.0.10; runtime identical to reviewed d0c0488 except the version comment)
+      verdict: PASS
+      response: |-
+        GATE: delivery-code
+        REVISION: a9d2ae3 (release 1.0.10; runtime identical to reviewed d0c0488 except the version comment)
+        VERDICT: PASS
+
+        Finding withdrawn:
+
+        The sole finding from the previous round alleged that `target?.instanceOf(Element)` calls a non-existent method and throws on every article interaction. The challenge's primary-source evidence refutes that premise: the supplied official obsidian.d.ts excerpt (obsidian-api master, retrieved 2026-09-22) declares `instanceOf<T>(type)` on the `Node` interface as a "Cross-window capable instanceof check, a drop-in replacement for instanceof checks on DOM Nodes. Remember to also check for nulls when necessary", and Obsidian's pop-out-windows guide recommends `element.instanceOf(HTMLElement)` over the global `instanceof` operator. This code runs inside Obsidian's runtime, where DOM Nodes are augmented with that method; `main.js` imports only the `obsidian` host module and the manifest targets Obsidian 1.13+, so the vanilla-browser premise was incorrect for this host. The null guard (`target?.`) matches the API's own documented caveat. The suggested remediation would have introduced the cross-window regression the host API exists to prevent.
+
+        The finding was unsupported and is withdrawn. No code change is required.
+
+        Reassessment for the record (all evidence hashes unchanged from the previously reviewed state except the added API excerpt):
+        - Scope and fidelity: delta from d0c0488 remains exactly the version comment, manifest 1.0.10 metadata from the authorized automatic-release workflow, and the W005 documentation-only ticket transfer. separateReadingBlocks, Help on demand, styles.css, tests, scripts and command identity conform to the W005 solution design.
+        - Test evidence: OT004.7 GREEN at a9d2ae3 (lint, 12/12 regressions, DOM/source review, bundled-help equality, git diff --check, 2026-09-22); UT004.1/UT004.2 AMBER with recorded reasons awaiting native operator validation, permitted at delivery-code.
+        - Security: no new dependency, network, note write, content logging, speech API or privilege; DOM additions use createElement/append only.
+        - Documentation: README, VISION, native-testing and reader-help are current for this increment, impersonal factual voice; no materially stale required documentation.
+        - Audit-state hygiene: no supplied artefact duplicates audit findings, verdicts, revisions, round numbers or session IDs; validation.org records only test evidence.
+
+        No blocking findings. Native macOS and iPhone validation of this candidate remains outstanding as recorded (UT004.1, UT004.2).
+      history:
+        - readiness_check: delivery-code
+          cache_key: sha256:1bc7468bec59bb39e88c660e5bf97d5ebd63053bf43f22fe83fa34e2a5f1d354
+          session_id: df51751d-f692-4a39-900c-09396a820a12
+          harness: claude
+          model: claude-opus-5
+          incident: start-failed
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: 17aefd3515d0d1deb97cbbf0f36e05891c581ec686159c40fc4ae0bcd62f76dc
+              bytes: 15497
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: d8696dca9f4ed75cc8487e064a8c6756a418bbe623e55bcde0bc58996b011c9c
+              bytes: 7652
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 4c93e9ebfd051a1caa3a3a456ef20228c4403f3ca00726ed1ac4c93676ac26cc
+              bytes: 4915
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 04a5798f1c77dfd9e0c4690bc43bbc4e7733ac7a18662e17d4f6cd8785f96858
+              bytes: 16237
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: 3bd52e90c0a9928d911712172a28a51863e726ee204e319935994c365711d28b
+              bytes: 5753
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 799bbd1f83b26515a693c147b5bc33d49f553159d191a5ae57295fd968f4e384
+              bytes: 3625
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/native-testing.md
+              sha256: f73fd9be561df03e8e4454538838f763fabb35ae01569257ca75390a59810f77
+              bytes: 4792
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 235a95071399c1bbe50109c02fdfcd20143c792326bfbb991b8a6d5fb1648135
+              bytes: 3810
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 9eee5d680e5281f764a110484155c5bc474e7673f8ece10a0478c8cc6ce721e6
+              bytes: 31326
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 9acc1a9b3c9414016bd88167400841920c05ec9ad553be6b34e1e803ed2e8b93
+              bytes: 306
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: 0b8104e549865e86d9ee7ace198fb5f2cf0b9fb65d1ab874cd17ba342b594911
+              bytes: 50803
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/audits.yaml
+              sha256: 13bcaf2d2b76d2bedb4f56de4392d4084b7765e7c36507417dfd4b578dbfaec0
+              bytes: 110328
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/005-accessibility-preview-boundaries/spec.org
+              sha256: a408397857c53d5a12a702c2a1f3bb562527e02f1194224b7ab5a5739b6f196d
+              bytes: 9716
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/005-accessibility-preview-boundaries/validation.org
+              sha256: 28016602bba17d4de2e9359ff9bc1b423ea54d31e67f75528c5ce7f28fec9c64
+              bytes: 3631
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: 98e36ad3e991e56844ef990031d018aed27aa242b680de09aa7aeeaf0921f0e3
+              bytes: 913
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 1
+          updated: "2026-09-22T16:30:58Z"
+        - readiness_check: delivery-code
+          cache_key: sha256:1bc7468bec59bb39e88c660e5bf97d5ebd63053bf43f22fe83fa34e2a5f1d354
+          session_id: 20260922_173101_8f5ef2
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: 17aefd3515d0d1deb97cbbf0f36e05891c581ec686159c40fc4ae0bcd62f76dc
+              bytes: 15497
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: d8696dca9f4ed75cc8487e064a8c6756a418bbe623e55bcde0bc58996b011c9c
+              bytes: 7652
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 4c93e9ebfd051a1caa3a3a456ef20228c4403f3ca00726ed1ac4c93676ac26cc
+              bytes: 4915
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 04a5798f1c77dfd9e0c4690bc43bbc4e7733ac7a18662e17d4f6cd8785f96858
+              bytes: 16237
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: 3bd52e90c0a9928d911712172a28a51863e726ee204e319935994c365711d28b
+              bytes: 5753
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 799bbd1f83b26515a693c147b5bc33d49f553159d191a5ae57295fd968f4e384
+              bytes: 3625
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/native-testing.md
+              sha256: f73fd9be561df03e8e4454538838f763fabb35ae01569257ca75390a59810f77
+              bytes: 4792
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 235a95071399c1bbe50109c02fdfcd20143c792326bfbb991b8a6d5fb1648135
+              bytes: 3810
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 9eee5d680e5281f764a110484155c5bc474e7673f8ece10a0478c8cc6ce721e6
+              bytes: 31326
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 9acc1a9b3c9414016bd88167400841920c05ec9ad553be6b34e1e803ed2e8b93
+              bytes: 306
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: 0b8104e549865e86d9ee7ace198fb5f2cf0b9fb65d1ab874cd17ba342b594911
+              bytes: 50803
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/audits.yaml
+              sha256: 13bcaf2d2b76d2bedb4f56de4392d4084b7765e7c36507417dfd4b578dbfaec0
+              bytes: 110328
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/005-accessibility-preview-boundaries/spec.org
+              sha256: a408397857c53d5a12a702c2a1f3bb562527e02f1194224b7ab5a5739b6f196d
+              bytes: 9716
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/005-accessibility-preview-boundaries/validation.org
+              sha256: 28016602bba17d4de2e9359ff9bc1b423ea54d31e67f75528c5ce7f28fec9c64
+              bytes: 3631
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: 98e36ad3e991e56844ef990031d018aed27aa242b680de09aa7aeeaf0921f0e3
+              bytes: 913
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+          round: 2
+          revision: a9d2ae3 (release 1.0.10; runtime identical to reviewed d0c0488 except the version comment)
+          verdict: FAIL
+          response: |-
+            GATE: delivery-code
+            REVISION: a9d2ae3 (release 1.0.10; runtime identical to reviewed d0c0488 except the version comment)
+            VERDICT: FAIL
+
+            Findings and required remediation:
+
+            1. main.js, ReaderModal constructor, blockTaskEdit listener (capture-phase click/change/input on the article):
+
+               `target?.instanceOf(Element)` calls a method named `instanceOf` that does not exist on DOM objects. The intended check is `target instanceof Element`. For any real event target (an Element), `target.instanceOf` is undefined, so the handler throws `TypeError: target.instanceOf is not a function` on every click inside the published article, and `preventDefault()` / `stopImmediatePropagation()` never execute.
+
+               Consequences:
+               - The listener is the only guard for task checkboxes rendered after publication (its own comment: "including checkboxes added after rendering"); the publish-time `disabled = true` loop covers only checkboxes present at publication. A late-rendered checkbox is therefore unprotected and can reach Obsidian's source-updating behaviour, violating the source-preservation requirement (W003 AC003.3, retained as applicable by the W005 spec: "The note is unchanged"; docs/native-testing.md: "Check the task checkbox cannot edit its source").
+               - Every article interaction raises an uncaught exception on the plugin's primary interaction surface — a concrete correctness defect and a disabled verification path (CODING.md: never leave a check that cannot actually run; hidden failure).
+
+               No current GREEN evidence covers this path: the 12 regression cases are pure-logic session/settings tests that never construct the modal, and the platform UTs that would exercise checkbox interaction (UT004.1/UT004.2) are AMBER. The defect predates the W005 increment (it was byte-identical in d0c0488 and earlier reviewed revisions), but this gate certifies the current runtime revision a9d2ae3, which the operator context explicitly places under review, and passing tests do not excuse departure from an approved mechanism.
+
+               Required remediation: replace the condition with `target instanceof Element` (which also safely handles a null target, making the optional chaining unnecessary), rerun make lint and the 12 regression cases, and record fresh OT004.7 GREEN evidence (revision, command, observation) for the new candidate in specs/005-accessibility-preview-boundaries/validation.org. The unchanged W005 paragraph-break and Help-on-demand implementation needs no other change for this finding.
+
+            Verified without findings:
+            - Scope and fidelity: the delta from the previously reviewed d0c0488 is exactly the version comment (main.js +1 byte) and manifest 1.0.10 metadata from the authorized automatic-release workflow, plus the W005 ticket transfer and documentation updates. separateReadingBlocks, Help on demand, styles.css, tests, scripts and command identity are unchanged and conform to the W005 solution design (breaks appended only inside XHTML blocks of the detached article, processed-block marker preventing repeat insertion, pre/non-HTML exclusion, margin removal matched in styles.css; Help created on activation, removed on collapse, aria-expanded maintained, listener owned by the session RenderOwner, reset to collapsed on reopen; command ID and display name unchanged).
+            - Test evidence and schema: OT004.7 GREEN at a9d2ae3 with lint, 12/12 regressions (2026-09-22), DOM/source review, bundled-help equality with docs/reader-help.md and git diff --check recorded; UT004.1/UT004.2 AMBER with recorded reasons awaiting native operator validation, which is permitted at delivery-code. AC004.8/OT004.7/UT004.1/UT004.2 carry the required tags and properties with legacy numbering preserved as authorized.
+            - Security: no new dependency, network, note write, content logging, speech API or privilege in the delta; DOM additions use createElement/append only.
+            - Documentation: README, docs/VISION.md, docs/native-testing.md and docs/reader-help.md are current for this increment (paragraph-boundary handling, Help on demand, honest pending-iPhone status), impersonal factual voice, no materially stale required documentation.
+            - Audit-state hygiene: no supplied artefact duplicates audit findings, verdicts, revisions, round numbers or session IDs; spec.org and validation.org only link to audits.yaml and record their own designated evidence.
+          updated: "2026-09-22T16:30:59Z"
+        - readiness_check: delivery-code
+          cache_key: sha256:0a9219f5d45faf05140ea61fe256b0267c1888aa1f4ed17e37731bcd9c5aadfd
+          session_id: 20260922_173101_8f5ef2
+          harness: hermes
+          provider: nous
+          model: z-ai/glm-5.3
+          evidence:
+            - path: /Users/tigger/.agents/sdlc/ARCHITECTURE.md
+              sha256: bd7a66ffd967010eefb8dc7abe64b059994c7b0f44ed5f5c30ec73e354f5b7f7
+              bytes: 8154
+            - path: /Users/tigger/.agents/sdlc/AUDITS.md
+              sha256: 17aefd3515d0d1deb97cbbf0f36e05891c581ec686159c40fc4ae0bcd62f76dc
+              bytes: 15497
+            - path: /Users/tigger/.agents/sdlc/CODING.md
+              sha256: a69a5d3b7ce3604b093703d72ab0de1bb6d607f140baab17292d209054fe902f
+              bytes: 13502
+            - path: /Users/tigger/.agents/sdlc/DOCUMENTATION.md
+              sha256: d8696dca9f4ed75cc8487e064a8c6756a418bbe623e55bcde0bc58996b011c9c
+              bytes: 7652
+            - path: /Users/tigger/.agents/sdlc/MAIN.md
+              sha256: 6560e15ae577d79ba0fa565eaba53f1a94c57f00e9b1c3b3278291e19bf22dd8
+              bytes: 11718
+            - path: /Users/tigger/.agents/sdlc/ORG-SCHEMA.md
+              sha256: 4c93e9ebfd051a1caa3a3a456ef20228c4403f3ca00726ed1ac4c93676ac26cc
+              bytes: 4915
+            - path: /Users/tigger/.agents/sdlc/PAIRING.md
+              sha256: 6143ccad299a5cd89cb8b73fbb4082caa7a9826d065d78b1a41cdcaba9fed854
+              bytes: 6035
+            - path: /Users/tigger/.agents/sdlc/TESTING.md
+              sha256: 04a5798f1c77dfd9e0c4690bc43bbc4e7733ac7a18662e17d4f6cd8785f96858
+              bytes: 16237
+            - path: /Users/tigger/.agents/sdlc/technologies/JAVASCRIPT.md
+              sha256: bdd055c0f688a752dd6e452da385a583c2c875be7249ece0bfd8200f33809acb
+              bytes: 7508
+            - path: /Users/tigger/.agents/sdlc/technologies/WEB.md
+              sha256: c474f4646fae1e318c78c18b68cfe75d7100b2b7dd85d8ad264326fa375bc000
+              bytes: 10423
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/.sdlc/project.yaml
+              sha256: 00d1f541c1bee9faf5f5b0b3f219446e1108ce5405c6ed77f15ac37a9fd45162
+              bytes: 453
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/README.md
+              sha256: 3bd52e90c0a9928d911712172a28a51863e726ee204e319935994c365711d28b
+              bytes: 5753
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/VISION.md
+              sha256: 799bbd1f83b26515a693c147b5bc33d49f553159d191a5ae57295fd968f4e384
+              bytes: 3625
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/native-testing.md
+              sha256: f73fd9be561df03e8e4454538838f763fabb35ae01569257ca75390a59810f77
+              bytes: 4792
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/docs/reader-help.md
+              sha256: 235a95071399c1bbe50109c02fdfcd20143c792326bfbb991b8a6d5fb1648135
+              bytes: 3810
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/main.js
+              sha256: 9eee5d680e5281f764a110484155c5bc474e7673f8ece10a0478c8cc6ce721e6
+              bytes: 31326
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/manifest.json
+              sha256: 9acc1a9b3c9414016bd88167400841920c05ec9ad553be6b34e1e803ed2e8b93
+              bytes: 306
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/scripts/test.sh
+              sha256: b7e7bd2620b8ad24d2a63a2173d40117b59096de638d89aaa6a6fe5db35f8338
+              bytes: 685
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/003-full-document-reader/spec.org
+              sha256: 0b8104e549865e86d9ee7ace198fb5f2cf0b9fb65d1ab874cd17ba342b594911
+              bytes: 50803
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/004-marketplace-prep/audits.yaml
+              sha256: 13bcaf2d2b76d2bedb4f56de4392d4084b7765e7c36507417dfd4b578dbfaec0
+              bytes: 110328
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/005-accessibility-preview-boundaries/spec.org
+              sha256: a408397857c53d5a12a702c2a1f3bb562527e02f1194224b7ab5a5739b6f196d
+              bytes: 9716
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/specs/005-accessibility-preview-boundaries/validation.org
+              sha256: 28016602bba17d4de2e9359ff9bc1b423ea54d31e67f75528c5ce7f28fec9c64
+              bytes: 3631
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/styles.css
+              sha256: 98e36ad3e991e56844ef990031d018aed27aa242b680de09aa7aeeaf0921f0e3
+              bytes: 913
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-session.test.js
+              sha256: 564dd4b1d730bf12c8276b4446240e4e443eb5d38b918dc8c25adcdd1ade9dfb
+              bytes: 3674
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/reader-settings.test.js
+              sha256: 2dca1add50099df0853bd533dbcadb37609f1aed7c80b1b532297e094de048a0
+              bytes: 5513
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/run.js
+              sha256: 2db855c6a9f9414aad528645a43f521d552a6b9912ae2154b1c57f709407e475
+              bytes: 807
+            - path: /Users/tigger/code/tigoss/obsidian-ios-tts/tests/setup.js
+              sha256: 09fa5dda47920cf23dd0f491bb51957d66e5ca5515d677e36853842d9bf731e9
+              bytes: 1496
+            - path: /var/folders/wn/zk3zl2050rd7qkfgkfzn6rwr0000gp/T/reader-review-20260922-99614-14oxm12/obsidian-node-api.txt
+              sha256: a84663c61a4ce49daf280ff3b1930e32889f497a1fda5772bf63e332d93e2252
+              bytes: 1318
+          round: 3
+          revision: a9d2ae3 (release 1.0.10; runtime identical to reviewed d0c0488 except the version comment)
+          verdict: PASS
+          response: |-
+            GATE: delivery-code
+            REVISION: a9d2ae3 (release 1.0.10; runtime identical to reviewed d0c0488 except the version comment)
+            VERDICT: PASS
+
+            Finding withdrawn:
+
+            The sole finding from the previous round alleged that `target?.instanceOf(Element)` calls a non-existent method and throws on every article interaction. The challenge's primary-source evidence refutes that premise: the supplied official obsidian.d.ts excerpt (obsidian-api master, retrieved 2026-09-22) declares `instanceOf<T>(type)` on the `Node` interface as a "Cross-window capable instanceof check, a drop-in replacement for instanceof checks on DOM Nodes. Remember to also check for nulls when necessary", and Obsidian's pop-out-windows guide recommends `element.instanceOf(HTMLElement)` over the global `instanceof` operator. This code runs inside Obsidian's runtime, where DOM Nodes are augmented with that method; `main.js` imports only the `obsidian` host module and the manifest targets Obsidian 1.13+, so the vanilla-browser premise was incorrect for this host. The null guard (`target?.`) matches the API's own documented caveat. The suggested remediation would have introduced the cross-window regression the host API exists to prevent.
+
+            The finding was unsupported and is withdrawn. No code change is required.
+
+            Reassessment for the record (all evidence hashes unchanged from the previously reviewed state except the added API excerpt):
+            - Scope and fidelity: delta from d0c0488 remains exactly the version comment, manifest 1.0.10 metadata from the authorized automatic-release workflow, and the W005 documentation-only ticket transfer. separateReadingBlocks, Help on demand, styles.css, tests, scripts and command identity conform to the W005 solution design.
+            - Test evidence: OT004.7 GREEN at a9d2ae3 (lint, 12/12 regressions, DOM/source review, bundled-help equality, git diff --check, 2026-09-22); UT004.1/UT004.2 AMBER with recorded reasons awaiting native operator validation, permitted at delivery-code.
+            - Security: no new dependency, network, note write, content logging, speech API or privilege; DOM additions use createElement/append only.
+            - Documentation: README, VISION, native-testing and reader-help are current for this increment, impersonal factual voice; no materially stale required documentation.
+            - Audit-state hygiene: no supplied artefact duplicates audit findings, verdicts, revisions, round numbers or session IDs; validation.org records only test evidence.
+
+            No blocking findings. Native macOS and iPhone validation of this candidate remains outstanding as recorded (UT004.1, UT004.2).
+          updated: "2026-09-22T16:33:15Z"

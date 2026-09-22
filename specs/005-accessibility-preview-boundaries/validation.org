@@ -1,0 +1,34 @@
+#+TITLE: W005 - Accessibility Preview verification
+#+TODO: AMBER RED | GREEN
+#+STARTUP: overview
+
+* GREEN OT004.7 - Preview implementation checks :testdef:
+:PROPERTIES:
+:REVISION: a9d2ae3 (release 1.0.10) with documentation-only ticket transfer
+:EVIDENCE: make lint and all 12 existing regression cases passed; DOM/source review retains paragraph and heading elements, snapshot-only mutation, lifecycle-owned help and existing command identity. Bundled-help equality and diff checks are recorded below.
+:END:
+- Execution :: 2026-09-22, macOS. =make lint= and =make test= passed again, 12/12 cases. Earlier run: 2026-09-21 on the Accessibility Preview candidate. The regression suite verifies session and setting behaviour, not native rendering.
+- Documentation checks :: Bundled help matches =docs/reader-help.md= exactly after trimming the file's final newline. =sanitize oed= left all changed documentation unchanged. =git diff --check= passed. The delivery-code readiness check reports valid schema with both platform user tests AMBER.
+- Source review :: Explicit breaks are added only to the detached article before publication, leaving captured source and original inline nodes intact. Processing marks prevent repeat additions. Preformatted and non-HTML elements are excluded. Help instructions are created on activation and removed on collapse; its listener belongs to the render owner. The command ID and display name are unchanged. No file-writing, network, speech or new dependency is introduced.
+- Prior evidence :: Earlier release/documentation checks remain evidence for their recorded historical increments. They do not establish native correctness of this candidate. The new amendment has the local check and platform user tests recorded here.
+
+* AMBER UT004.1 - macOS paragraph reading :testdef:
+:PROPERTIES:
+:REASON: Candidate awaits native user validation; the earlier diagnostic fixture did not test this implementation.
+:END:
+- Required :: Paragraph fixture and long chapter, from editing and reading mode: separation, highlighting, pauses, final paragraph, no duplication, Help toggle, usable spacing, unchanged source and restored workspace after dismissal.
+
+* AMBER UT004.2 - iPhone paragraph reading :testdef:
+:PROPERTIES:
+:REASON: Candidate awaits iPhone user validation, including the previously observed duplicated reading.
+:END:
+- Required :: Same fixtures and outcomes as the macOS test, with touch-operated Help and the Accessibility Shortcut. No device installation or new device pass is recorded.
+
+* Native evidence, 2026-09-21
+- Method :: User validation on macOS, Obsidian 1.13.7, Accessibility Reader at 1.2x playback.
+- Result :: PASS for visible paragraph separation and individual paragraph highlighting in a longer prose note. Screenshot =screenshot-26-09-21-1339-39.png= shows a dialogue paragraph highlighted separately and surrounding paragraphs separated. The runtime candidate is the d0c0488 implementation; the installed metadata version was not captured.
+- Scope :: The screenshot includes a footnote marker but does not establish footnote reading, final-paragraph completion, Help interaction or iPhone behaviour. UT004.1 - macOS paragraph reading therefore remains AMBER for its untested portions; UT004.2 - iPhone paragraph reading remains AMBER.
+
+* Runtime comparison, 2026-09-22
+- Revision :: Current release 1.0.10 at a9d2ae3 compared with d0c0488 - paragraph breaks and help on demand.
+- Result :: main.js differs only in the version comment. styles.css, tests and scripts/release.sh have no differences. Ticket transfer and documentation updates do not change executable code.

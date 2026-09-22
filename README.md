@@ -1,3 +1,9 @@
+---
+title: Full Document View for iOS TTS
+version: 1
+last-updated: 2026-09-22
+---
+
 # Full Document View for iOS TTS
 
 The purpose of this plugin is to unlock native Apple Text-to-Speech (TTS) on Obsidian notes. Normally the Accessibility Reader in iOS only sees a portion of the note, as Obsidian's preview is optimized to load only the visible portion of the note give or take some caching. This plugin presents a special preview mode that Accessibility Reader can use to read the entire document
@@ -77,6 +83,10 @@ This opens **Accessibility Preview**. You can also use
 On Mac, you can assign a hotkey to this command in **Obsidian Settings > Hotkeys**
 to open the preview from the keyboard.
 
+Accessibility Preview adds explicit breaks to rendered paragraphs and headings
+to support separate paragraph highlighting and pauses in Accessibility Reader.
+The source note is unchanged.
+
 The preview's **Help** button shows the shortcut reminder when needed. Select
 **Help** again to close it before starting Accessibility Reader.
 
@@ -100,3 +110,10 @@ The default limit is **100,000 words**, adjustable in plugin settings.
 [Releases and provenance](docs/releases/automation.md)
 
 Licensed under [Apache License 2.0](LICENSE).
+
+## Change history
+
+- 2026-09-22: Documented paragraph-boundary handling and linked the
+  [accessibility bugfix, research and validation](specs/005-accessibility-preview-boundaries/spec.org).
+  macOS paragraph separation and highlighting have been observed; iPhone
+  validation of this change remains pending.

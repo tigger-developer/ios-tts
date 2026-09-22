@@ -1,0 +1,98 @@
+#+TITLE: W005 - Accessibility Preview paragraph boundaries
+#+SCHEMA: 8
+#+STARTUP: overview
+#+OPTIONS: toc:2 num:nil
+#+OPERATOR_SIGNOFF: APPROVED 2026-09-21 paired implementation scope
+
+* Synopsis
+:PROPERTIES:
+:CUSTOM_ID: summary
+:END:
+** Outcome
+- Preserve *paragraph boundaries* for native Accessibility Reader.
+** Before
+- Rendered paragraphs could become *one continuous text block*, impairing highlighting and spoken pacing.
+- Permanent shortcut instructions entered the reading content.
+** After
+- Rendered headings and paragraphs include *explicit breaks*; Help appears *on demand*.
+** Changes
+- The view and opening controls are named *Accessibility Preview*.
+** Unchanged
+- The source note, command identity, word limit, native speech and existing modal remain unchanged.
+** Edge cases
+- Existing breaks and inline markup remain. Preformatted content is not transformed; complex content and iPhone duplication need further validation.
+** Decisions
+- *Paired implementation* uses the existing HTML presentation. Native companion apps and pop-out windows are outside this change.
+** Next step
+- Finish the *macOS and iPhone user checks* in the validation record.
+
+* Context
+- Defect relationship :: [[file:../003-full-document-reader/spec.org::#ac-003-2][AC003.2 - Complete native reading]] requires uninterrupted whole-document reading. Flattened paragraph boundaries impaired that experience; the earlier screenshot tests isolated a presentation-dependent failure.
+- Lineage :: Implemented under [[file:../004-marketplace-prep/spec.org][W004 - Marketplace prep]] on 2026-09-21. Transferred here on 2026-09-22. Existing requirement and test identifiers remain unchanged to preserve references and review evidence.
+- Authorities :: [[file:../../.sdlc/project.yaml][Project profile]], [[file:../../docs/VISION.md][product vision]], W003's solution design, the maintained session/settings tests and [[file:../../main.js][reader implementation]].
+- Boundaries :: No source-note rewriting, speech engine, cloud service, new dependency, platform-window change or Notes automation.
+
+** Research and findings
+- macOS comparison :: The same prose retained paragraph separation in Apple Notes. A webpage retained paragraphs in Safari but flattened them in Firefox, both normal and Reader modes, and Chromium.
+- Inference :: The evidence points to differences in text exposed to or extracted by Accessibility Reader. It does not identify a browser implementation as the proven root cause.
+- Controlled fixture :: Three short passages were represented as separate paragraph elements, double explicit line breaks, and preserved blank-line text. Firefox, Chromium and the plugin flattened ordinary paragraph boundaries while retaining internal explicit breaks and preserved newlines. Adjacent headings still joined where no explicit break existed.
+- Reading granularity :: The plugin's preserved-newline case highlighted its middle paragraph independently. This established that HTML presentation within the plugin could support separate reading units.
+- Native comparison limit :: The Safari result used a normal webpage, not the three-variant fixture. Ordinary Obsidian extraction also included workspace text; its preformatted case differed from the plugin case. These are separate observations, not evidence that every host exposes identical HTML.
+- Apple guidance :: [[https://developer.apple.com/videos/play/wwdc2026/219/][Enhance the accessibility of your reading app]] discusses granular text navigation, continuous reading and standard native text components. [[https://developer.apple.com/videos/play/wwdc2025/229/][Make your Mac app more accessible to everyone]] distinguishes containing and combining accessibility elements. Neither establishes that a single element necessarily lacks paragraph structure.
+- WebKit reference :: [[https://bugs.webkit.org/show_bug.cgi?id=154098][Paragraph-related accessibility text-marker implementation]] documents paragraph operations at the browser accessibility interface. No special HTML metadata tag was established as a remedy.
+- Evidence limits :: Screenshots establish displayed boundaries and highlighting, not audible pacing or end-to-end completeness. The earlier iPhone duplication and footnote-related failures remain separate validation concerns.
+
+* Acceptance Criteria
+** AC004.8 - Accessible paragraph presentation and help :ac:
+:PROPERTIES:
+:CUSTOM_ID: ac-004-8
+:END:
+- Criterion :: Accessibility Preview preserves complete note text and semantic headings/paragraphs, with explicit breaks supporting separate paragraph highlighting and paced reading on macOS and iPhone. The note is unchanged. Shortcut instructions appear only after Help is activated and disappear on collapse. Help is keyboard- and touch-operable; reopening resets it to collapsed. Existing commands and hotkeys remain valid.
+- Proven by :: [[#ot-004-7][OT004.7 - Preview implementation checks]], [[#ut-004-1][UT004.1 - macOS paragraph reading]] and [[#ut-004-2][UT004.2 - iPhone paragraph reading]].
+
+
+* Test Definitions
+
+** OT004.7 - Preview implementation checks :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ot-004-7
+:END:
+- Covers :: [[#ac-004-8][AC004.8 - Accessible paragraph presentation and help]].
+- Procedure :: Run make lint, make test and git diff --check. Review the DOM changes for source safety, semantic preservation, repeat-publication safety and cleanup. Compare bundled help with docs/reader-help.md; review updated usage instructions.
+- Expected :: Existing 12 regression cases pass; lint succeeds; no source-note write or new dependency; paragraph and heading elements retained; help text absent from the DOM until requested and removed on collapse. Native behaviour is established only by the platform user tests.
+
+** UT004.1 - macOS paragraph reading :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ut-004-1
+:END:
+- Covers :: [[#ac-004-8][AC004.8 - Accessible paragraph presentation and help]].
+- Procedure :: Open the three-variant paragraph fixture and a longer chapter through the plugin from both editing and reading mode. Invoke Accessibility Reader. Check paragraph separation, independent highlighting, natural pauses, no duplicated content and reading through the final paragraph. Check headings with emphasis/links, existing hard breaks and paragraphs in lists. Open and collapse Help by keyboard and pointer, then reopen the preview. Check source text remains unchanged and dismissal restores the workspace.
+- Expected :: Ordinary paragraphs and headings no longer concatenate; existing line breaks remain; layout is usable. Help starts collapsed and its instructions do not enter the reading content while collapsed. Record any title/control announcement separately. No new claim about footnote support follows from plain-prose success.
+
+** UT004.2 - iPhone paragraph reading :testdef:
+:PROPERTIES:
+:CUSTOM_ID: ut-004-2
+:END:
+- Covers :: [[#ac-004-8][AC004.8 - Accessible paragraph presentation and help]].
+- Procedure :: Repeat the macOS fixture and chapter procedure on iPhone using touch and the Accessibility Shortcut. Check Help by tapping, no repeated sentences, full-document reading and source preservation.
+- Expected :: The same paragraph, completeness and collapsed-help outcomes as the macOS test, without duplication. Record iOS version and tested revision.
+
+* Edge Cases
+- Repeated publication must not add another separator pair to an already processed block.
+- Empty notes retain normal renderer output. Existing hard breaks, links and emphasis are preserved.
+- Preformatted and non-HTML elements are excluded. Late embedded rendering is not newly normalized by a background observer.
+- Help starts collapsed for each snapshot and does not create its instructions until activation.
+
+* Solution Design
+- Boundary handling :: After rendering, before publication, append two br elements inside each XHTML paragraph and heading. Retain the original elements and their inline children; mark processed blocks to avoid repeat insertion. Remove their bottom margin so explicit breaks supply the trailing spacing.
+- Help :: A semantic button outside the article toggles creation/removal of the platform-specific shortcut paragraph. Maintain aria-expanded. Its event listener belongs to the session RenderOwner. No fade timer, rasterized instructions or persistent help state.
+- Compatibility :: Keep the command ID and display name, manifest name, settings, snapshot lifetime and focus/isolation behaviour. The modal title, opening-control labels and relevant notices use Accessibility Preview.
+- Security :: Fixed DOM additions affect only the snapshot. No new dependency, note write, network access, content logging, speech API or privilege. Obsidian remains responsible for rendering untrusted note content.
+- Verification choice :: Retain the 12 session/settings regressions. Native rendering and speech need user validation; no mock accessibility engine or source-matching regression suite is introduced.
+
+* Delivery Handoff
+- Implementation :: Commit =d0c0488= (paragraph breaks and help on demand), included in releases 1.0.8 through 1.0.10.
+- Current code review :: [[file:audits.yaml][Harness-owned implementation review]]. No ticket-definition audit is required for this paired record.
+- Original code review :: [[file:../004-marketplace-prep/audits.yaml][Original harness-owned code-audit record]]. Keep this record in place; do not copy or rewrite audit state under the new ticket.
+- Validation :: [[file:validation.org][Current results and outstanding device checks]].
+- Documentation :: README describes usage; Vision describes complete, paced reading; the native checklist covers paragraph boundaries and Help. This transfer introduces no executable change.

@@ -2,27 +2,9 @@
 #+TODO: AMBER RED | GREEN
 #+STARTUP: content
 
-* GREEN OT004.7 - Preview implementation checks :testdef:
-:PROPERTIES:
-:REVISION: af40e71 plus the Accessibility Preview amendment in main.js, styles.css and accompanying documentation
-:EVIDENCE: make lint and all 12 existing regression cases passed; DOM/source review retains paragraph and heading elements, snapshot-only mutation, lifecycle-owned help and existing command identity. Bundled-help equality and diff checks are recorded below.
-:END:
-- Execution :: 2026-09-21, macOS. =make lint= and =make test= passed. The regression suite verifies session and setting behaviour, not native rendering.
-- Documentation checks :: Bundled help matches =docs/reader-help.md= exactly after trimming the file's final newline. =sanitize oed= left all changed documentation unchanged. =git diff --check= passed. The delivery-code readiness check reports valid schema with both platform user tests AMBER.
-- Source review :: Explicit breaks are added only to the detached article before publication, leaving captured source and original inline nodes intact. Processing marks prevent repeat additions. Preformatted and non-HTML elements are excluded. Help instructions are created on activation and removed on collapse; its listener belongs to the render owner. The command ID and display name are unchanged. No file-writing, network, speech or new dependency is introduced.
-- Prior evidence :: Earlier release/documentation checks remain evidence for their recorded historical increments. They do not establish native correctness of this candidate. The new amendment has the local check and platform user tests recorded here.
+* Accessibility evidence transferred, 2026-09-22
 
-* AMBER UT004.1 - macOS paragraph reading :testdef:
-:PROPERTIES:
-:REASON: Candidate awaits native user validation; the earlier diagnostic fixture did not test this implementation.
-:END:
-- Required :: Paragraph fixture and long chapter, from editing and reading mode: separation, highlighting, pauses, final paragraph, no duplication, Help toggle, usable spacing, unchanged source and restored workspace after dismissal.
-
-* AMBER UT004.2 - iPhone paragraph reading :testdef:
-:PROPERTIES:
-:REASON: Candidate awaits iPhone user validation, including the previously observed duplicated reading.
-:END:
-- Required :: Same fixtures and outcomes as the macOS test, with touch-operated Help and the Accessibility Shortcut. No device installation or new device pass is recorded.
+OT004.7 - Preview implementation checks, UT004.1 - macOS paragraph reading and UT004.2 - iPhone paragraph reading now reside in [[file:../005-accessibility-preview-boundaries/validation.org][W005 - Accessibility Preview verification]]. Their identifiers and earlier execution evidence are preserved. The original code-audit record remains here.
 
 * GREEN OT004.1 - Package and documentation review :testdef:
 :PROPERTIES:
@@ -128,3 +110,8 @@
 - Documentation :: =docs/releases/automation.md=, =docs/release-help.md= and the developer target list describe the operator-invoked release and publication-triggered attestation. All changed local links and the =#release-provenance= anchor resolve.
 - Limits :: Local evidence does not establish hosted publication or signing. The first =make release= supplies that evidence. Release 1.0.4 was published by the superseded push-triggered process and carries no attestation from it; manual dispatch of the attestation workflow with tag 1.0.4 would sign it.
 - Scope :: Bounded one-off packaging checks. The stub =gh= models only the release-creation boundary and is not retained; no persistent source-text or third-party simulation test was added.
+
+* Marketplace closure evidence, 2026-09-22
+- Closure :: Approved 2026-09-22 for marketplace preparation. Runtime accessibility work and outstanding native checks are tracked under W005 - Accessibility Preview paragraph boundaries.
+- Publication :: Release 1.0.10 was published on 2026-09-21 with main.js, manifest.json and styles.css. [[https://github.com/tigger-developer/ios-tts/actions/runs/35615151317][Release 1.0.10 attestation workflow]] was verified completed successfully on 2026-09-22.
+- Recovery history :: Release 1.0.9 initially had a remote tag and manifest bump without a GitHub release. Publishing the existing tag succeeded; its attestation workflow succeeded. The next make release published 1.0.10 successfully. The earlier interruption's cause remains unverified. Manual recovery is documented in docs/release-help.md; automatic resume remains a potential improvement, not a delivered change.

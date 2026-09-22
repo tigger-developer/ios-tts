@@ -1,3 +1,9 @@
+---
+title: Native Accessibility Preview tests
+version: 1
+last-updated: 2026-09-22
+---
+
 # Native reader test
 
 **First check:** open a long note with **Preview for Accessibility View (TTS on iOS/macOS)** in the command palette, invoke
@@ -7,12 +13,16 @@ without scrolling the plugin view. If it stops early, record where it stops.
 Test the current maintained JavaScript package in a **disposable vault**,
 with the default theme and only core plugins. The package is
 `main.js`, `manifest.json` and `styles.css` in the checkout. Record the tested
-commit, device, OS and Obsidian versions, and the tester's name.
+commit, device, OS and Obsidian versions. Record the method as user validation.
 
 1. **Reading:** use empty, mixed-Markdown, second-note and 100,000-word notes.
    Confirm the full rendered body in order, including the long ending in the
    native reader. Listen through the short note; navigate native playback to
    hear the long ending. Three markers alone do not prove completeness.
+   Check headings and paragraphs remain separate in Accessibility Reader,
+   including individual paragraph highlighting and audible pauses. Include
+   emphasis, links, existing hard breaks, list paragraphs and a footnote.
+   Record duplication, joined boundaries or unwanted controls separately.
 2. **Controls and safety:** try the note's top toolbar book and sound waves icon,
    ribbon and command, editing and reading modes,
    an unsaved edit, note switching, reopen, no note and a non-Markdown tab.
@@ -25,9 +35,10 @@ commit, device, OS and Obsidian versions, and the tester's name.
    disable/re-enable: expect one icon per Markdown pane and none after disabling.
    Confirm toolbar and ribbon use the supplied accessibility-reader artwork
    and are visually distinguishable from Obsidian's preview control.
-   After rendering, check the hint beneath the title: Command-Escape on Mac,
-   accessibility shortcut on iPhone. It must be absent while preparing, remain
-   outside the document article, and leave the document scrollable.
+   Confirm the title is Accessibility Preview. Help starts collapsed; activate
+   it by keyboard, pointer or touch to reveal the platform shortcut, then
+   collapse it. Its instructions must be absent from native reading while
+   collapsed. Reopening the preview resets Help to collapsed.
    For the focus/isolation amendment, invoke Accessibility Reader immediately
    after rendering: sidebar and other-tab text must not precede the note.
    Check that keyboard focus begins in the document and Tab stays in the modal.
@@ -55,3 +66,12 @@ Record observations separately for **macOS** and **physical iPhone** in the
 contains the reproducible synthetic-fixture recipe and hashes. The authoritative
 procedures are the two user tests in the
 [approved specification](../specs/003-full-document-reader/spec.org).
+
+Record the paragraph-boundary and Help checks in the
+[Accessibility Preview validation record](../specs/005-accessibility-preview-boundaries/validation.org).
+Do not infer an iPhone result from a macOS test.
+
+## Document history
+
+- 2026-09-22: Added paragraph/highlighting checks and replaced the permanent-hint
+  check with Help on demand; validation records identify the method and environment.
